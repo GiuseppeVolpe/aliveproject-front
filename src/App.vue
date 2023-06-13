@@ -1,17 +1,31 @@
 <template>
-  <div :style="myStyle" id="app" class="customColor">
+  <div id="app" class="mt-0 pt-0">
     <!--<img alt="Vue logo" src="./assets/logo.png">-->
-    <LoginComponent></LoginComponent>
+    <div v-if="getUserId > -1">
+      <NavBar></NavBar>
+    </div>
+    <RouterView></RouterView>
   </div>
 </template>
 
 <script>
-import LoginComponent from '@/components/LoginComponent'
+import { mapGetters } from "vuex";
+import NavBar from '@/components/NavBar'
+//import LoginComponent from '@/components/LoginComponent'
+import { RouterView } from "vue-router";
 
 export default {
   name: 'App',
+
   components: {
-    LoginComponent,
+    NavBar,
+    RouterView
+},
+
+  computed : {
+    ...mapGetters([
+      "getUserId",
+    ]),
   },
   
   data: function() {
