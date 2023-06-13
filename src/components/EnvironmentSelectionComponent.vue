@@ -154,8 +154,8 @@ export default {
         return
       }
 
-      this.setEnvId(this.selectedEnv.id)
-      this.setEnvName(this.selectedEnv.name)
+      this.setSelectedEnvId(this.selectedEnv.id)
+      this.setSelectedEnvName(this.selectedEnv.name)
       this.$router.push("/env_space")
     },
 
