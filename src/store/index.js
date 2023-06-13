@@ -14,6 +14,7 @@ export default new Vuex.Store({
     availableModels : [],
     availableDatasets : [],
     trainingSessions : [],
+    generalAlerts : [],
   },
 
   getters: {
@@ -40,6 +41,9 @@ export default new Vuex.Store({
     },
     getTrainingSessions : state => {
       return state.trainingSessions;
+    },
+    getGeneralAlerts : state => {
+      return state.generalAlerts;
     },
     getSession : state => {
       return {
@@ -76,6 +80,19 @@ export default new Vuex.Store({
     setTrainingSessions : (state, trainingSessions) => {
       state.trainingSessions = trainingSessions
     },
+    pushAlert : (state, alert) => {
+
+      if (state.generalAlerts.length > 0) {
+        state.generalAlerts.pop()
+      }
+
+      state.generalAlerts.push(alert)
+    },
+    popAlert : (state) => {
+      if (state.generalAlerts.length > 0) {
+        state.generalAlerts.pop()
+      }
+    },
     resetState : (state) => {
       state.userId = null
       state.username = null
@@ -85,10 +102,15 @@ export default new Vuex.Store({
       state.availableModels = []
       state.availableDatasets = []
       state.trainingSessions = []
+      state.generalAlerts = []
     }
   },
 
   actions: {
+    pushAlertAction (context, alert) {
+      context.commit('pushAlert', alert)
+      setTimeout(() => { context.commit('popAlert') }, 2000)
+    }
   },
 
   modules: {

@@ -50,8 +50,8 @@
             </b-button>
           </div>
         </div>
-        
-        <AlertComponent :errors="errors"></AlertComponent>
+
+        <AlertComponent :alerts="alerts"></AlertComponent>
 
       </div>
     </div>
@@ -75,7 +75,7 @@ export default {
     return {
       selectedEnv: null,
       newEnvName: null,
-      errors: [],
+      alerts: [],
     }
   },
 
@@ -170,10 +170,10 @@ export default {
             break
           case 1000:
           case 1001:
-            this.errors.push(responseData.message)
+            this.alerts.push(responseData.message)
             break
           case 1002:
-            this.errors = responseData.data
+            this.alerts = responseData.data
         }
       });
     },

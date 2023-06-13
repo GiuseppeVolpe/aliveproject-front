@@ -4,6 +4,9 @@
       <NavBar></NavBar>
     </div>
     <RouterView></RouterView>
+    <div v-if="getGeneralAlerts.length > 0">
+      <AlertComponent :alerts="getGeneralAlerts"></AlertComponent>
+    </div>
   </div>
 </template>
 
@@ -12,6 +15,7 @@ import { RouterView } from "vue-router";
 import { mapGetters } from "vuex";
 
 import NavBar from '@/components/NavBar'
+import AlertComponent from '@/components/AlertComponent'
 
 export default {
   name: 'App',
@@ -19,11 +23,13 @@ export default {
   components: {
     NavBar,
     RouterView,
+    AlertComponent,
   },
 
   computed: {
     ...mapGetters([
       "getUserId",
+      "getGeneralAlerts"
     ]),
   },
 

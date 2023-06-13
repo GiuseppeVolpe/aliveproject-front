@@ -18,7 +18,7 @@
                             title="Create a password" minlength="8" maxlength="50" required
                             v-model="userDetails.password" />
                         
-                        <AlertComponent :errors="errors"></AlertComponent>
+                        <AlertComponent :alerts="alerts"></AlertComponent>
 
                         <b-button class="col-12 mb-1 buttonColor" @click="signup()" :disabled="!signupButtonIsEnabled" >Signup</b-button>
                         <b-button class="col-12 mb-1 buttonColor" @click="goToLogin()">Go to login</b-button>
@@ -31,7 +31,7 @@
 </template>
   
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapMutations, mapActions } from "vuex";
 import axios from 'axios';
 
 import AlertComponent from "@/components/AlertComponent"
@@ -46,13 +46,13 @@ export default {
     data() {
         return {
             userDetails: {},
-            errors: [],
+            alerts: [],
         }
     },
 
     mounted() {
         this.userDetails = {}
-        this.errors = []
+        this.alerts = []
     },
 
     computed: {
@@ -73,10 +73,13 @@ export default {
         ...mapMutations([
 
         ]),
+        ...mapActions([
+            "pushAlertAction",
+        ]),
 
         signup() {
             
-            this.errors = []
+            this.alerts = []
 
             var url_to_signup = process.env.VUE_APP_API_URL + "signup"
 
@@ -93,13 +96,14 @@ export default {
                 switch (responseData.code) {
                     case 1:
                         this.goToLogin()
+                        this.pushAlertAction("User added succesfully!")
                         break
                     case 1000:
                     case 1001:
-                        this.errors.push(responseData.message)
+                        this.alerts.push(responseData.message)
                         break
                     case 1002:
-                        this.errors = responseData.data
+                        this.alerts = responseData.data
                 }
             })
         },

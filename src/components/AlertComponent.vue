@@ -1,7 +1,7 @@
 <template>
-    <div v-if="errors.length > 0">
+    <div v-if="alerts.length > 0">
         <b-alert show>
-            <li v-for="(err, index) in errors" :key="index">
+            <li v-for="(err, index) in alerts" :key="index">
                 {{ err }}
             </li>
         </b-alert>
@@ -27,7 +27,7 @@ export default {
   },
   
   props: {
-    errors: [],
+    alerts: [],
   },
 
 }
