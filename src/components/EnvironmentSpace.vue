@@ -1,11 +1,11 @@
 <template>
     <div>
-        <EnvironmentSpaceNavigator></EnvironmentSpaceNavigator>
+        <EnvironmentSpaceBar></EnvironmentSpaceBar>
     </div>
 </template>
 
 <script>
-import EnvironmentSpaceNavigator from '@/components/EnvironmentSpaceNavigator'
+import EnvironmentSpaceBar from '@/components/EnvironmentSpaceBar'
 import { mapGetters, mapMutations } from "vuex";
 //import axios from 'axios';
 
@@ -20,7 +20,7 @@ export default {
     methods: {
         ...mapMutations([]),
     },
-    components: { EnvironmentSpaceNavigator }
+    components: { EnvironmentSpaceBar }
 }
 
 </script>

@@ -6,14 +6,14 @@ Vue.use(Vuex)
 export default new Vuex.Store({
 
   state: {
-    userId : -1,
-    username : "",
+    userId : null,
+    username : null,
     availableEnvs : [],
-    envId : -1,
-    envName : "",
+    selectedEnvId : null,
+    selectedEnvName : null,
     availableModels : [],
     availableDatasets : [],
-    errors : null,
+    trainingSessions : [],
   },
 
   getters: {
@@ -26,11 +26,11 @@ export default new Vuex.Store({
     getAvailableEnvs : state => {
       return state.availableEnvs;
     },
-    getEnvId : state => {
-      return state.envId;
+    getSelectedEnvId : state => {
+      return state.selectedEnvId;
     },
-    getEnvName : state => {
-      return state.envName;
+    getSelectedEnvName : state => {
+      return state.selectedEnvName;
     },
     getAvailableModels : state => {
       return state.availableModels;
@@ -38,31 +38,34 @@ export default new Vuex.Store({
     getAvailableDatasets : state => {
       return state.availableDatasets;
     },
+    getTrainingSessions : state => {
+      return state.trainingSessions;
+    },
     getSession : state => {
       return {
         "user_id" : state.userId,
         "username" : state.username,
-        "env_id" : state.envId,
-        "env_name" : state.envName,
+        "env_id" : state.selectedEnvId,
+        "env_name" : state.selectedEnvName,
       }
     }
   },
 
   mutations: {
-    setUserId : (state, userIdValue) => {
-      state.userId = userIdValue
+    setUserId : (state, userId) => {
+      state.userId = userId
     },
-    setUsername : (state, usernameValue) => {
-      state.username = usernameValue
+    setUsername : (state, username) => {
+      state.username = username
     },
     setAvailableEnvs : (state, availableEnvs) => {
       state.availableEnvs = availableEnvs
     },
-    setEnvId : (state, envIdValue) => {
-      state.envId = envIdValue
+    setSelectedEnvId : (state, envId) => {
+      state.selectedEnvId = envId
     },
-    setEnvName : (state, envNameValue) => {
-      state.envName = envNameValue
+    setSelectedEnvName : (state, envName) => {
+      state.selectedEnvName = envName
     },
     setAvailableModels : (state, availableModels) => {
       state.availableModels = availableModels
@@ -70,6 +73,19 @@ export default new Vuex.Store({
     setAvailableDatasets : (state, availableDatasets) => {
       state.availableDatasets = availableDatasets
     },
+    setTrainingSessions : (state, trainingSessions) => {
+      state.trainingSessions = trainingSessions
+    },
+    resetState : (state) => {
+      state.userId = null
+      state.username = null
+      state.availableEnvs = []
+      state.selectedEnvId = null
+      state.selectedEnvName = null
+      state.availableModels = []
+      state.availableDatasets = []
+      state.trainingSessions = []
+    }
   },
 
   actions: {

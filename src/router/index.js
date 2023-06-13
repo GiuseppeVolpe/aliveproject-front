@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+
 import LoginComponent from '@/components/LoginComponent'
+import SignupComponent from '@/components/SignupComponent'
 import EnvironmentSelectionComponent from '@/components/EnvironmentSelectionComponent'
 import EnvironmentSpace from '@/components/EnvironmentSpace'
 import ModelsComponent from '@/components/ModelsComponent'
@@ -14,9 +16,9 @@ const routes = [
     component: LoginComponent
   },
   {
-    path: '/login',
-    name: 'login',
-    component: LoginComponent
+    path: '/signup',
+    name: 'signup',
+    component: SignupComponent
   },
   {
     path: '/env_selection',
@@ -31,6 +33,16 @@ const routes = [
   {
     path: '/models',
     name: 'models',
+    component: ModelsComponent
+  },
+  {
+    path: '/datasets',
+    name: 'datasets',
+    component: ModelsComponent
+  },
+  {
+    path: '/training',
+    name: 'training',
     component: ModelsComponent
   },
 ]

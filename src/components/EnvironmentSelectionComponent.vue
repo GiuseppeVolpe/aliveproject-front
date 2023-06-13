@@ -3,39 +3,52 @@
     <div class="row mt-5">
       <div class="col-4 offset-4 mt-5 mb-5 loginColor">
         <h1 class="mt-3">Alive</h1>
-        <div class="row">
-          <div class="col-12 mr-2 ml-2">
-            <div class="row">
-              <div class="col-8 mr-2 ml-2">
-                <b-form-select v-model="selectedEnv" :options="getAvailableEnvs" class="form-control" size="lg">
-                  <option value="null" disabled hidden>Select Environment</option>
-                </b-form-select>
-              </div>
-              <div class="col-4">
-                <b-button class="col-12 mb-3 buttonColor" @click="selectEnvironment()">Select</b-button>
-              </div>
-            </div>
 
-            <div class="row">
-              <hr class="col-4 mt-5">
-              <h3 class="col-4 mt-4">Or</h3>
-              <hr class="col-4 mt-5">
-            </div>
+        <div v-if="getAvailableEnvs.length > 0">
 
-            <div class="row">
-              <div class="col-8 mt-2 mr-2 ml-2">
-                <input name="environmentName" type="text" class="form-control mb-2" placeholder="Name" maxlength="50"
-                  minlength="8" />
-              </div>
-              <div class="col-4">
-                <b-button class="col-12 mt-2 mb-3 buttonColor">Create new</b-button>
-              </div>
-            </div>
+          <div class="row">
+            <div class="col-12 mr-2 ml-2">
 
+              <div class="row">
+                <div class="col-8 mr-2 ml-2">
+                  <b-form-select v-model="selectedEnv" :options="getAvailableEnvs" class="form-control" size="lg">
+                    <option value="null" disabled hidden>Select Environment</option>
+                  </b-form-select>
+                </div>
+                <div class="col-4">
+                  <b-button class="col-12 mb-3 buttonColor" @click="selectEnvironment()">Select</b-button>
+                </div>
+              </div>
+
+              <div class="row">
+                <hr class="col-4 mt-5">
+                <h3 class="col-4 mt-4">Or</h3>
+                <hr class="col-4 mt-5">
+              </div>
+
+            </div>
           </div>
 
+        </div>
+        <div v-else>
+
+          <div class="row">
+            <h3>You don't have environments... create a new one!</h3>
+          </div>
 
         </div>
+
+        <div class="row">
+          <div class="col-8 mt-2 mr-2 ml-2">
+            <input name="environmentName" type="text" class="form-control mb-2" placeholder="Name" maxlength="50"
+              minlength="8" />
+          </div>
+          <div class="col-4">
+            <b-button class="col-12 mt-2 mb-3 buttonColor">Create new</b-button>
+          </div>
+        </div>
+
+
       </div>
     </div>
   </div>
@@ -55,19 +68,7 @@ export default {
   },
 
   mounted() {
-    var url_to_available_envs = process.env.VUE_APP_API_URL + "get_user_envs"
-
-    var envs_payload = {
-      "session": this.getSession
-    }
-
-    axios.post(url_to_available_envs, envs_payload).then(env_response => {
-      var envResponseData = env_response.data
-
-      if (envResponseData.code == 1) {
-        this.setAvailableEnvs(envResponseData.data)
-      }
-    })
+    this.updateAvailableEnvs()
   },
 
   computed: {
@@ -79,10 +80,26 @@ export default {
 
   methods: {
     ...mapMutations([
-      "setEnvId",
-      "setEnvName",
+      "setSelectedEnvId",
+      "setSelectedEnvName",
       "setAvailableEnvs",
     ]),
+
+    updateAvailableEnvs() {
+      var url_to_available_envs = process.env.VUE_APP_API_URL + "get_user_envs"
+
+      var envs_payload = {
+        "session": this.getSession
+      }
+
+      axios.post(url_to_available_envs, envs_payload).then(env_response => {
+        var envResponseData = env_response.data
+
+        if (envResponseData.code == 1) {
+          this.setAvailableEnvs(envResponseData.data)
+        }
+      })
+    },
 
     selectEnvironment() {
       if (this.selectedEnv == null) {
@@ -95,40 +112,9 @@ export default {
     },
 
     createNewEnvironment() {
-      
+
     },
   }
 }
 
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
-}
-
-div.loginColor {
-  background-color: #fff;
-}
-
-button.buttonColor {
-  background-color: #8bd9b6;
-  border-color: #8bd9b6;
-}
-</style>
-  

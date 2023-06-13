@@ -10,7 +10,7 @@
 import { RouterLink } from "vue-router";
 
 export default {
-    name: "EnvironmentSpaceNavigator",
+    name: "EnvironmentSpaceBar",
     data() {
         return {};
     },

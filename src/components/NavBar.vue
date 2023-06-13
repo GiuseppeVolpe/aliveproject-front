@@ -22,29 +22,17 @@ export default {
 
   computed : {
     ...mapGetters([
-      "getUserId",
+      
     ]),
   },
 
   methods : {
     ...mapMutations([
-      "setUserId",
-      "setUsername",
-      "setAvailableEnvs",
-      "setEnvId",
-      "setEnvName",
-      "setAvailableModels",
-      "setAvailableDatasets",
+      "resetState",
     ]),
 
     logout() {
-      this.setUserId(-1)
-      this.setUsername("")
-      this.setAvailableEnvs([])
-      this.setEnvId(-1)
-      this.setEnvName("")
-      this.setAvailableModels([])
-      this.setAvailableDatasets([])
+      this.resetState()
       this.$router.push("/")
     },
   }
