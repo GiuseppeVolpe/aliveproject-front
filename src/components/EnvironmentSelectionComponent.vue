@@ -1,7 +1,8 @@
 <template>
   <div>
     <div class="row mt-5">
-      <div class="col-4 offset-4 mt-5 mb-5 loginColor">
+      <div class="col-4 offset-4 mt-5 mb-5">
+
         <h1 class="mt-3">Welcome, {{ getUsername }}</h1>
 
         <div v-if="getAvailableEnvs.length > 0">
@@ -16,7 +17,10 @@
                   </b-form-select>
                 </div>
                 <div class="col-4">
-                  <b-button class="col-12 mb-3 buttonColor" @click="selectEnvironment()">Select</b-button>
+                  <b-button class="col-12 mb-3 buttonColor" @click="selectEnvironment()"
+                    :disabled="!selectButtonIsEnabled">
+                    Select
+                  </b-button>
                 </div>
               </div>
 
@@ -59,7 +63,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapMutations, mapActions } from "vuex";
 import axios from 'axios';
 
 import AlertComponent from "@/components/AlertComponent"
@@ -81,6 +85,7 @@ export default {
 
   mounted() {
     this.updateAvailableEnvs()
+    this.alerts = []
   },
 
   computed: {
@@ -89,6 +94,10 @@ export default {
       "getAvailableEnvs",
       "getSession",
     ]),
+
+    selectButtonIsEnabled() {
+      return this.selectedEnv != null
+    },
 
     createButtonIsEnabled() {
       var envNameIsSet = this.newEnvName != null && this.newEnvName.length > 0
@@ -99,7 +108,7 @@ export default {
           var currentName = currentEnv.value.name
 
           if (this.newEnvName == currentName) {
-            //return false
+            return false
           }
         }
       } else {
@@ -115,6 +124,9 @@ export default {
       "setSelectedEnvId",
       "setSelectedEnvName",
       "setAvailableEnvs",
+    ]),
+    ...mapActions([
+      "pushAlertAction",
     ]),
 
     updateAvailableEnvs() {
@@ -134,7 +146,11 @@ export default {
     },
 
     selectEnvironment() {
+
+      this.alerts = []
+
       if (this.selectedEnv == null) {
+        this.alerts.push("No environment selected!")
         return
       }
 
@@ -143,11 +159,10 @@ export default {
       this.$router.push("/env_space")
     },
 
-    deleteEnvironment() {
-
-    },
-
     createNewEnvironment() {
+
+      this.alerts = []
+
       if (this.newEnvName == null) {
         return
       }
@@ -162,11 +177,12 @@ export default {
       axios.post(url_to_create_env, payload).then(response => {
 
         var responseData = response.data
-        console.log(responseData)
+
         switch (responseData.code) {
           case 1:
             this.newEnvName = ""
             this.updateAvailableEnvs()
+            this.pushAlertAction("Environment created succesfully!")
             break
           case 1000:
           case 1001:
