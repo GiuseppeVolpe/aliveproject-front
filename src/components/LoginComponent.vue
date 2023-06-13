@@ -7,20 +7,14 @@
           <div class="col-12 mr-2 ml-2">
 
             <input name="username" type="text" class="form-control mt-3 mb-2" placeholder="Username"
-              title="Digit username" minlength="2" maxlength="50" required autofocus
+              title="Digit username" minlength="2" maxlength="50" required autofocus 
               v-model="userDetails.username" />
 
-            <input name="password" type="password" class="form-control mb-2" placeholder="Password"
-              title="Digit password" minlength="8" maxlength="50" required 
-              v-model="userDetails.password" />
+            <input name="password" type="password" class="form-control mb-2" placeholder="Password" title="Digit password"
+              minlength="8" maxlength="50" 
+              required v-model="userDetails.password" />
 
-            <div v-if="errors.length > 0">
-              <b-alert show>
-                <li v-for="(err, index) in errors" :key="index">
-                  {{ err }}
-                </li>
-              </b-alert>
-            </div>
+            <AlertComponent :errors="errors"></AlertComponent>
 
             <b-button class="col-12 mb-1 buttonColor" @click="login()" :disabled="!loginButtonIsEnabled">Login</b-button>
             <b-button class="col-12 mb-3 buttonColor" @click="goToSignup()">Go to signup</b-button>
@@ -36,8 +30,14 @@
 import { mapGetters, mapMutations } from "vuex";
 import axios from 'axios';
 
+import AlertComponent from "@/components/AlertComponent"
+
 export default {
   name: "LoginComponent",
+
+  components: {
+    AlertComponent
+  },
 
   data() {
     return {

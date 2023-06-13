@@ -17,14 +17,8 @@
                         <input name="password" type="password" class="form-control mb-2" placeholder="Password"
                             title="Create a password" minlength="8" maxlength="50" required
                             v-model="userDetails.password" />
-
-                        <div v-if="errors.length > 0">
-                            <b-alert show>
-                                <li v-for="(err, index) in errors" :key="index">
-                                    {{ err }}
-                                </li>
-                            </b-alert>
-                        </div>
+                        
+                        <AlertComponent :errors="errors"></AlertComponent>
 
                         <b-button class="col-12 mb-1 buttonColor" @click="signup()" :disabled="!signupButtonIsEnabled" >Signup</b-button>
                         <b-button class="col-12 mb-1 buttonColor" @click="goToLogin()">Go to login</b-button>
@@ -40,8 +34,14 @@
 import { mapGetters, mapMutations } from "vuex";
 import axios from 'axios';
 
+import AlertComponent from "@/components/AlertComponent"
+
 export default {
     name: "SignupComponent",
+
+    components: {
+    AlertComponent
+  },
 
     data() {
         return {

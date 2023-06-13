@@ -2,7 +2,7 @@
   <div>
     <div class="row mt-5">
       <div class="col-4 offset-4 mt-5 mb-5 loginColor">
-        <h1 class="mt-3">Alive</h1>
+        <h1 class="mt-3">Welcome, {{ getUsername }}</h1>
 
         <div v-if="getAvailableEnvs.length > 0">
 
@@ -40,14 +40,18 @@
 
         <div class="row">
           <div class="col-8 mt-2 mr-2 ml-2">
-            <input name="environmentName" type="text" class="form-control mb-2" placeholder="Name" maxlength="50"
-              minlength="8" />
+            <input name="environmentName" type="text" class="form-control mb-2" placeholder="Name" minlength="8"
+              maxlength="50" v-model="newEnvName" />
           </div>
           <div class="col-4">
-            <b-button class="col-12 mt-2 mb-3 buttonColor">Create new</b-button>
+            <b-button class="col-12 mt-2 mb-3 buttonColor" @click="createNewEnvironment(newEnvName)"
+              :disabled="!createButtonIsEnabled">
+              Create new environment
+            </b-button>
           </div>
         </div>
-
+        
+        <AlertComponent :errors="errors"></AlertComponent>
 
       </div>
     </div>
@@ -58,12 +62,20 @@
 import { mapGetters, mapMutations } from "vuex";
 import axios from 'axios';
 
+import AlertComponent from "@/components/AlertComponent"
+
 export default {
   name: "EnvironmentSelectionComponent",
+
+  components: {
+    AlertComponent
+  },
 
   data() {
     return {
       selectedEnv: null,
+      newEnvName: null,
+      errors: [],
     }
   },
 
@@ -73,9 +85,29 @@ export default {
 
   computed: {
     ...mapGetters([
+      "getUsername",
       "getAvailableEnvs",
       "getSession",
     ]),
+
+    createButtonIsEnabled() {
+      var envNameIsSet = this.newEnvName != null && this.newEnvName.length > 0
+
+      if (envNameIsSet) {
+        for (var i = 0; i < this.getAvailableEnvs.length; i++) {
+          var currentEnv = this.getAvailableEnvs[i]
+          var currentName = currentEnv.value.name
+
+          if (this.newEnvName == currentName) {
+            //return false
+          }
+        }
+      } else {
+        return false
+      }
+
+      return true
+    },
   },
 
   methods: {
@@ -88,15 +120,15 @@ export default {
     updateAvailableEnvs() {
       var url_to_available_envs = process.env.VUE_APP_API_URL + "get_user_envs"
 
-      var envs_payload = {
+      var payload = {
         "session": this.getSession
       }
 
-      axios.post(url_to_available_envs, envs_payload).then(env_response => {
-        var envResponseData = env_response.data
+      axios.post(url_to_available_envs, payload).then(response => {
+        var responseData = response.data
 
-        if (envResponseData.code == 1) {
-          this.setAvailableEnvs(envResponseData.data)
+        if (responseData.code == 1) {
+          this.setAvailableEnvs(responseData.data)
         }
       })
     },
@@ -111,8 +143,39 @@ export default {
       this.$router.push("/env_space")
     },
 
-    createNewEnvironment() {
+    deleteEnvironment() {
 
+    },
+
+    createNewEnvironment() {
+      if (this.newEnvName == null) {
+        return
+      }
+
+      var url_to_create_env = process.env.VUE_APP_API_URL + "create_env"
+
+      var payload = {
+        "session": this.getSession,
+        "env_name": this.newEnvName,
+      }
+
+      axios.post(url_to_create_env, payload).then(response => {
+
+        var responseData = response.data
+        console.log(responseData)
+        switch (responseData.code) {
+          case 1:
+            this.newEnvName = ""
+            this.updateAvailableEnvs()
+            break
+          case 1000:
+          case 1001:
+            this.errors.push(responseData.message)
+            break
+          case 1002:
+            this.errors = responseData.data
+        }
+      });
     },
   }
 }
