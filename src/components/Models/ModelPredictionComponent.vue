@@ -1,0 +1,102 @@
+<template>
+    <div>
+        <div>
+            <b-form-select v-model="modelForPrediction" :options="getAvailableModels" class="form-control" size="lg">
+                <option value="null" disabled hidden>Select Model to make a prediction</option>
+            </b-form-select>
+            <input type="text" name="sentenceToPredict" class="form-control mb-2" placeholder="Sentence to predict"
+                maxlength="500" v-model="sentenceToPredict" />
+            <input type="text" name="prediction" class="form-control mb-2" placeholder="Prediction" maxlength="500"
+                v-model="prediction" readonly />
+            <b-button class="col-12 mb-3" @click="getPrediction(modelForPrediction, sentenceToPredict)"
+                :disabled="!predictButtonIsEnabled">Predict</b-button>
+        </div>
+    </div>
+</template>
+
+<script>
+import { mapGetters, mapMutations } from "vuex";
+import axios from 'axios';
+
+export default {
+    name: "ModelPredictionComponent",
+
+    data() {
+        return {
+            modelForPrediction: null,
+            sentenceToPredict: null,
+            prediction: null,
+        };
+    },
+
+    mounted() {
+        //this.updateAvailableModels()
+    },
+
+    computed: {
+        ...mapGetters([
+            "getSession",
+            "getAvailableModels",
+            "isWaitingForServerResponse",
+        ]),
+
+        predictButtonIsEnabled() {
+            var modelIsSet = this.modelForPrediction != null
+            var sentenceIsSet = this.sentenceToPredict != null && this.sentenceToPredict.length > 0
+
+            return modelIsSet && sentenceIsSet && !this.isWaitingForServerResponse
+        }
+    },
+
+    methods: {
+        ...mapMutations([
+            "setAvailableModels",
+            "setWaitingForServerResponse",
+        ]),
+
+        updateAvailableModels() {
+            var url_to_available_models = process.env.VUE_APP_API_URL + "get_env_models"
+
+            var payload = {
+                "session": this.getSession
+            }
+
+            axios.post(url_to_available_models, payload).then(response => {
+                var envResponseData = response.data
+
+                console.log(envResponseData)
+
+                if (envResponseData.code == 1) {
+                    this.setAvailableModels(envResponseData.data)
+                }
+            })
+        },
+
+        getPrediction(modelForPrediction, sentenceToPredict) {
+
+            if (this.isWaitingForServerResponse) {
+                return
+            }
+
+            this.setWaitingForServerResponse(true)
+
+            var url_to_predict = process.env.VUE_APP_API_URL + "predict"
+
+            var payload = {
+                "session": this.getSession,
+                "model_name": modelForPrediction.name,
+                "sent": sentenceToPredict,
+            }
+
+            axios.post(url_to_predict, payload).then(response => {
+                var responseData = response.data
+
+                this.prediction = responseData.data.prediction
+
+                this.setWaitingForServerResponse(false)
+            })
+        },
+    },
+}
+
+</script>

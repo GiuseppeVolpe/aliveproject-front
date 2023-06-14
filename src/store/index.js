@@ -15,6 +15,7 @@ export default new Vuex.Store({
     availableDatasets : [],
     trainingSessions : [],
     generalAlerts : [],
+    waitingForServerResponse: false,
   },
 
   getters: {
@@ -44,6 +45,9 @@ export default new Vuex.Store({
     },
     getGeneralAlerts : state => {
       return state.generalAlerts;
+    },
+    isWaitingForServerResponse : state => {
+      return state.waitingForServerResponse
     },
     getSession : state => {
       return {
@@ -93,6 +97,9 @@ export default new Vuex.Store({
         state.generalAlerts.pop()
       }
     },
+    setWaitingForServerResponse : (state, waitingForServerResponse) => {
+      state.waitingForServerResponse = waitingForServerResponse
+    },
     resetState : (state) => {
       state.userId = null
       state.username = null
@@ -102,7 +109,6 @@ export default new Vuex.Store({
       state.availableModels = []
       state.availableDatasets = []
       state.trainingSessions = []
-      state.generalAlerts = []
     }
   },
 
