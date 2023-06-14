@@ -1,7 +1,7 @@
 <template>
     <div>
         <RouterLink to="/models">Models</RouterLink> |
-        <RouterLink to="">Datasets</RouterLink> |
+        <RouterLink to="/datasets">Datasets</RouterLink> |
         <RouterLink to="">Training</RouterLink>
 
         <button @click="closeSelectedEnvAction()">Close Environment</button>

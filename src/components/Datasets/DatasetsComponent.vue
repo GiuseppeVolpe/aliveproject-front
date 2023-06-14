@@ -1,9 +1,8 @@
 <template>
     <div>
         <EnvironmentSpaceBar></EnvironmentSpaceBar>
-        <ModelCreationComponent></ModelCreationComponent>
-        <ModelDeleteComponent></ModelDeleteComponent>
-        <ModelPredictionComponent></ModelPredictionComponent>
+        <DatasetCreationComponent></DatasetCreationComponent>
+        <DatasetDeleteComponent></DatasetDeleteComponent>
     </div>
 </template>
 
@@ -12,18 +11,16 @@ import { mapGetters, mapMutations, mapActions } from "vuex";
 //import axios from 'axios';
 
 import EnvironmentSpaceBar from '@/components/EnvironmentSpaceBar'
-import ModelCreationComponent from "@/components/Models/ModelCreationComponent"
-import ModelDeleteComponent from "@/components/Models/ModelDeleteComponent"
-import ModelPredictionComponent from "@/components/Models/ModelPredictionComponent";
+import DatasetCreationComponent from "@/components/Datasets/DatasetCreationComponent"
+import DatasetDeleteComponent from "@/components/Datasets/DatasetDeleteComponent"
 
 export default {
     name: "DatasetsComponent",
 
     components: {
         EnvironmentSpaceBar,
-        ModelCreationComponent,
-        ModelDeleteComponent,
-        ModelPredictionComponent,
+        DatasetCreationComponent,
+        DatasetDeleteComponent,
     },
 
     data() {
@@ -34,8 +31,7 @@ export default {
 
     mounted() {
         this.updateAvailableModelTypesAction()
-        this.updateAvailableBaseModelsAction()
-        this.updateAvailableModelsAction()
+        this.updateAvailableDatasetsAction()
     },
 
     computed: {
@@ -46,8 +42,7 @@ export default {
         ...mapMutations([]),
         ...mapActions([
             "updateAvailableModelTypesAction",
-            "updateAvailableBaseModelsAction",
-            "updateAvailableModelsAction",
+            "updateAvailableDatasetsAction",
         ]),
     },
 }

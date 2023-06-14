@@ -1,11 +1,11 @@
 <template>
     <div>
         <div>
-            <b-form-select v-model="modelToDelete" :options="getAvailableModels" class="form-control" size="lg">
-                <option value="null" disabled hidden>Select Model to delete</option>
+            <b-form-select v-model="datasetToDelete" :options="getAvailableDatasets" class="form-control" size="lg">
+                <option value="null" disabled hidden>Select dataset to delete</option>
             </b-form-select>
-            <b-button class="col-12 mb-3" @click="deleteModel(modelToDelete)"
-                :disabled="!deleteButtonIsEnabled">Delete model</b-button>
+            <b-button class="col-12 mb-3" @click="deleteDataset(datasetToDelete)"
+                :disabled="!deleteButtonIsEnabled">Delete dataset</b-button>
         </div>
     </div>
 </template>
@@ -19,7 +19,7 @@ export default {
 
     data() {
         return {
-            modelToDelete: null,
+            datasetToDelete: null,
         };
     },
 
@@ -32,27 +32,26 @@ export default {
             "getUserId",
             "getSelectedEnvId",
             "getSession",
-            "getAvailableModels",
+            "getAvailableDatasets",
             "isWaitingForServerResponse",
         ]),
 
         deleteButtonIsEnabled() {
-            return this.modelToDelete != null && !this.isWaitingForServerResponse
+            return this.datasetToDelete != null && !this.isWaitingForServerResponse
         },
     },
 
     methods: {
         ...mapMutations([
-            "setAvailableModels",
             "resetState",
             "setWaitingForServerResponse",
         ]),
         ...mapActions([
             "pushAlertAction",
-            "updateAvailableModelsAction",
+            "updateAvailableDatasetsAction",
         ]),
 
-        deleteModel(modelToDelete) {
+        deleteDataset(datasetToDelete) {
 
             if (this.isWaitingForServerResponse) {
                 return
@@ -65,34 +64,34 @@ export default {
                 return
             }
 
-            if (modelToDelete == null) {
+            if (datasetToDelete == null) {
                 return
             }
 
             this.setWaitingForServerResponse(true)
 
-            var url_to_delete_model = process.env.VUE_APP_API_URL + "delete_model"
+            var url_to_delete_dataset = process.env.VUE_APP_API_URL + "delete_dataset"
 
             var payload = {
                 "session": this.getSession,
-                "model_name": modelToDelete.name,
+                "dataset_name": datasetToDelete.name,
             }
 
-            axios.post(url_to_delete_model, payload).then(response => {
+            axios.post(url_to_delete_dataset, payload).then(response => {
 
                 var responseData = response.data
 
                 switch (responseData.code) {
                     case 1:
-                        this.pushAlertAction("Model deleted!")
+                        this.pushAlertAction("Dataset deleted!")
                         break
                     case 1000:
                     case 1001:
                     case 1002:
-                        this.pushAlertAction("Couldn't delete the model...")
+                        this.pushAlertAction("Couldn't delete the dataset...")
                 }
 
-                this.updateAvailableModelsAction()
+                this.updateAvailableDatasetsAction()
                 this.setWaitingForServerResponse(false)
             })
         },

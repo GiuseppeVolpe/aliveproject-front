@@ -141,7 +141,7 @@ export default {
 
       this.setSelectedEnvId(this.selectedEnv.id)
       this.setSelectedEnvName(this.selectedEnv.name)
-      this.$router.push("/env_space")
+      this.$router.push("/models")
     },
 
     createNewEnvironment() {

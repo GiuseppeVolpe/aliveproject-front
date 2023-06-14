@@ -237,6 +237,30 @@ export default new Vuex.Store({
         }
       })
     },
+
+    updateAvailableDatasetsAction(context) {
+
+      if (context.getters.getUserId == null || context.getters.getSelectedEnvId == null) {
+        context.dispatch("pushAlertAction", "Lost your session data... try to login again.")
+        context.commit("resetState")
+        router.push("/")
+        return
+      }
+
+      var url_to_available_datasets = process.env.VUE_APP_API_URL + "get_env_datasets"
+
+      var payload = {
+        "session": context.getters.getSession
+      }
+
+      axios.post(url_to_available_datasets, payload).then(response => {
+        var responseData = response.data
+
+        if (responseData.code == 1) {
+          context.commit("setAvailableDatasets", responseData.data)
+        }
+      })
+    },
   },
 
   modules: {
