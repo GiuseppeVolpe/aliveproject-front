@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapMutations, mapActions } from "vuex";
 
 export default {
   name: "NavBar",
@@ -21,14 +21,14 @@ export default {
   }, 
 
   computed : {
-    ...mapGetters([
-      
-    ]),
+    ...mapGetters([]),
   },
 
   methods : {
     ...mapMutations([
       "resetState",
+    ]),
+    ...mapActions([
       "pushAlertAction",
     ]),
 
