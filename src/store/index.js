@@ -281,6 +281,30 @@ export default new Vuex.Store({
         }
       })
     },
+
+    updateTrainingSessionsAction(context) {
+
+      if (context.getters.getUserId == null || context.getters.getSelectedEnvId == null) {
+        context.dispatch("pushAlertAction", "Lost your session data... try to login again.")
+        context.commit("resetState")
+        router.push("/")
+        return
+      }
+
+      var url_to_training_sessions = process.env.VUE_APP_API_URL + "get_training_sessions"
+
+      var payload = {
+        "session": context.getters.getSession
+      }
+
+      axios.post(url_to_training_sessions, payload).then(response => {
+        var responseData = response.data
+
+        if (responseData.code == 1) {
+          context.commit("setTrainingSessions", responseData.data)
+        }
+      })
+    },
   },
 
   modules: {

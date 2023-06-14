@@ -7,6 +7,7 @@ import EnvironmentSelectionComponent from '@/components/EnvironmentSelectionComp
 import EnvironmentSpace from '@/components/EnvironmentSpace'
 import ModelsComponent from '@/components/Models/ModelsComponent'
 import DatasetsComponent from '@/components/Datasets/DatasetsComponent'
+import TrainingComponent from '@/components/Training/TrainingComponent'
 
 Vue.use(VueRouter)
 
@@ -44,7 +45,7 @@ const routes = [
   {
     path: '/training',
     name: 'training',
-    component: ModelsComponent
+    component: TrainingComponent
   },
 ]
 

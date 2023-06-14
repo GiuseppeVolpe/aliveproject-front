@@ -2,7 +2,7 @@
     <div>
         <RouterLink to="/models">Models</RouterLink> |
         <RouterLink to="/datasets">Datasets</RouterLink> |
-        <RouterLink to="">Training</RouterLink>
+        <RouterLink to="/training">Training</RouterLink>
 
         <button @click="closeSelectedEnvAction()">Close Environment</button>
         <button @click="deleteSelectedEnvAction()">Delete Environment</button>
