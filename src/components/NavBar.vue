@@ -29,11 +29,13 @@ export default {
   methods : {
     ...mapMutations([
       "resetState",
+      "pushAlertAction",
     ]),
 
     logout() {
       this.resetState()
       this.$router.push("/")
+      this.pushAlertAction("Logged out!")
     },
   }
 }
