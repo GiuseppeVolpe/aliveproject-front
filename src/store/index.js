@@ -10,6 +10,7 @@ export default new Vuex.Store({
   state: {
     availableModelTypes: [],
     availableBaseModels: [],
+    availableExampleCategories: [],
     userId: null,
     username: null,
     availableEnvs: [],
@@ -28,6 +29,9 @@ export default new Vuex.Store({
     },
     getAvailableBaseModels: state => {
       return state.availableBaseModels;
+    },
+    getAvailableExampleCategories: state => {
+      return state.availableExampleCategories;
     },
     getUserId: state => {
       return state.userId;
@@ -75,6 +79,9 @@ export default new Vuex.Store({
     },
     setAvailableBaseModels: (state, availableBaseModels) => {
       state.availableBaseModels = availableBaseModels
+    },
+    setAvailableExampleCategories: (state, availableExampleCategories) => {
+      state.availableExampleCategories = availableExampleCategories
     },
     setUserId: (state, userId) => {
       state.userId = userId
@@ -156,6 +163,19 @@ export default new Vuex.Store({
 
         if (responseData.code == 1) {
           context.commit("setAvailableBaseModels", responseData.data)
+        }
+      })
+    },
+
+    updateAvailableExampleCategoriesAction(context) {
+
+      var url_to_available_example_categories = process.env.VUE_APP_API_URL + "fetch_available_example_categories"
+
+      axios.post(url_to_available_example_categories, null).then(response => {
+        var responseData = response.data
+
+        if (responseData.code == 1) {
+          context.commit("setAvailableExampleCategories", responseData.data)
         }
       })
     },

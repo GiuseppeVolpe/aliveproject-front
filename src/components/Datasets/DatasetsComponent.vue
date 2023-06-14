@@ -3,6 +3,7 @@
         <EnvironmentSpaceBar></EnvironmentSpaceBar>
         <DatasetCreationComponent></DatasetCreationComponent>
         <DatasetDeleteComponent></DatasetDeleteComponent>
+        <CsvToDatasetComponent></CsvToDatasetComponent>
     </div>
 </template>
 
@@ -13,6 +14,7 @@ import { mapGetters, mapMutations, mapActions } from "vuex";
 import EnvironmentSpaceBar from '@/components/EnvironmentSpaceBar'
 import DatasetCreationComponent from "@/components/Datasets/DatasetCreationComponent"
 import DatasetDeleteComponent from "@/components/Datasets/DatasetDeleteComponent"
+import CsvToDatasetComponent from "@/components/Datasets/CsvToDatasetComponent"
 
 export default {
     name: "DatasetsComponent",
@@ -21,6 +23,7 @@ export default {
         EnvironmentSpaceBar,
         DatasetCreationComponent,
         DatasetDeleteComponent,
+        CsvToDatasetComponent,
     },
 
     data() {
@@ -31,6 +34,7 @@ export default {
 
     mounted() {
         this.updateAvailableModelTypesAction()
+        this.updateAvailableExampleCategoriesAction()
         this.updateAvailableDatasetsAction()
     },
 
@@ -42,6 +46,7 @@ export default {
         ...mapMutations([]),
         ...mapActions([
             "updateAvailableModelTypesAction",
+            "updateAvailableExampleCategoriesAction",
             "updateAvailableDatasetsAction",
         ]),
     },
