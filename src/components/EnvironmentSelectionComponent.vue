@@ -84,7 +84,7 @@ export default {
   },
 
   mounted() {
-    this.updateAvailableEnvs()
+    this.updateAvailableEnvsAction()
     this.alerts = []
   },
 
@@ -127,23 +127,8 @@ export default {
     ]),
     ...mapActions([
       "pushAlertAction",
+      "updateAvailableEnvsAction"
     ]),
-
-    updateAvailableEnvs() {
-      var url_to_available_envs = process.env.VUE_APP_API_URL + "get_user_envs"
-
-      var payload = {
-        "session": this.getSession
-      }
-
-      axios.post(url_to_available_envs, payload).then(response => {
-        var responseData = response.data
-
-        if (responseData.code == 1) {
-          this.setAvailableEnvs(responseData.data)
-        }
-      })
-    },
 
     selectEnvironment() {
 
@@ -181,7 +166,7 @@ export default {
         switch (responseData.code) {
           case 1:
             this.newEnvName = ""
-            this.updateAvailableEnvs()
+            this.updateAvailableEnvsAction()
             this.pushAlertAction("Environment created succesfully!")
             break
           case 1000:

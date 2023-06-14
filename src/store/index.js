@@ -119,6 +119,31 @@ export default new Vuex.Store({
       context.commit('pushAlert', alert)
       setTimeout(() => { context.commit('popAlert') }, 2000)
     },
+    
+    updateAvailableEnvsAction(context) {
+
+      var url_to_available_envs = process.env.VUE_APP_API_URL + "get_user_envs"
+
+      var payload = {
+        "session": context.getters.getSession
+      }
+
+      axios.post(url_to_available_envs, payload).then(response => {
+        var responseData = response.data
+
+        if (responseData.code == 1) {
+          context.commit("setAvailableEnvs", responseData.data)
+        }
+      })
+    },
+
+    closeSelectedEnvironmentAction(context) {
+      context.commit("setSelectedEnvId", null)
+      context.commit("setSelectedEnvName", null)
+      router.push("/env_selection")
+
+      context.dispatch("pushAlertAction", "Environment closed!")
+    },
 
     deleteSelectedEnvironmentAction(context) {
 
@@ -136,7 +161,7 @@ export default new Vuex.Store({
         context.commit("setSelectedEnvId", null)
         context.commit("setSelectedEnvName", null)
         router.push("/env_selection")
-        
+
         switch (responseData.code) {
           case 1:
             context.dispatch("pushAlertAction", "Environment deleted succesfully!")
@@ -147,14 +172,6 @@ export default new Vuex.Store({
             context.dispatch("pushAlertAction", "Couldn't delete the environment...")
         }
       })
-    },
-
-    closeSelectedEnvironmentAction(context) {
-      context.commit("setSelectedEnvId", null)
-      context.commit("setSelectedEnvName", null)
-      router.push("/env_selection")
-
-      context.dispatch("pushAlertAction", "Environment closed!")
     },
 
   },
