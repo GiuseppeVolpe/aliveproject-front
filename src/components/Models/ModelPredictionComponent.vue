@@ -30,7 +30,7 @@ export default {
     },
 
     mounted() {
-        //this.updateAvailableModels()
+        
     },
 
     computed: {
@@ -50,27 +50,8 @@ export default {
 
     methods: {
         ...mapMutations([
-            "setAvailableModels",
             "setWaitingForServerResponse",
         ]),
-
-        updateAvailableModels() {
-            var url_to_available_models = process.env.VUE_APP_API_URL + "get_env_models"
-
-            var payload = {
-                "session": this.getSession
-            }
-
-            axios.post(url_to_available_models, payload).then(response => {
-                var envResponseData = response.data
-
-                console.log(envResponseData)
-
-                if (envResponseData.code == 1) {
-                    this.setAvailableModels(envResponseData.data)
-                }
-            })
-        },
 
         getPrediction(modelForPrediction, sentenceToPredict) {
 

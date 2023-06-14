@@ -4,8 +4,8 @@
         <RouterLink to="">Datasets</RouterLink> |
         <RouterLink to="">Training</RouterLink>
 
-        <button @click="closeSelectedEnvironmentAction()">Close Environment</button>
-        <button @click="deleteSelectedEnvironmentAction()">Delete Environment</button>
+        <button @click="closeSelectedEnvAction()">Close Environment</button>
+        <button @click="deleteSelectedEnvAction()">Delete Environment</button>
     </div>
 </template>
 
@@ -34,8 +34,8 @@ export default {
     methods: {
         ...mapMutations([]),
         ...mapActions([
-            "closeSelectedEnvironmentAction",
-            "deleteSelectedEnvironmentAction",
+            "closeSelectedEnvAction",
+            "deleteSelectedEnvAction",
         ]),
     },
 }

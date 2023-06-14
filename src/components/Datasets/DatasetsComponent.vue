@@ -17,7 +17,7 @@ import ModelDeleteComponent from "@/components/Models/ModelDeleteComponent"
 import ModelPredictionComponent from "@/components/Models/ModelPredictionComponent";
 
 export default {
-    name: "ModelsComponent",
+    name: "DatasetsComponent",
 
     components: {
         EnvironmentSpaceBar,

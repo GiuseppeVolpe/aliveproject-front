@@ -8,6 +8,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
 
   state: {
+    availableModelTypes: [],
+    availableBaseModels: [],
     userId: null,
     username: null,
     availableEnvs: [],
@@ -21,6 +23,12 @@ export default new Vuex.Store({
   },
 
   getters: {
+    getAvailableModelTypes: state => {
+      return state.availableModelTypes;
+    },
+    getAvailableBaseModels: state => {
+      return state.availableBaseModels;
+    },
     getUserId: state => {
       return state.userId;
     },
@@ -62,6 +70,12 @@ export default new Vuex.Store({
   },
 
   mutations: {
+    setAvailableModelTypes: (state, availableModelTypes) => {
+      state.availableModelTypes = availableModelTypes
+    },
+    setAvailableBaseModels: (state, availableBaseModels) => {
+      state.availableBaseModels = availableBaseModels
+    },
     setUserId: (state, userId) => {
       state.userId = userId
     },
@@ -119,7 +133,33 @@ export default new Vuex.Store({
       context.commit('pushAlert', alert)
       setTimeout(() => { context.commit('popAlert') }, 2000)
     },
-    
+
+    updateAvailableModelTypesAction(context) {
+
+      var url_to_available_model_types = process.env.VUE_APP_API_URL + "fetch_available_model_types"
+
+      axios.post(url_to_available_model_types, null).then(response => {
+        var responseData = response.data
+
+        if (responseData.code == 1) {
+          context.commit("setAvailableModelTypes", responseData.data)
+        }
+      })
+    },
+
+    updateAvailableBaseModelsAction(context) {
+
+      var url_to_available_base_models = process.env.VUE_APP_API_URL + "fetch_available_base_models"
+
+      axios.post(url_to_available_base_models, null).then(response => {
+        var responseData = response.data
+
+        if (responseData.code == 1) {
+          context.commit("setAvailableBaseModels", responseData.data)
+        }
+      })
+    },
+
     updateAvailableEnvsAction(context) {
 
       var url_to_available_envs = process.env.VUE_APP_API_URL + "get_user_envs"
@@ -137,7 +177,7 @@ export default new Vuex.Store({
       })
     },
 
-    closeSelectedEnvironmentAction(context) {
+    closeSelectedEnvAction(context) {
       context.commit("setSelectedEnvId", null)
       context.commit("setSelectedEnvName", null)
       router.push("/env_selection")
@@ -145,7 +185,7 @@ export default new Vuex.Store({
       context.dispatch("pushAlertAction", "Environment closed!")
     },
 
-    deleteSelectedEnvironmentAction(context) {
+    deleteSelectedEnvAction(context) {
 
       var url_to_delete_env = process.env.VUE_APP_API_URL + "delete_env"
 
@@ -174,6 +214,29 @@ export default new Vuex.Store({
       })
     },
 
+    updateAvailableModelsAction(context) {
+
+      if (context.getters.getUserId == null || context.getters.getSelectedEnvId == null) {
+        context.dispatch("pushAlertAction", "Lost your session data... try to login again.")
+        context.commit("resetState")
+        router.push("/")
+        return
+      }
+
+      var url_to_available_models = process.env.VUE_APP_API_URL + "get_env_models"
+
+      var payload = {
+        "session": context.getters.getSession
+      }
+
+      axios.post(url_to_available_models, payload).then(response => {
+        var responseData = response.data
+
+        if (responseData.code == 1) {
+          context.commit("setAvailableModels", responseData.data)
+        }
+      })
+    },
   },
 
   modules: {

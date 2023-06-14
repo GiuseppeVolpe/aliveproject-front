@@ -15,7 +15,7 @@ import { mapGetters, mapMutations, mapActions } from "vuex";
 import axios from 'axios';
 
 export default {
-    name: "ModelDeleteComponent",
+    name: "DatasetDeleteComponent",
 
     data() {
         return {
