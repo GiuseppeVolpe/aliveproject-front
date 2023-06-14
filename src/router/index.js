@@ -5,7 +5,7 @@ import LoginComponent from '@/components/LoginComponent'
 import SignupComponent from '@/components/SignupComponent'
 import EnvironmentSelectionComponent from '@/components/EnvironmentSelectionComponent'
 import EnvironmentSpace from '@/components/EnvironmentSpace'
-import ModelsComponent from '@/components/ModelsComponent'
+import ModelsComponent from '@/components/Models/ModelsComponent'
 
 Vue.use(VueRouter)
 

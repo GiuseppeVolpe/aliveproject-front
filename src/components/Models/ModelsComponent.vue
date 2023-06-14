@@ -2,11 +2,6 @@
     <div>
         <EnvironmentSpaceBar></EnvironmentSpaceBar>
         <div>
-            <input name="modelName" type="text" class="form-control mb-2" placeholder="New model name" maxlength="50"
-                minlength="8" v-model="newModelName" />
-            <b-button class="col-12 mb-3 buttonColor" @click="createNewModel(newModelName)">Create new model</b-button>
-        </div>
-        <div>
             <b-form-select v-model="modelToDelete" :options="getAvailableModels" class="form-control" size="lg">
                 <option value="null" disabled hidden>Select Model to delete</option>
             </b-form-select>
@@ -84,8 +79,8 @@ export default {
                 "session": this.getSession
             }
 
-            axios.post(url_to_available_models, payload).then(env_response => {
-                var envResponseData = env_response.data
+            axios.post(url_to_available_models, payload).then(response => {
+                var envResponseData = response.data
 
                 console.log(envResponseData)
 
