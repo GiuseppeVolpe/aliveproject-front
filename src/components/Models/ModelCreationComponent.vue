@@ -79,6 +79,9 @@
                     </b-button>
                 </div>
             </div>
+
+            <PulseLoader :loading="loading"></PulseLoader>
+
         </div>
     </div>
 </template>
@@ -87,8 +90,14 @@
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import axios from 'axios';
 
+import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
+
 export default {
     name: "ModelCreationComponent",
+
+    components: {
+        PulseLoader,
+    },
 
     data() {
         return {
@@ -101,6 +110,7 @@ export default {
             dropoutRate: null,
             optimizerLearningRate: null,
             publicModel: null,
+            loading: false,
         };
     },
 
@@ -177,6 +187,7 @@ export default {
                 return
             }
 
+            this.loading = true
             this.setWaitingForServerResponse(true)
 
             var url_to_create_model = process.env.VUE_APP_API_URL + "create_model"
@@ -196,23 +207,32 @@ export default {
 
             var createdModelName = this.newModelName
 
-            axios.post(url_to_create_model, payload).then(response => {
+            axios.post(url_to_create_model, payload)
+                .then(response => {
 
-                var responseData = response.data
+                    var responseData = response.data
 
-                switch (responseData.code) {
-                    case 1:
-                        this.pushAlertAction("New model created!")
-                        break
-                    case 1000:
-                    case 1001:
-                    case 1002:
-                        this.pushAlertAction("Couldn't create the new model called '" + createdModelName + "'...")
-                }
+                    switch (responseData.code) {
+                        case 1:
+                            this.pushAlertAction("New model created!")
+                            break
+                        case 1000:
+                        case 1001:
+                        case 1002:
+                            this.pushAlertAction("Couldn't create the new model called '" + createdModelName + "'...")
+                    }
 
-                this.updateAvailableModelsAction()
-                this.setWaitingForServerResponse(false)
-            })
+                    this.updateAvailableModelsAction()
+
+                    this.loading = false
+                    this.setWaitingForServerResponse(false)
+                })
+                .catch(function (error) {
+                    this.pushAlertAction(error.toJSON())
+                    
+                    this.loading = false
+                    this.setWaitingForServerResponse(false)
+                })
         },
     },
 }

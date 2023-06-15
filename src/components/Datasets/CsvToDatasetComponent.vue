@@ -23,6 +23,9 @@
         <b-button class="col-12 mb-3" @click="importCsvToDataset()" :disabled="!importButtonIsEnabled">
             Import
         </b-button>
+
+        <PulseLoader :loading="loading"></PulseLoader>
+
     </div>
 </template>
 
@@ -30,11 +33,13 @@
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import axios from 'axios';
 
+import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
+
 export default {
     name: "CsvToDatasetComponent",
 
     components: {
-
+        PulseLoader,
     },
 
     data() {
@@ -45,6 +50,7 @@ export default {
             sentenceIdxColumnName: "sentence_idx",
             wordColumnName: "word",
             selectedExampleCategory: null,
+            loading: false,
         };
     },
 
@@ -63,7 +69,7 @@ export default {
         ]),
 
         importButtonIsEnabled() {
-            
+
             var fieldsAreSet = this.selectedDataset != null && this.selectedExampleCategory != null && this.datasetCsv != null
 
             return fieldsAreSet && !this.isWaitingForServerResponse
@@ -97,6 +103,7 @@ export default {
                 return
             }
 
+            this.loading = true
             this.setWaitingForServerResponse(true)
 
             var url_to_import_to_dataset = process.env.VUE_APP_API_URL + "import_csv_to_dataset"
@@ -104,7 +111,7 @@ export default {
             var formData = new FormData();
             formData.append("user_id", this.getSession.user_id)
             formData.append("env_id", this.getSession.env_id)
-            formData.append("dataset_name",  this.selectedDataset.name)
+            formData.append("dataset_name", this.selectedDataset.name)
             formData.append("dataset_csv", new Blob(this.datasetCsv), "blob")
             formData.append("text_column_name", this.textColumnName)
             formData.append("sentence_idx_column_name", this.sentenceIdxColumnName)
@@ -118,7 +125,7 @@ export default {
             };
 
             axios.post(url_to_import_to_dataset, formData, customHeader).then(response => {
-                
+
                 var responseData = response.data
 
                 switch (responseData.code) {
@@ -131,6 +138,13 @@ export default {
                         this.pushAlertAction("Couldn't import the examples to the dataset...")
                 }
 
+                this.loading = false
+                this.setWaitingForServerResponse(false)
+            })
+            .catch(function (error) {
+                this.pushAlertAction(error.toJSON())
+
+                this.loading = false
                 this.setWaitingForServerResponse(false)
             })
         }

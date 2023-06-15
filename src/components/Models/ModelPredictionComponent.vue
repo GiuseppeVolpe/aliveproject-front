@@ -1,5 +1,6 @@
 <template>
     <div>
+
         <div>
             <b-form-select v-model="modelForPrediction" :options="getAvailableModels" class="form-control" size="lg">
                 <option value="null" disabled hidden>Select Model to make a prediction</option>
@@ -11,6 +12,9 @@
             <b-button class="col-12 mb-3" @click="getPrediction(modelForPrediction, sentenceToPredict)"
                 :disabled="!predictButtonIsEnabled">Predict</b-button>
         </div>
+
+        <PulseLoader :loading="loading"></PulseLoader>
+
     </div>
 </template>
 
@@ -18,19 +22,26 @@
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import axios from 'axios';
 
+import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
+
 export default {
     name: "ModelPredictionComponent",
+
+    components: {
+        PulseLoader,
+    },
 
     data() {
         return {
             modelForPrediction: null,
             sentenceToPredict: null,
             prediction: null,
+            loading: false,
         };
     },
 
     mounted() {
-        
+
     },
 
     computed: {
@@ -62,6 +73,7 @@ export default {
                 return
             }
 
+            this.loading = true
             this.setWaitingForServerResponse(true)
 
             var url_to_predict = process.env.VUE_APP_API_URL + "predict"
@@ -85,6 +97,13 @@ export default {
                         this.pushAlertAction("Something went wrong when trying to predict...")
                 }
 
+                this.loading = false
+                this.setWaitingForServerResponse(false)
+            })
+            .catch(function (error) {
+                this.pushAlertAction(error.toJSON())
+
+                this.loading = false
                 this.setWaitingForServerResponse(false)
             })
         },

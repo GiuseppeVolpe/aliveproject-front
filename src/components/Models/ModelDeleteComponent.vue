@@ -105,6 +105,12 @@ export default {
                 this.updateAvailableModelsAction()
                 this.setWaitingForServerResponse(false)
             })
+            .catch(function (error) {
+                this.pushAlertAction(error.toJSON())
+
+                this.loading = false
+                this.setWaitingForServerResponse(false)
+            })
         },
     },
 }

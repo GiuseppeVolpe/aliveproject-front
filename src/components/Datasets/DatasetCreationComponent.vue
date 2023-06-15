@@ -126,6 +126,11 @@ export default {
                 this.updateAvailableDatasetsAction()
                 this.setWaitingForServerResponse(false)
             })
+            .catch(function (error) {
+                this.pushAlertAction(error.toJSON())
+                
+                this.setWaitingForServerResponse(false)
+            })
         },
     },
 }
