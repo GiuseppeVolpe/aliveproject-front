@@ -1,9 +1,8 @@
 <template>
     <div>
         <EnvironmentSpaceBar></EnvironmentSpaceBar>
-        <ModelCreationComponent></ModelCreationComponent>
-        <ModelDeleteComponent></ModelDeleteComponent>
-        <ModelPredictionComponent></ModelPredictionComponent>
+        <FunctionalitySelectorComponent :availableComponents="this.desiredComponents" >
+        </FunctionalitySelectorComponent>
     </div>
 </template>
 
@@ -12,28 +11,24 @@ import { mapGetters, mapMutations, mapActions } from "vuex";
 //import axios from 'axios';
 
 import EnvironmentSpaceBar from '@/components/EnvironmentSpaceBar'
-import ModelCreationComponent from "@/components/Models/ModelCreationComponent"
-import ModelDeleteComponent from "@/components/Models/ModelDeleteComponent"
-import ModelPredictionComponent from "@/components/Models/ModelPredictionComponent";
+import FunctionalitySelectorComponent from "../FunctionalitySelectorComponent";
 
 export default {
     name: "ModelsComponent",
 
     components: {
         EnvironmentSpaceBar,
-        ModelCreationComponent,
-        ModelDeleteComponent,
-        ModelPredictionComponent,
+        FunctionalitySelectorComponent,
     },
 
     data() {
         return {
-            
+            desiredComponents: ["ModelCreationComponent", "ModelDeleteComponent", "ModelPredictionComponent"],
         };
     },
 
     mounted() {
-        
+
     },
 
     computed: {
