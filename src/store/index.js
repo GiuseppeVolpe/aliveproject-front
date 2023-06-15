@@ -19,6 +19,7 @@ export default new Vuex.Store({
     availableModels: [],
     availableDatasets: [],
     trainingSessions: [],
+    trainingInProgress: false,
     generalAlerts: [],
     waitingForServerResponse: false,
   },
@@ -56,6 +57,9 @@ export default new Vuex.Store({
     },
     getTrainingSessions: state => {
       return state.trainingSessions;
+    },
+    getTrainingInProgress: state => {
+      return state.trainingInProgress;
     },
     getGeneralAlerts: state => {
       return state.generalAlerts;
@@ -106,6 +110,9 @@ export default new Vuex.Store({
     },
     setTrainingSessions: (state, trainingSessions) => {
       state.trainingSessions = trainingSessions
+    },
+    setTrainingInProgress: (state, trainingInProgress) => {
+      state.trainingInProgress = trainingInProgress
     },
     pushAlert: (state, alert) => {
 
@@ -307,7 +314,7 @@ export default new Vuex.Store({
     },
 
     async updateEnvironmentDataAction(context) {
-      
+
       if (context.getters.getSelectedEnvId == null) {
         return
       }
@@ -328,7 +335,7 @@ export default new Vuex.Store({
     },
 
     async loadEnvironmentSpaceAction(context) {
-      
+
       if (context.getters.getSelectedEnvId == null) {
         return
       }
@@ -348,6 +355,9 @@ export default new Vuex.Store({
       })
     },
 
+    waitForTrainingToFinishAction() {
+
+    },
   },
 
   modules: {

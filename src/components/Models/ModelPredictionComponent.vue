@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapMutations, mapActions } from "vuex";
 import axios from 'axios';
 
 export default {
@@ -52,6 +52,9 @@ export default {
         ...mapMutations([
             "setWaitingForServerResponse",
         ]),
+        ...mapActions([
+            "pushAlertAction",
+        ]),
 
         getPrediction(modelForPrediction, sentenceToPredict) {
 
@@ -72,7 +75,15 @@ export default {
             axios.post(url_to_predict, payload).then(response => {
                 var responseData = response.data
 
-                this.prediction = responseData.data.prediction
+                switch (responseData.code) {
+                    case 1:
+                        this.prediction = responseData.data.prediction
+                        break
+                    case 1000:
+                    case 1001:
+                    case 1002:
+                        this.pushAlertAction("Something went wrong when trying to predict...")
+                }
 
                 this.setWaitingForServerResponse(false)
             })

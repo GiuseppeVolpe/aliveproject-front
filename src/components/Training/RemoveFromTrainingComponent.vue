@@ -80,9 +80,7 @@ export default {
             axios.post(url_to_remove_training_session, payload).then(response => {
 
                 var responseData = response.data
-
-                console.log(responseData)
-
+                
                 switch (responseData.code) {
                     case 1:
                         this.pushAlertAction("Removed training session from queue!")
