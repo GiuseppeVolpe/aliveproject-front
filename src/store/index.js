@@ -141,11 +141,11 @@ export default new Vuex.Store({
       setTimeout(() => { context.commit('popAlert') }, 2000)
     },
 
-    updateAvailableModelTypesAction(context) {
+    async updateAvailableModelTypesAction(context) {
 
       var url_to_available_model_types = process.env.VUE_APP_API_URL + "fetch_available_model_types"
 
-      axios.post(url_to_available_model_types, null).then(response => {
+      return axios.post(url_to_available_model_types, null).then(response => {
         var responseData = response.data
 
         if (responseData.code == 1) {
@@ -154,11 +154,11 @@ export default new Vuex.Store({
       })
     },
 
-    updateAvailableBaseModelsAction(context) {
+    async updateAvailableBaseModelsAction(context) {
 
       var url_to_available_base_models = process.env.VUE_APP_API_URL + "fetch_available_base_models"
 
-      axios.post(url_to_available_base_models, null).then(response => {
+      return axios.post(url_to_available_base_models, null).then(response => {
         var responseData = response.data
 
         if (responseData.code == 1) {
@@ -167,11 +167,11 @@ export default new Vuex.Store({
       })
     },
 
-    updateAvailableExampleCategoriesAction(context) {
+    async updateAvailableExampleCategoriesAction(context) {
 
       var url_to_available_example_categories = process.env.VUE_APP_API_URL + "fetch_available_example_categories"
 
-      axios.post(url_to_available_example_categories, null).then(response => {
+      return axios.post(url_to_available_example_categories, null).then(response => {
         var responseData = response.data
 
         if (responseData.code == 1) {
@@ -180,7 +180,7 @@ export default new Vuex.Store({
       })
     },
 
-    updateAvailableEnvsAction(context) {
+    async updateAvailableEnvsAction(context) {
 
       var url_to_available_envs = process.env.VUE_APP_API_URL + "get_user_envs"
 
@@ -188,7 +188,7 @@ export default new Vuex.Store({
         "session": context.getters.getSession
       }
 
-      axios.post(url_to_available_envs, payload).then(response => {
+      return axios.post(url_to_available_envs, payload).then(response => {
         var responseData = response.data
 
         if (responseData.code == 1) {
@@ -234,7 +234,7 @@ export default new Vuex.Store({
       })
     },
 
-    updateAvailableModelsAction(context) {
+    async updateAvailableModelsAction(context) {
 
       if (context.getters.getUserId == null || context.getters.getSelectedEnvId == null) {
         context.dispatch("pushAlertAction", "Lost your session data... try to login again.")
@@ -249,7 +249,7 @@ export default new Vuex.Store({
         "session": context.getters.getSession
       }
 
-      axios.post(url_to_available_models, payload).then(response => {
+      return axios.post(url_to_available_models, payload).then(response => {
         var responseData = response.data
 
         if (responseData.code == 1) {
@@ -258,7 +258,7 @@ export default new Vuex.Store({
       })
     },
 
-    updateAvailableDatasetsAction(context) {
+    async updateAvailableDatasetsAction(context) {
 
       if (context.getters.getUserId == null || context.getters.getSelectedEnvId == null) {
         context.dispatch("pushAlertAction", "Lost your session data... try to login again.")
@@ -273,7 +273,7 @@ export default new Vuex.Store({
         "session": context.getters.getSession
       }
 
-      axios.post(url_to_available_datasets, payload).then(response => {
+      return axios.post(url_to_available_datasets, payload).then(response => {
         var responseData = response.data
 
         if (responseData.code == 1) {
@@ -282,7 +282,7 @@ export default new Vuex.Store({
       })
     },
 
-    updateTrainingSessionsAction(context) {
+    async updateTrainingSessionsAction(context) {
 
       if (context.getters.getUserId == null || context.getters.getSelectedEnvId == null) {
         context.dispatch("pushAlertAction", "Lost your session data... try to login again.")
@@ -297,7 +297,7 @@ export default new Vuex.Store({
         "session": context.getters.getSession
       }
 
-      axios.post(url_to_training_sessions, payload).then(response => {
+      return axios.post(url_to_training_sessions, payload).then(response => {
         var responseData = response.data
 
         if (responseData.code == 1) {
@@ -305,6 +305,49 @@ export default new Vuex.Store({
         }
       })
     },
+
+    async updateEnvironmentDataAction(context) {
+      
+      if (context.getters.getSelectedEnvId == null) {
+        return
+      }
+
+      context.dispatch("updateAvailableModelTypesAction").then(() => {
+        context.dispatch("updateAvailableBaseModelsAction").then(() => {
+          context.dispatch("updateAvailableExampleCategoriesAction").then(() => {
+            context.dispatch("updateAvailableModelsAction").then(() => {
+              context.dispatch("updateAvailableDatasetsAction").then(() => {
+                context.dispatch("updateTrainingSessionsAction").then(() => {
+                  console.log("Loaded environment data!")
+                })
+              })
+            })
+          })
+        })
+      })
+    },
+
+    async loadEnvironmentSpaceAction(context) {
+      
+      if (context.getters.getSelectedEnvId == null) {
+        return
+      }
+
+      context.dispatch("updateAvailableModelTypesAction").then(() => {
+        context.dispatch("updateAvailableBaseModelsAction").then(() => {
+          context.dispatch("updateAvailableExampleCategoriesAction").then(() => {
+            context.dispatch("updateAvailableModelsAction").then(() => {
+              context.dispatch("updateAvailableDatasetsAction").then(() => {
+                context.dispatch("updateTrainingSessionsAction").then(() => {
+                  router.push("/models")
+                })
+              })
+            })
+          })
+        })
+      })
+    },
+
   },
 
   modules: {

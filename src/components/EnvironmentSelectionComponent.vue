@@ -127,7 +127,8 @@ export default {
     ]),
     ...mapActions([
       "pushAlertAction",
-      "updateAvailableEnvsAction"
+      "updateAvailableEnvsAction",
+      "loadEnvironmentSpaceAction",
     ]),
 
     selectEnvironment() {
@@ -141,7 +142,7 @@ export default {
 
       this.setSelectedEnvId(this.selectedEnv.id)
       this.setSelectedEnvName(this.selectedEnv.name)
-      this.$router.push("/models")
+      this.loadEnvironmentSpaceAction()
     },
 
     createNewEnvironment() {

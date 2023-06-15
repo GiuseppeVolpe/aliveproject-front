@@ -33,9 +33,7 @@ export default {
     },
 
     mounted() {
-        this.updateAvailableModelTypesAction()
-        this.updateAvailableExampleCategoriesAction()
-        this.updateAvailableDatasetsAction()
+        
     },
 
     computed: {
@@ -44,11 +42,7 @@ export default {
 
     methods: {
         ...mapMutations([]),
-        ...mapActions([
-            "updateAvailableModelTypesAction",
-            "updateAvailableExampleCategoriesAction",
-            "updateAvailableDatasetsAction",
-        ]),
+        ...mapActions([]),
     },
 }
 

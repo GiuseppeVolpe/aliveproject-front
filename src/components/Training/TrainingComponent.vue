@@ -29,9 +29,7 @@ export default {
     },
 
     mounted() {
-        //this.updateAvailableModelsAction()
-        //this.updateAvailableDatasetsAction()
-        this.updateTrainingSessionsAction()
+        
     },
 
     computed: {
@@ -40,11 +38,7 @@ export default {
 
     methods: {
         ...mapMutations([]),
-        ...mapActions([
-            "updateAvailableModelsAction",
-            "updateAvailableDatasetsAction",
-            "updateTrainingSessionsAction",
-        ]),
+        ...mapActions([]),
     },
 }
 
