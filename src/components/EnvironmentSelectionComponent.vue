@@ -55,6 +55,8 @@
           </div>
         </div>
 
+        <PulseLoader :loading="loading"></PulseLoader>
+
         <AlertComponent :alerts="alerts"></AlertComponent>
 
       </div>
@@ -67,12 +69,14 @@ import { mapGetters, mapMutations, mapActions } from "vuex";
 import axios from 'axios';
 
 import AlertComponent from "@/components/AlertComponent"
+import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 
 export default {
   name: "EnvironmentSelectionComponent",
 
   components: {
-    AlertComponent
+    AlertComponent,
+    PulseLoader,
   },
 
   data() {
@@ -80,12 +84,14 @@ export default {
       selectedEnv: null,
       newEnvName: null,
       alerts: [],
+      loading: false,
     }
   },
 
   mounted() {
     this.updateAvailableEnvsAction()
     this.alerts = []
+    this.loading = false
   },
 
   computed: {
@@ -142,6 +148,7 @@ export default {
 
       this.setSelectedEnvId(this.selectedEnv.id)
       this.setSelectedEnvName(this.selectedEnv.name)
+      this.loading = true
       this.loadEnvironmentSpaceAction()
     },
 
