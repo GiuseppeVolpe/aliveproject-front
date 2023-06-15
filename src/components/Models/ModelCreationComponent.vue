@@ -1,46 +1,83 @@
 <template>
-    <div>
-        <div class="row">
-            <div class="col-8 offset-2 mt-3">
+    <div class="row">
+        <div class="col-12 ml-2 mr-2 pl-2 pr-2">
+            <div class="row mt-3">
+                <div class="col-4">
+                    <small class="form-text text-muted">Model Name</small>
+                    <input type="text" name="modelName" class="form-control mb-2" placeholder="New model name" minlength="8"
+                        maxlength="50" v-model="newModelName" />
+                </div>
 
-                <input type="text" name="modelName" class="form-control mb-2" placeholder="New model name" minlength="8"
-                    maxlength="50" v-model="newModelName" />
+                <div class="col-4">
+                    <small class="form-text text-muted">Model Type</small>
+                    <b-form-select v-model="selectedModelType" :options="getAvailableModelTypes" class="form-control"
+                        size="lg">
+                        <option value="null" disabled hidden>Select model type</option>
+                    </b-form-select>
+                </div>
+                <div class="col-4">
+                    <small class="form-text text-muted">Finetunable</small>
+                    <b-checkbox switch v-model="finetunable" class="mt-2" />
 
-                <b-form-select v-model="selectedModelType" :options="getAvailableModelTypes" class="form-control" size="lg">
-                    <option value="null" disabled hidden>Select model type</option>
-                </b-form-select>
+                </div>
 
-                <input type="checkbox" name="finetunable" v-model="finetunable" />
-                <div>Finetunable: {{ finetunable }}</div>
+            </div>
 
-                <b-form-select v-model="selectedBaseModel" :options="getAvailableBaseModels" class="form-control" size="lg">
-                    <option value="null" disabled hidden>Select base model</option>
-                </b-form-select>
+            <div class="row">
+                <div class="col-4">
 
-                <input type="number" name="outputShape" min="1" class="form-control mb-2" placeholder="Output shape"
-                    v-model="outputShape" />
+                    <small class="form-text text-muted">Base Model</small>
+                    <b-form-select v-model="selectedBaseModel" :options="getAvailableBaseModels" class="form-control"
+                        size="lg">
+                        <option value="null" disabled hidden>Select base model</option>
+                    </b-form-select>
+                </div>
 
-                <b-form-checkbox switch name="encoderTrainable" v-model="encoderTrainable">
-                    Encoder is trainable fff {{ encoderTrainable }}
-                </b-form-checkbox>
+                <div class="col-4">
+                    <small class="form-text text-muted">Output shape</small>
+                    <input type="number" name="outputShape" min="1" class="form-control mb-2" placeholder="Output shape"
+                        v-model="outputShape" />
+                </div>
 
-                <!--<input type="checkbox" name="encoderTrainable" v-model="encoderTrainable" />
-        <div>Encoder is trainable: {{ encoderTrainable }}</div>-->
+                <div class="col-4">
+                    <small class="form-text text-muted">Encoder is trainable</small>
+                    <b-form-checkbox switch name="encoderTrainable" v-model="encoderTrainable" class="mt-2">
+                    </b-form-checkbox>
+                </div>
 
-                <input type="number" name="dropoutRate" min="0.1" step="0.1" class="form-control mb-2"
-                    placeholder="Dropout rate" v-model="dropoutRate" />
+            </div>
 
-                <input type="number" name="optimizerLR" min="0.000005" step="0.000005" class="form-control mb-2"
-                    placeholder="Optimizer learning rate" v-model="optimizerLearningRate" />
+            <div class="row">
+                <div class="col-4">
+                    <small class="form-text text-muted">Dropout rate</small>
+                    <input type="number" name="dropoutRate" min="0.1" step="0.1" class="form-control mb-2"
+                        placeholder="Dropout rate" v-model="dropoutRate" />
 
-                <input type="checkbox" name="public" v-model="publicModel" />
-                <div>Public: {{ publicModel }}</div>
+                </div>
+                <div class="col-4">
+                    <small class="form-text text-muted">Optimizer learning rate</small>
+                    <input type="number" name="optimizerLR" min="0.000005" step="0.000005" class="form-control mb-2"
+                        placeholder="Optimizer learning rate" v-model="optimizerLearningRate" />
 
-                <b-button class="col-12 mb-3" @click="createNewModel(newModelName)" :disabled="!createButtonIsEnabled">
-                    Create new model
-                </b-button>
+                </div>
+            </div>
 
-                {{ isWaitingForServerResponse }}
+            <div class="row">
+
+                <div class="col-4 offset-4">
+                    <small class="form-text text-muted">Public</small>
+                    <b-form-checkbox switch name="public" v-model="publicModel" class="mt-2">
+                    </b-form-checkbox>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+
+                <div class="col-4 offset-4">
+                    <b-button class="col-12 mb-3" @click="createNewModel(newModelName)" :disabled="!createButtonIsEnabled">
+                        Create new model
+                    </b-button>
+                </div>
             </div>
         </div>
     </div>

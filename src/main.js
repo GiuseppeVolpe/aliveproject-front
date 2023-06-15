@@ -4,6 +4,8 @@ import router from '@/router'
 import store from '@/store/index'
 import axios from 'axios'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
+import { FormCheckboxPlugin } from 'bootstrap-vue'
+Vue.use(FormCheckboxPlugin)
 
 // Import Bootstrap and BootstrapVue CSS files (order is important)
 import 'bootstrap/dist/css/bootstrap.css';

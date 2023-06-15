@@ -1,11 +1,22 @@
 <template>
-    <div>
-        <div>
-            <b-form-select v-model="modelToDelete" :options="getAvailableModels" class="form-control" size="lg">
-                <option value="null" disabled hidden>Select Model to delete</option>
-            </b-form-select>
-            <b-button class="col-12 mb-3" @click="deleteModel(modelToDelete)"
-                :disabled="!deleteButtonIsEnabled">Delete model</b-button>
+    <div class="row">
+        <div class="col-12 ml-2 mr-2 pl-2 pr-2">
+            <div class="row mt-3">
+                <div class="col-4 offset-4">
+
+                    <small class="form-text text-muted">Model To Delete</small>
+                    <b-form-select v-model="modelToDelete" :options="getAvailableModels" class="form-control" size="lg">
+                        <option value="null" disabled hidden>Select Model to delete</option>
+                    </b-form-select>
+                </div>
+            </div>
+            <div class="row mt-3">
+
+                <div class="col-4 offset-4">
+                    <b-button class="col-12 mb-3" @click="deleteModel(modelToDelete)"
+                        :disabled="!deleteButtonIsEnabled">Delete model</b-button>
+                </div>
+            </div>
         </div>
     </div>
 </template>
