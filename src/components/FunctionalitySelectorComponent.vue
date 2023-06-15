@@ -59,10 +59,13 @@
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import ModelCreationComponent from "@/components/Models/ModelCreationComponent"
 import ModelDeleteComponent from "@/components/Models/ModelDeleteComponent"
-import ModelPredictionComponent from "@/components/Models/ModelPredictionComponent";
+import ModelPredictionComponent from "@/components/Models/ModelPredictionComponent"
 import DatasetCreationComponent from "@/components/Datasets/DatasetCreationComponent"
 import DatasetDeleteComponent from "@/components/Datasets/DatasetDeleteComponent"
-import CsvToDatasetComponent from "@/components/Datasets/CsvToDatasetComponent";
+import CsvToDatasetComponent from "@/components/Datasets/CsvToDatasetComponent"
+import AddToTrainingComponent from "@/components/Training/AddToTrainingComponent"
+import RemoveFromTrainingComponent from "@/components/Training/RemoveFromTrainingComponent"
+import StartTrainComponent from "@/components/Training/StartTrainComponent"
 
 export default {
     name: "FunctionalitySelectorComponent",
@@ -74,6 +77,9 @@ export default {
         DatasetCreationComponent,
         DatasetDeleteComponent,
         CsvToDatasetComponent,
+        AddToTrainingComponent,
+        RemoveFromTrainingComponent,
+        StartTrainComponent,
     },
 
     data() {
