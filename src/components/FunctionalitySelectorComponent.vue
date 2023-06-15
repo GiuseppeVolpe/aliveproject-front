@@ -4,18 +4,20 @@
             <div class="col-8 offset-2">
                 <div class="container-fluid">
                     <div class="shadow rounded border border-primary">
+
                         <div class="row mt-0">
                             <div class="col-12">
                                 <b-navbar toggleable="lg" type="dark" variant="info">
+
                                     <b-navbar-brand>
                                         <b-collapse id="nav-collapse" is-nav>
                                             <b-navbar-nav>
-                                                <b-dropdown dropright text="Go to" class="m-md-2">
+                                                <b-dropdown dropright :text="dropdownText" class="m-md-2">
 
                                                     <div v-for="(availableComponent, index) in availableComponents"
                                                         :key="index">
-                                                        <b-dropdown-item @click="setComponent(index)"> {{ availableComponent
-                                                        }}
+                                                        <b-dropdown-item @click="setComponent(index)">
+                                                            {{ availableComponent }}
                                                         </b-dropdown-item>
                                                     </div>
 
@@ -30,12 +32,13 @@
                                     <b-collapse id="nav-collapse" is-nav>
                                         <div class="col-md-12 mt-0 mb-0 pt-0 pb-0">
                                             <div class="row mt-0 mb-0 pt-0 pb-0">
-                                                <h3 class="text-light text-center font-weight-bold col-12">Models {{
-                                                    selectedComponent }}
+                                                <h3 class="text-light text-center font-weight-bold col-12">
+                                                    {{ title }}
                                                 </h3>
                                             </div>
                                         </div>
                                     </b-collapse>
+
                                 </b-navbar>
                             </div>
                         </div>
@@ -47,9 +50,9 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -89,7 +92,7 @@ export default {
     },
 
     mounted() {
-
+        this.selectedComponent = 0
     },
 
     computed: {
@@ -107,6 +110,8 @@ export default {
 
     props: {
         availableComponents: [],
+        title: String,
+        dropdownText: String,
     },
 
 }

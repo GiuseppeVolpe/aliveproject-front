@@ -1,7 +1,7 @@
 <template>
     <div>
         <EnvironmentSpaceBar></EnvironmentSpaceBar>
-        <FunctionalitySelectorComponent :availableComponents="this.desiredComponents" >
+        <FunctionalitySelectorComponent :availableComponents="this.desiredComponents" title="Datasets" dropdownText="Go to">
         </FunctionalitySelectorComponent>
     </div>
 </template>
@@ -28,7 +28,7 @@ export default {
     },
 
     mounted() {
-        
+
     },
 
     computed: {

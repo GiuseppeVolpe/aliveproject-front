@@ -1,7 +1,7 @@
 <template>
     <div>
         <EnvironmentSpaceBar></EnvironmentSpaceBar>
-        <FunctionalitySelectorComponent :availableComponents="this.desiredComponents" >
+        <FunctionalitySelectorComponent :availableComponents="this.desiredComponents" title="Models" dropdownText="Go to">
         </FunctionalitySelectorComponent>
     </div>
 </template>
