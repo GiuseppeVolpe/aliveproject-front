@@ -1,25 +1,55 @@
 <template>
-    <div>
+    <div class="row">
+        <div class="col-12 ml-2 mr-2 pl-2 pr-2">
 
-        <b-form-select v-model="selectedModel" :options="getAvailableModels" class="form-control" size="lg">
-            <option value="null" disabled hidden>Select model</option>
-        </b-form-select>
+            <div class="row mt-3">
 
-        <b-form-select v-model="selectedDataset" :options="getLegalDatasets" class="form-control" size="lg">
-            <option value="null" disabled hidden>Select dataset</option>
-        </b-form-select>
+                <div class="col-4">
+                    <small class="form-text text-muted">Select Model</small>
+                    <b-form-select v-model="selectedModel" :options="getAvailableModels" class="form-control" size="lg">
+                        <option value="null" disabled hidden>Select model</option>
+                    </b-form-select>
 
-        <input type="text" name="target" class="form-control mb-2" placeholder="Target" maxlength="50" v-model="target" />
+                </div>
 
-        <input type="number" name="numOfEpochs" min="1" class="form-control mb-2" placeholder="Number of epochs"
-            v-model="numOfEpochs" />
+                <div class="col-4">
+                    <small class="form-text text-muted">Select Dataset</small>
+                    <b-form-select v-model="selectedDataset" :options="getLegalDatasets" class="form-control" size="lg">
+                        <option value="null" disabled hidden>Select dataset</option>
+                    </b-form-select>
+                </div>
 
-        <input type="number" name="batchSize" min="1" class="form-control mb-2" placeholder="Batch size"
-            v-model="batchSize" />
+                <div class="col-4">
+                    <small class="form-text text-muted">Target</small>
+                    <input type="text" name="target" class="form-control mb-2" placeholder="Target" maxlength="100"
+                        v-model="target" />
+                </div>
 
-        <b-button class="col-12 mb-3" @click="addToTrainQueue()" :disabled="!addButtonIsEnabled">
-            Add to training queue
-        </b-button>
+            </div>
+
+            <div class="row mt-3">
+
+                <div class="col-6">
+                    <small class="form-text text-muted">Number of epochs</small>
+                    <input type="number" name="numOfEpochs" min="1" class="form-control mb-2" placeholder="Number of epochs"
+                        v-model="numOfEpochs" />
+                </div>
+
+                <div class="col-6">
+                    <small class="form-text text-muted">Batch size</small>
+                    <input type="number" name="batchSize" min="1" class="form-control mb-2" placeholder="Batch size"
+                        v-model="batchSize" />
+                </div>
+
+            </div>
+
+            <div class="row mt-3">
+                <b-button class="col-4 mb-3 offset-4" @click="addToTrainQueue()" :disabled="!addButtonIsEnabled">
+                    Add to training queue
+                </b-button>
+            </div>
+
+        </div>
     </div>
 </template>
 
@@ -137,11 +167,11 @@ export default {
                 this.updateTrainQueueAction()
                 this.setWaitingForServerResponse(false)
             })
-            .catch(function (error) {
-                this.pushAlertAction(error.toJSON())
+                .catch(function (error) {
+                    this.pushAlertAction(error.toJSON())
 
-                this.setWaitingForServerResponse(false)
-            })
+                    this.setWaitingForServerResponse(false)
+                })
         },
     },
 }

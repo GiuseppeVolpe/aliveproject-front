@@ -1,11 +1,19 @@
 <template>
     <div>
-        <div>
-            <b-form-select v-model="trainingSessionToRemove" :options="getTrainQueue" class="form-control" size="lg">
-                <option value="null" disabled hidden>Select training session to remove</option>
-            </b-form-select>
-            <b-button class="col-12 mb-3" @click="removeTrainingSession()"
-                :disabled="!removeButtonIsEnabled">Remove session</b-button>
+        <div class="row">
+            <div class="col-8 offset-2 mt-3">
+                <small class="form-text text-muted">Training session to remove</small>
+                <b-form-select v-model="trainingSessionToRemove" :options="getTrainQueue" class="form-control" size="lg">
+                    <option value="null" disabled hidden>Select training session to remove</option>
+                </b-form-select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-4 offset-4 mt-3">
+                <b-button class="col-12 mb-3" @click="removeTrainingSession()" :disabled="!removeButtonIsEnabled">Remove
+                    session</b-button>
+            </div>
         </div>
     </div>
 </template>
@@ -80,7 +88,7 @@ export default {
             axios.post(url_to_remove_training_session, payload).then(response => {
 
                 var responseData = response.data
-                
+
                 switch (responseData.code) {
                     case 1:
                         this.pushAlertAction("Removed training session from queue!")
@@ -94,11 +102,11 @@ export default {
                 this.updateTrainQueueAction()
                 this.setWaitingForServerResponse(false)
             })
-            .catch(function (error) {
-                this.pushAlertAction(error.toJSON())
+                .catch(function (error) {
+                    this.pushAlertAction(error.toJSON())
 
-                this.setWaitingForServerResponse(false)
-            })
+                    this.setWaitingForServerResponse(false)
+                })
         },
     },
 }

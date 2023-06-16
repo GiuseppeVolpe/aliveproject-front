@@ -1,15 +1,27 @@
 <template>
     <div>
-        <div>
-            <li v-for="(trainingSession, index) in getTrainQueue" :key="index">
-                {{ trainingSession.text }} , {{ trainingSession.value.num_of_epochs }} epochs
-            </li>
+        <div class="row mt-3 mb-3">
 
-            <b-button class="col-12 mb-3" @click="startTrain()" :disabled="!startButtonIsEnabled">Start training</b-button>
+            <div class="col-10">
+                <b-list-group>
+                    <b-list-group-item v-for="(trainingSession, index) in getTrainQueue" :key="index">
+                        <b-badge pill variant="primary">{{ index }}</b-badge>
+                        {{ trainingSession.text }}, {{ trainingSession.value.num_of_epochs }} epochs
+                    </b-list-group-item>
+                </b-list-group>
+            </div>
 
-            <b-button class="col-12 mb-3" @click="stopTrain()" :disabled="!stopButtonIsEnabled">Stop training</b-button>
+            <div class="col-2">
 
-            <TrainProgressCheckComponent></TrainProgressCheckComponent>
+                <div class="row">
+                    <b-button @click="startTrain()" :disabled="!startButtonIsEnabled">Start training</b-button>
+                </div>
+
+                <div class="row mt-2">
+                    <b-button @click="stopTrain()" :disabled="!stopButtonIsEnabled">Stop training</b-button>
+                </div>
+
+            </div>
 
         </div>
     </div>
@@ -19,13 +31,11 @@
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import axios from 'axios';
 
-import TrainProgressCheckComponent from "./TrainProgressCheckComponent";
-
 export default {
     name: "StartTrainComponent",
 
     components: {
-        TrainProgressCheckComponent,
+
     },
 
     data() {

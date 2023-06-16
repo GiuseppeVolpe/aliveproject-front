@@ -1,20 +1,43 @@
 <template>
-    <div>
+    <div class="row">
+        <div class="col-12 ml-2 mr-2 pl-2 pr-2">
 
-        <div>
-            <b-form-select v-model="modelForPrediction" :options="getAvailableModels" class="form-control" size="lg">
-                <option value="null" disabled hidden>Select Model to make a prediction</option>
-            </b-form-select>
-            <input type="text" name="sentenceToPredict" class="form-control mb-2" placeholder="Sentence to predict"
-                maxlength="500" v-model="sentenceToPredict" />
-            <input type="text" name="prediction" class="form-control mb-2" placeholder="Prediction" maxlength="500"
-                v-model="prediction" readonly />
-            <b-button class="col-12 mb-3" @click="getPrediction(modelForPrediction, sentenceToPredict)"
-                :disabled="!predictButtonIsEnabled">Predict</b-button>
+            <div class="row mt-3">
+                <div class="col-4 offset-4">
+                    <small class="form-text text-muted">Select Model</small>
+                    <b-form-select v-model="modelForPrediction" :options="getAvailableModels" class="form-control"
+                        size="lg">
+                        <option value="null" disabled hidden>Select Model to make a prediction</option>
+                    </b-form-select>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+
+                <div class="col-5 offset-1">
+                    <small class="form-text text-muted">Sentence to predict</small>
+                    <textarea type="text" name="sentenceToPredict" class="form-control mb-2"
+                        placeholder="Sentence to predict" maxlength="500" v-model="sentenceToPredict" />
+                </div>
+
+                <div class="col-5">
+                    <small class="form-text text-muted">Prediction</small>
+                    <textarea type="text" name="prediction" class="form-control mb-2" placeholder="Prediction"
+                        maxlength="500" v-model="prediction" readonly />
+                </div>
+                
+            </div>
+
+            <div class="row mt-3">
+
+                <b-button class="col-4 offset-4 mb-3" @click="getPrediction(modelForPrediction, sentenceToPredict)"
+                    :disabled="!predictButtonIsEnabled">Predict</b-button>
+
+            </div>
+
+            <PulseLoader :loading="loading"></PulseLoader>
+
         </div>
-
-        <PulseLoader :loading="loading"></PulseLoader>
-
     </div>
 </template>
 
@@ -100,12 +123,12 @@ export default {
                 this.loading = false
                 this.setWaitingForServerResponse(false)
             })
-            .catch(function (error) {
-                this.pushAlertAction(error.toJSON())
+                .catch(function (error) {
+                    this.pushAlertAction(error.toJSON())
 
-                this.loading = false
-                this.setWaitingForServerResponse(false)
-            })
+                    this.loading = false
+                    this.setWaitingForServerResponse(false)
+                })
         },
     },
 }

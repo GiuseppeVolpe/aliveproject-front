@@ -1,12 +1,26 @@
 <template>
-    <div>
-        <div>
-            <b-form-select v-model="datasetToDelete" :options="getAvailableDatasets" class="form-control" size="lg">
-                <option value="null" disabled hidden>Select dataset to delete</option>
-            </b-form-select>
-            <b-button class="col-12 mb-3" @click="deleteDataset(datasetToDelete)"
-                :disabled="!deleteButtonIsEnabled">Delete dataset</b-button>
+    <div class="row">
+
+        <div class="col-12 ml-2 mr-2 pl-2 pr-2">
+
+            <div class="row mt-3">
+                <div class="col-4 offset-4">
+                    <small class="form-text text-muted">Dataset To Delete</small>
+                    <b-form-select v-model="datasetToDelete" :options="getAvailableDatasets" class="form-control" size="lg">
+                        <option value="null" disabled hidden>Select dataset to delete</option>
+                    </b-form-select>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-4 offset-4">
+                    <b-button class="col-12 mb-3" @click="deleteDataset(datasetToDelete)"
+                        :disabled="!deleteButtonIsEnabled">Delete dataset</b-button>
+                </div>
+            </div>
+
         </div>
+
     </div>
 </template>
 
@@ -93,11 +107,9 @@ export default {
 
                 this.updateAvailableDatasetsAction()
                 this.setWaitingForServerResponse(false)
-            })
-            .catch(function (error) {
-                this.pushAlertAction(error.toJSON())
-                
-                this.setWaitingForServerResponse(false)
+            }).catch(function (error) {
+                console.log(error)
+                this.$store.commit("setWaitingForServerResponse", false)
             })
         },
     },

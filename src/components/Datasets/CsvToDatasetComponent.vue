@@ -1,31 +1,66 @@
 <template>
-    <div>
+    <div class="row">
+        <div class="col-12 ml-2 mr-2 pl-2 pr-2">
 
-        <b-form-select v-model="selectedDataset" :options="getAvailableDatasets" class="form-control" size="lg">
-            <option value="null" disabled hidden>Select a dataset for the import</option>
-        </b-form-select>
+            <div class="row mt-3">
+                <div class="col-6 offset-3">
+                    <small class="form-text text-muted">Select Dataset</small>
+                    <b-form-select v-model="selectedDataset" :options="getAvailableDatasets" class="form-control" size="lg">
+                        <option value="null" disabled hidden>Select a dataset for the import</option>
+                    </b-form-select>
+                </div>
+            </div>
 
-        <div v-if="selectedDataset != null && selectedDataset.type == 'SLCM'">
-            <input type="text" name="textColumnName" v-model="textColumnName">
+            <div class="row mt-3">
+
+                <div v-if="selectedDataset != null && selectedDataset.type == 'SLCM'">
+                    <div class="col-6 offset-3">
+                        <small class="form-text text-muted">Text Column Name</small>
+                        <input type="text" name="textColumnName" class="form-control" v-model="textColumnName">
+                    </div>
+                </div>
+
+                <div v-if="selectedDataset != null && selectedDataset.type == 'TLCM'">
+                    <div class="col-4 offset-2">
+                        <small class="form-text text-muted">Sentence Index Column Name</small>
+                        <input type="text" name="sentenceIdxColumnName" class="form-control"
+                            v-model="sentenceIdxColumnName">
+                    </div>
+
+                    <div class="col-4">
+                        <small class="form-text text-muted">Word Column Name</small>
+                        <input type="text" name="wordColumnName" class="form-control" v-model="wordColumnName">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-6 offset-3">
+                    <small class="form-text text-muted">Example Category</small>
+                    <b-form-select v-model="selectedExampleCategory" :options="getAvailableExampleCategories"
+                        class="form-control" size="lg">
+                        <option value="null" disabled hidden>Select an example category</option>
+                    </b-form-select>
+                </div>
+            </div>
+
+            <div class="row mt-3 mb-2">
+                <div class="col-12">
+                    <small class="form-text text-muted">Upload csv</small>
+                    <b-form-file v-model="datasetCsv" size="sm" accept=".csv,"
+                        drop-placeholder="Drop file here..."></b-form-file>
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <b-button class="col-4 offset-4 mb-3" @click="importCsvToDataset()"
+                    :disabled="!importButtonIsEnabled">Import</b-button>
+            </div>
+
+            <PulseLoader :loading="loading"></PulseLoader>
+
         </div>
-        <div v-if="selectedDataset != null && selectedDataset.type == 'TLCM'">
-            <input type="text" name="sentenceIdxColumnName" v-model="sentenceIdxColumnName">
-            <input type="text" name="wordColumnName" v-model="wordColumnName">
-        </div>
-
-        <b-form-select v-model="selectedExampleCategory" :options="getAvailableExampleCategories" class="form-control"
-            size="lg">
-            <option value="null" disabled hidden>Select an example category</option>
-        </b-form-select>
-
-        <input type="file" @change="uploadFile()">
-
-        <b-button class="col-12 mb-3" @click="importCsvToDataset()" :disabled="!importButtonIsEnabled">
-            Import
-        </b-button>
-
-        <PulseLoader :loading="loading"></PulseLoader>
-
     </div>
 </template>
 
@@ -34,6 +69,7 @@ import { mapGetters, mapMutations, mapActions } from "vuex";
 import axios from 'axios';
 
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
+//import store from "@/store";
 
 export default {
     name: "CsvToDatasetComponent",
@@ -51,6 +87,7 @@ export default {
             wordColumnName: "word",
             selectedExampleCategory: null,
             loading: false,
+            file1: null
         };
     },
 
@@ -73,7 +110,8 @@ export default {
             var fieldsAreSet = this.selectedDataset != null && this.selectedExampleCategory != null && this.datasetCsv != null
 
             return fieldsAreSet && !this.isWaitingForServerResponse
-        }
+        },
+
     },
 
     methods: {
@@ -86,11 +124,9 @@ export default {
             "updateAvailableDatasetsAction",
         ]),
 
-        uploadFile() {
-            this.datasetCsv = event.target.files
-        },
-
         importCsvToDataset() {
+
+            console.log(this.datasetCsv)
 
             if (this.isWaitingForServerResponse) {
                 return
@@ -112,7 +148,7 @@ export default {
             formData.append("user_id", this.getSession.user_id)
             formData.append("env_id", this.getSession.env_id)
             formData.append("dataset_name", this.selectedDataset.name)
-            formData.append("dataset_csv", new Blob(this.datasetCsv), "blob")
+            formData.append("dataset_csv", this.datasetCsv, "blob")
             formData.append("text_column_name", this.textColumnName)
             formData.append("sentence_idx_column_name", this.sentenceIdxColumnName)
             formData.append("word_column_name", this.wordColumnName)
@@ -140,12 +176,9 @@ export default {
 
                 this.loading = false
                 this.setWaitingForServerResponse(false)
-            })
-            .catch(function (error) {
-                this.pushAlertAction(error.toJSON())
-
-                this.loading = false
-                this.setWaitingForServerResponse(false)
+            }).catch(function (error) {
+                console.log(error)
+                this.$store.commit("setWaitingForServerResponse", false)
             })
         }
     },
