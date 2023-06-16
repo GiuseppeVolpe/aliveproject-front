@@ -91,6 +91,7 @@ import { mapGetters, mapMutations, mapActions } from "vuex";
 import axios from 'axios';
 
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
+import store from "@/store";
 
 export default {
     name: "ModelCreationComponent",
@@ -121,6 +122,7 @@ export default {
         this.dropoutRate = 0.3
         this.optimizerLearningRate = 1e-5
         this.publicModel = false
+        this.loading = false
     },
 
     computed: {
@@ -226,12 +228,9 @@ export default {
 
                     this.loading = false
                     this.setWaitingForServerResponse(false)
-                })
-                .catch(function (error) {
-                    this.pushAlertAction(error.toJSON())
-                    
-                    this.loading = false
-                    this.setWaitingForServerResponse(false)
+                }).catch(function (error) {
+                    store.dispatch("pushAlertAction", error.toJSON())
+                    store.commit("setWaitingForServerResponse", false)
                 })
         },
     },

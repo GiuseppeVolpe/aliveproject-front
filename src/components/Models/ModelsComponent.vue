@@ -23,7 +23,8 @@ export default {
 
     data() {
         return {
-            desiredComponents: ["ModelCreationComponent", "ModelDeleteComponent", "ModelPredictionComponent"],
+            desiredComponents: ["ModelCreationComponent", "ModelDeleteComponent",
+                "ModelPredictionComponent", "ModelTrainingHistoriesComponent"],
         };
     },
 

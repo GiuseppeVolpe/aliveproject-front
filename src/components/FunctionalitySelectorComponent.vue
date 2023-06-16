@@ -69,6 +69,7 @@ import CsvToDatasetComponent from "@/components/Datasets/CsvToDatasetComponent"
 import AddToTrainingComponent from "@/components/Training/AddToTrainingComponent"
 import RemoveFromTrainingComponent from "@/components/Training/RemoveFromTrainingComponent"
 import StartTrainComponent from "@/components/Training/StartTrainComponent"
+import ModelTrainingHistoriesComponent from "./Models/ModelTrainingHistoriesComponent";
 
 export default {
     name: "FunctionalitySelectorComponent",
@@ -83,6 +84,7 @@ export default {
         AddToTrainingComponent,
         RemoveFromTrainingComponent,
         StartTrainComponent,
+        ModelTrainingHistoriesComponent,
     },
 
     data() {
