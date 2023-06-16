@@ -1,12 +1,12 @@
 <template>
     <div>
         <div>
-            <li v-for="(trainingSession, index) in getTrainingSessions" :key="index">
+            <li v-for="(trainingSession, index) in getTrainingQueue" :key="index">
                 {{ trainingSession.text }} , {{ trainingSession.value.num_of_epochs }} epochs
             </li>
 
             <b-button class="col-12 mb-3" @click="startTrain()" :disabled="!startButtonIsEnabled">Start training</b-button>
-
+            
         </div>
     </div>
 </template>
@@ -33,12 +33,12 @@ export default {
             "getUserId",
             "getSelectedEnvId",
             "getSession",
-            "getTrainingSessions",
+            "getTrainingQueue",
             "isWaitingForServerResponse",
         ]),
 
         startButtonIsEnabled() {
-            return this.getTrainingSessions != null && this.getTrainingSessions.length > 0 && !this.isWaitingForServerResponse
+            return this.getTrainingQueue != null && this.getTrainingQueue.length > 0 && !this.isWaitingForServerResponse
         },
     },
 
@@ -49,7 +49,7 @@ export default {
         ]),
         ...mapActions([
             "pushAlertAction",
-            "updateTrainingSessionsAction",
+            "updateTrainingQueueAction",
             "waitForTrainingToFinishAction",
         ]),
 

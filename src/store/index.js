@@ -18,7 +18,7 @@ export default new Vuex.Store({
     selectedEnvName: null,
     availableModels: [],
     availableDatasets: [],
-    trainingSessions: [],
+    trainingQueue: [],
     trainingInProgress: false,
     generalAlerts: [],
     waitingForServerResponse: false,
@@ -55,8 +55,8 @@ export default new Vuex.Store({
     getAvailableDatasets: state => {
       return state.availableDatasets;
     },
-    getTrainingSessions: state => {
-      return state.trainingSessions;
+    getTrainingQueue: state => {
+      return state.trainingQueue;
     },
     getTrainingInProgress: state => {
       return state.trainingInProgress;
@@ -108,8 +108,8 @@ export default new Vuex.Store({
     setAvailableDatasets: (state, availableDatasets) => {
       state.availableDatasets = availableDatasets
     },
-    setTrainingSessions: (state, trainingSessions) => {
-      state.trainingSessions = trainingSessions
+    setTrainingQueue: (state, trainingQueue) => {
+      state.trainingQueue = trainingQueue
     },
     setTrainingInProgress: (state, trainingInProgress) => {
       state.trainingInProgress = trainingInProgress
@@ -138,7 +138,7 @@ export default new Vuex.Store({
       state.selectedEnvName = null
       state.availableModels = []
       state.availableDatasets = []
-      state.trainingSessions = []
+      state.trainingQueue = []
     }
   },
 
@@ -289,7 +289,7 @@ export default new Vuex.Store({
       })
     },
 
-    async updateTrainingSessionsAction(context) {
+    async updateTrainQueueAction(context) {
 
       if (context.getters.getUserId == null || context.getters.getSelectedEnvId == null) {
         context.dispatch("pushAlertAction", "Lost your session data... try to login again.")
@@ -298,7 +298,7 @@ export default new Vuex.Store({
         return
       }
 
-      var url_to_training_sessions = process.env.VUE_APP_API_URL + "get_training_sessions"
+      var url_to_training_sessions = process.env.VUE_APP_API_URL + "get_train_queue"
 
       var payload = {
         "session": context.getters.getSession
@@ -308,7 +308,7 @@ export default new Vuex.Store({
         var responseData = response.data
 
         if (responseData.code == 1) {
-          context.commit("setTrainingSessions", responseData.data)
+          context.commit("setTrainingQueue", responseData.data)
         }
       })
     },
@@ -324,7 +324,7 @@ export default new Vuex.Store({
           context.dispatch("updateAvailableExampleCategoriesAction").then(() => {
             context.dispatch("updateAvailableModelsAction").then(() => {
               context.dispatch("updateAvailableDatasetsAction").then(() => {
-                context.dispatch("updateTrainingSessionsAction").then(() => {
+                context.dispatch("updateTrainingQueueAction").then(() => {
                   console.log("Loaded environment data!")
                 })
               })
@@ -345,7 +345,7 @@ export default new Vuex.Store({
           context.dispatch("updateAvailableExampleCategoriesAction").then(() => {
             context.dispatch("updateAvailableModelsAction").then(() => {
               context.dispatch("updateAvailableDatasetsAction").then(() => {
-                context.dispatch("updateTrainingSessionsAction").then(() => {
+                context.dispatch("updateTrainingQueueAction").then(() => {
                   router.push("/models")
                 })
               })
