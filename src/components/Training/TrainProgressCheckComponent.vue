@@ -34,11 +34,14 @@ export default {
             currentSessionEpoch: 0,
             currentSessionEpochsLeft: 0,
             training: false,
+            timer: null,
         };
     },
 
     mounted() {
-        this.lifeCycle()
+        this.timer = setInterval(() => {
+            this.updateTrainQueueProgressInfos()
+        }, 4000)
     },
 
     computed: {
@@ -46,12 +49,12 @@ export default {
             "getUserId",
             "getSelectedEnvId",
             "getSession",
-            "getTrainingQueue",
+            "getTrainQueue",
             "isWaitingForServerResponse",
         ]),
 
         startButtonIsEnabled() {
-            return this.getTrainingQueue != null && this.getTrainingQueue.length > 0 && !this.isWaitingForServerResponse
+            return this.getTrainQueue != null && this.getTrainQueue.length > 0 && !this.isWaitingForServerResponse
         },
     },
 
@@ -62,20 +65,17 @@ export default {
         ]),
         ...mapActions([
             "pushAlertAction",
-            "updateTrainingQueueAction",
+            "updateTrainQueueAction",
             "waitForTrainingToFinishAction",
         ]),
 
-        async lifeCycle() {
-            promise = new Promise(resolve => setTimeout(resolve, 5000))
-
-            while (this.currentSessionEpoch >= 0) {
-                await promise
-                this.updateTrainQueueProgressInfos()
-            }
-        },
-
         updateTrainQueueProgressInfos() {
+
+            console.log("Updating")
+
+            if (this.currentSessionIndex >= 0) {
+                return
+            }
 
             var url_to_infos = process.env.VUE_APP_API_URL + "get_train_queue_progress_info"
 
@@ -89,7 +89,9 @@ export default {
 
                 switch (responseData.code) {
                     case 1:
-                        if (responseData.data == null) {
+                        var data = responseData.data
+
+                        if (data == null) {
                             this.training = false
                         } else {
                             this.currentSessionIndex = data.current_session_index
@@ -116,6 +118,11 @@ export default {
             })
         }
     },
+
+    beforeDestroy() {
+        clearInterval(this.timer)
+    },
+
 }
 
 </script>

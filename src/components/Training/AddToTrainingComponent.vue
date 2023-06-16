@@ -91,7 +91,7 @@ export default {
         ]),
         ...mapActions([
             "pushAlertAction",
-            "updateTrainingQueueAction",
+            "updateTrainQueueAction",
         ]),
 
         addToTrainQueue() {
@@ -134,12 +134,12 @@ export default {
                         this.pushAlertAction("Couldn't add this model to train queue...")
                 }
 
-                this.updateTrainingQueueAction()
+                this.updateTrainQueueAction()
                 this.setWaitingForServerResponse(false)
             })
             .catch(function (error) {
                 this.pushAlertAction(error.toJSON())
-                
+
                 this.setWaitingForServerResponse(false)
             })
         },

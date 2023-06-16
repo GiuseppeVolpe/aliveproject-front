@@ -1,7 +1,7 @@
 <template>
     <div>
         <div>
-            <b-form-select v-model="trainingSessionToRemove" :options="getTrainingQueue" class="form-control" size="lg">
+            <b-form-select v-model="trainingSessionToRemove" :options="getTrainQueue" class="form-control" size="lg">
                 <option value="null" disabled hidden>Select training session to remove</option>
             </b-form-select>
             <b-button class="col-12 mb-3" @click="removeTrainingSession()"
@@ -32,7 +32,7 @@ export default {
             "getUserId",
             "getSelectedEnvId",
             "getSession",
-            "getTrainingQueue",
+            "getTrainQueue",
             "isWaitingForServerResponse",
         ]),
 
@@ -48,7 +48,7 @@ export default {
         ]),
         ...mapActions([
             "pushAlertAction",
-            "updateTrainingQueueAction",
+            "updateTrainQueueAction",
         ]),
 
         removeTrainingSession() {
@@ -91,12 +91,12 @@ export default {
                         this.pushAlertAction("Couldn't remove the training session from queue...")
                 }
 
-                this.updateTrainingQueueAction()
+                this.updateTrainQueueAction()
                 this.setWaitingForServerResponse(false)
             })
             .catch(function (error) {
                 this.pushAlertAction(error.toJSON())
-                
+
                 this.setWaitingForServerResponse(false)
             })
         },

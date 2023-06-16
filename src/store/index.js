@@ -55,7 +55,7 @@ export default new Vuex.Store({
     getAvailableDatasets: state => {
       return state.availableDatasets;
     },
-    getTrainingQueue: state => {
+    getTrainQueue: state => {
       return state.trainingQueue;
     },
     getTrainingInProgress: state => {
@@ -108,7 +108,7 @@ export default new Vuex.Store({
     setAvailableDatasets: (state, availableDatasets) => {
       state.availableDatasets = availableDatasets
     },
-    setTrainingQueue: (state, trainingQueue) => {
+    setTrainQueue: (state, trainingQueue) => {
       state.trainingQueue = trainingQueue
     },
     setTrainingInProgress: (state, trainingInProgress) => {
@@ -242,7 +242,7 @@ export default new Vuex.Store({
     },
 
     async updateAvailableModelsAction(context) {
-
+      
       if (context.getters.getUserId == null || context.getters.getSelectedEnvId == null) {
         context.dispatch("pushAlertAction", "Lost your session data... try to login again.")
         context.commit("resetState")
@@ -308,7 +308,7 @@ export default new Vuex.Store({
         var responseData = response.data
 
         if (responseData.code == 1) {
-          context.commit("setTrainingQueue", responseData.data)
+          context.commit("setTrainQueue", responseData.data)
         }
       })
     },
@@ -324,7 +324,7 @@ export default new Vuex.Store({
           context.dispatch("updateAvailableExampleCategoriesAction").then(() => {
             context.dispatch("updateAvailableModelsAction").then(() => {
               context.dispatch("updateAvailableDatasetsAction").then(() => {
-                context.dispatch("updateTrainingQueueAction").then(() => {
+                context.dispatch("updateTrainQueueAction").then(() => {
                   console.log("Loaded environment data!")
                 })
               })
@@ -345,7 +345,7 @@ export default new Vuex.Store({
           context.dispatch("updateAvailableExampleCategoriesAction").then(() => {
             context.dispatch("updateAvailableModelsAction").then(() => {
               context.dispatch("updateAvailableDatasetsAction").then(() => {
-                context.dispatch("updateTrainingQueueAction").then(() => {
+                context.dispatch("updateTrainQueueAction").then(() => {
                   router.push("/models")
                 })
               })

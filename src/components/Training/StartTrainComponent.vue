@@ -1,11 +1,13 @@
 <template>
     <div>
         <div>
-            <li v-for="(trainingSession, index) in getTrainingQueue" :key="index">
+            <li v-for="(trainingSession, index) in getTrainQueue" :key="index">
                 {{ trainingSession.text }} , {{ trainingSession.value.num_of_epochs }} epochs
             </li>
 
             <b-button class="col-12 mb-3" @click="startTrain()" :disabled="!startButtonIsEnabled">Start training</b-button>
+
+            <TrainProgressCheckComponent></TrainProgressCheckComponent>
 
         </div>
     </div>
@@ -15,8 +17,14 @@
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import axios from 'axios';
 
+import TrainProgressCheckComponent from "./TrainProgressCheckComponent";
+
 export default {
     name: "StartTrainComponent",
+
+    components: {
+        TrainProgressCheckComponent,
+    },
 
     data() {
         return {
@@ -33,12 +41,12 @@ export default {
             "getUserId",
             "getSelectedEnvId",
             "getSession",
-            "getTrainingQueue",
+            "getTrainQueue",
             "isWaitingForServerResponse",
         ]),
 
         startButtonIsEnabled() {
-            return this.getTrainingQueue != null && this.getTrainingQueue.length > 0 && !this.isWaitingForServerResponse
+            return this.getTrainQueue != null && this.getTrainQueue.length > 0 && !this.isWaitingForServerResponse
         },
     },
 
@@ -49,7 +57,7 @@ export default {
         ]),
         ...mapActions([
             "pushAlertAction",
-            "updateTrainingQueueAction",
+            "updateTrainQueueAction",
             "waitForTrainingToFinishAction",
         ]),
 
