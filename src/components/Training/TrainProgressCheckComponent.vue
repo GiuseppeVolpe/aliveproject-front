@@ -20,7 +20,7 @@ import axios from 'axios';
 import RotateLoader from 'vue-spinner/src/RotateLoader.vue'
 
 export default {
-    name: "StartTrainComponent",
+    name: "TrainProgressCheckComponent",
 
     components: {
         RotateLoader,
