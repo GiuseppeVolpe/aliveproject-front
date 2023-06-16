@@ -6,7 +6,7 @@
             </li>
 
             <b-button class="col-12 mb-3" @click="startTrain()" :disabled="!startButtonIsEnabled">Start training</b-button>
-            
+
         </div>
     </div>
 </template>
@@ -67,7 +67,6 @@ export default {
 
                 switch (responseData.code) {
                     case 1:
-                        this.waitForTrainingToFinishAction()
                         this.pushAlertAction("Training started!")
                         break
                     case 1000:
@@ -75,6 +74,11 @@ export default {
                     case 1002:
                         this.pushAlertAction("Couldn't start training...")
                 }
+
+                this.setWaitingForServerResponse(false)
+            })            
+            .catch(function (error) {
+                this.pushAlertAction(error.toJSON())
 
                 this.setWaitingForServerResponse(false)
             })

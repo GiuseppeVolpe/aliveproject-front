@@ -94,6 +94,11 @@ export default {
                 this.updateTrainingQueueAction()
                 this.setWaitingForServerResponse(false)
             })
+            .catch(function (error) {
+                this.pushAlertAction(error.toJSON())
+                
+                this.setWaitingForServerResponse(false)
+            })
         },
     },
 }
