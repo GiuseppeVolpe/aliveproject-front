@@ -2,8 +2,8 @@
     <div>
         <div>
 
-            <div v-if="training">
-                <rotate-loader :loading="training"></rotate-loader>
+            <div v-if="isTrainingInProgress && (currentSessionEpoch > 0)">
+                <rotate-loader :loading="isTrainingInProgress"></rotate-loader>
 
                 Now training {{ currentSessionModelName }} on {{ currentSessionDatasetName }},
                 epoch {{ currentSessionEpoch }} out of {{ currentSessionEpochsLeft }}.
@@ -33,15 +33,20 @@ export default {
             currentSessionDatasetName: null,
             currentSessionEpoch: 0,
             currentSessionEpochsLeft: 0,
-            training: false,
             timer: null,
         };
     },
 
     mounted() {
-        this.timer = setInterval(() => {
-            this.updateTrainQueueProgressInfos()
-        }, 4000)
+        this.$root.$on("TrainingStarted", () => {
+            this.timer = setInterval(() => {
+                this.updateTrainQueueProgressInfos()
+            }, 4000)
+        })
+
+        this.$root.$on("TrainingStopped", () => {
+            clearInterval(this.timer)
+        })
     },
 
     computed: {
@@ -50,12 +55,10 @@ export default {
             "getSelectedEnvId",
             "getSession",
             "getTrainQueue",
+            "isTrainingInProgress",
             "isWaitingForServerResponse",
         ]),
 
-        startButtonIsEnabled() {
-            return this.getTrainQueue != null && this.getTrainQueue.length > 0 && !this.isWaitingForServerResponse
-        },
     },
 
     methods: {
@@ -66,16 +69,11 @@ export default {
         ...mapActions([
             "pushAlertAction",
             "updateTrainQueueAction",
+            "setTrainingInProgress",
             "waitForTrainingToFinishAction",
         ]),
 
         updateTrainQueueProgressInfos() {
-
-            console.log("Updating")
-
-            if (this.currentSessionIndex >= 0) {
-                return
-            }
 
             var url_to_infos = process.env.VUE_APP_API_URL + "get_train_queue_progress_info"
 
@@ -91,16 +89,16 @@ export default {
                     case 1:
                         var data = responseData.data
 
-                        if (data == null) {
-                            this.training = false
-                        } else {
+                        if (data != null) {
                             this.currentSessionIndex = data.current_session_index
                             this.currentSessionModelName = data.current_session_model_name
                             this.currentSessionDatasetName = data.current_session_dataset_name
                             this.currentSessionEpoch = data.current_session_epoch
                             this.currentSessionEpochsLeft = data.current_session_epochs_left
-                            this.training = true
+                        } else {
+                            this.setTrainingInProgress(false)
                         }
+
                         break
                     case 1000:
                     case 1001:
@@ -108,19 +106,10 @@ export default {
                         break
                 }
 
-                this.setWaitingForServerResponse(false)
-            })
-            .catch(function (error) {
-                this.pushAlertAction(error.toJSON())
-
-                this.training = false
-                this.setWaitingForServerResponse(false)
+            }).catch(function (error) {
+                console.log(error)
             })
         }
-    },
-
-    beforeDestroy() {
-        clearInterval(this.timer)
     },
 
 }

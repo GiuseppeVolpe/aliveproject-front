@@ -58,7 +58,7 @@ export default new Vuex.Store({
     getTrainQueue: state => {
       return state.trainingQueue;
     },
-    getTrainingInProgress: state => {
+    isTrainingInProgress: state => {
       return state.trainingInProgress;
     },
     getGeneralAlerts: state => {
@@ -355,9 +355,6 @@ export default new Vuex.Store({
       })
     },
 
-    waitForTrainingToFinishAction() {
-
-    },
   },
 
   modules: {
