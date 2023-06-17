@@ -1,40 +1,45 @@
 <template>
-  <div>
+  <div class="mt-0 mb-0">
     <div class="row mt-5">
       <div class="col-2 offset-5 border rounded mt-5 mb-5">
-        <h1 class="mt-3">Alive</h1>
-        <div class="row">
-          <div class="col-12 mr-2 ml-2">
 
-            <input name="username" type="text" class="form-control mt-3 mb-2" placeholder="Username"
-              title="Digit username" minlength="2" maxlength="50" required autofocus v-model="userDetails.username" />
+        <img class="mt-5 mb-5" src="@/assets/green_logo.png" width="200" height="50">
 
-            <input name="password" type="password" class="form-control mb-2" placeholder="Password" title="Digit password"
-              minlength="8" maxlength="50" required v-model="userDetails.password" />
+        <div class="col-10 offset-1">
 
-            <AlertComponent :alerts="alerts"></AlertComponent>
-
-            <b-button class="col-12 mb-1 buttonColor" @click="login()" :disabled="!loginButtonIsEnabled">Login</b-button>
-            <b-button class="col-12 mb-3 buttonColor" @click="goToSignup()">Go to signup</b-button>
-
+          <div class="row">
+            <input name="username" type="text" class="form-control mb-2" placeholder="Username" title="Digit username"
+              minlength="2" maxlength="50" required autofocus v-model="userDetails.username" />
           </div>
+
+          <div class="row">
+            <input name="password" type="password" class="form-control mb-4" placeholder="Password" title="Digit password"
+              minlength="8" maxlength="50" required v-model="userDetails.password" />
+          </div>
+
+          <div class="row">
+            <b-button class="col-12 mb-1 buttonColor" @click="login()" :disabled="!loginButtonIsEnabled">Login</b-button>
+          </div>
+
+          <div class="row">
+            <b-button class="col-12 mb-3 buttonColor" @click="goToSignup()">Go to signup</b-button>
+          </div>
+
         </div>
+
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapMutations, mapActions } from "vuex";
 import axios from 'axios';
-
-import AlertComponent from "@/components/AlertComponent"
 
 export default {
   name: "LoginComponent",
 
   components: {
-    AlertComponent
+
   },
 
   data() {
@@ -50,10 +55,6 @@ export default {
   },
 
   computed: {
-    ...mapGetters([
-      "getSession",
-    ]),
-
     loginButtonIsEnabled() {
       var usernameIsSet = this.userDetails.username != null && this.userDetails.username.length > 0
       var passwordIsSet = this.userDetails.password != null && this.userDetails.password.length > 0
@@ -63,13 +64,6 @@ export default {
   },
 
   methods: {
-    ...mapMutations([
-      "setUserId",
-      "setUsername",
-    ]),
-    ...mapActions([
-      "pushAlertAction",
-    ]),
 
     login() {
 
@@ -88,10 +82,11 @@ export default {
 
         switch (responseData.code) {
           case 1:
-            this.setUserId(responseData.data.user_id)
-            this.setUsername(responseData.data.username)
+            this.$store.commit("setUserId", responseData.data.user_id)
+            this.$store.commit("setUsername", responseData.data.username)
             this.$router.push("/env_selection")
-            this.pushAlertAction("logged in!")
+
+            this.$root.$emit("pushAlert", "Logged in!")
             break
           case 1000:
           case 1001:

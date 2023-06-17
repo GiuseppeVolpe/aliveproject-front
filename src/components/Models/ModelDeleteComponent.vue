@@ -58,7 +58,6 @@ export default {
             "setWaitingForServerResponse",
         ]),
         ...mapActions([
-            "pushAlertAction",
             "updateAvailableModelsAction",
         ]),
 
@@ -69,7 +68,7 @@ export default {
             }
 
             if (this.getUserId == null || this.getSelectedEnvId == null) {
-                this.pushAlertAction("Lost your session data... try to login again.")
+                this.$store.commit("pushAlert", "Lost your session data... try to login again.")
                 this.resetState()
                 this.$router.push("/")
                 return
@@ -94,19 +93,19 @@ export default {
 
                 switch (responseData.code) {
                     case 1:
-                        this.pushAlertAction("Model deleted!")
+                        this.$store.commit("pushAlert", "Model deleted!")
                         break
                     case 1000:
                     case 1001:
                     case 1002:
-                        this.pushAlertAction("Couldn't delete the model...")
+                        this.$store.commit("pushAlert", "Couldn't delete the model...")
                 }
 
                 this.updateAvailableModelsAction()
                 this.setWaitingForServerResponse(false)
             })
             .catch(function (error) {
-                this.pushAlertAction(error.toJSON())
+                this.$store.commit("pushAlert", error.toJSON())
 
                 this.loading = false
                 this.setWaitingForServerResponse(false)

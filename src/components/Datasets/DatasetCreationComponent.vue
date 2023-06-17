@@ -107,7 +107,6 @@ export default {
             "resetState",
         ]),
         ...mapActions([
-            "pushAlertAction",
             "updateAvailableDatasetsAction",
         ]),
 
@@ -118,7 +117,7 @@ export default {
             }
 
             if (this.getUserId == null || this.getSelectedEnvId == null) {
-                this.pushAlertAction("Lost your session data... try to login again.")
+                this.$store.commit("pushAlert", "Lost your session data... try to login again.")
                 this.resetState()
                 this.$router.push("/")
                 return
@@ -144,12 +143,12 @@ export default {
 
                 switch (responseData.code) {
                     case 1:
-                        this.pushAlertAction("New dataset created!")
+                        this.$store.commit("pushAlert", "New dataset created!")
                         break
                     case 1000:
                     case 1001:
                     case 1002:
-                        this.pushAlertAction("Couldn't create the new dataset called '" + createdDatasetName + "'...")
+                        this.$store.commit("pushAlert", "Couldn't create the new dataset called '" + createdDatasetName + "'...")
                 }
 
                 this.updateAvailableDatasetsAction()

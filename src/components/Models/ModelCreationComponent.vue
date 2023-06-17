@@ -183,7 +183,7 @@ export default {
             }
 
             if (this.getUserId == null || this.getSelectedEnvId == null) {
-                this.pushAlertAction("Lost your session data... try to login again.")
+                this.$store.commit("pushAlert", "Lost your session data... try to login again.")
                 this.resetState()
                 this.$router.push("/")
                 return
@@ -216,12 +216,12 @@ export default {
 
                     switch (responseData.code) {
                         case 1:
-                            this.pushAlertAction("New model created!")
+                            this.$store.commit("pushAlert", "New model created!")
                             break
                         case 1000:
                         case 1001:
                         case 1002:
-                            this.pushAlertAction("Couldn't create the new model called '" + createdModelName + "'...")
+                            this.$store.commit("pushAlert", "Couldn't create the new model called '" + createdModelName + "'...")
                     }
 
                     this.updateAvailableModelsAction()
@@ -229,7 +229,7 @@ export default {
                     this.loading = false
                     this.setWaitingForServerResponse(false)
                 }).catch(function (error) {
-                    store.dispatch("pushAlertAction", error.toJSON())
+                    console.log(error)
                     store.commit("setWaitingForServerResponse", false)
                 })
         },

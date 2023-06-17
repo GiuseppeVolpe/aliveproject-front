@@ -52,7 +52,6 @@ export default {
             "setWaitingForServerResponse",
         ]),
         ...mapActions([
-            "pushAlertAction",
             "updateAvailableModelsAction",
         ]),
 
@@ -63,7 +62,7 @@ export default {
             }
 
             if (this.getUserId == null || this.getSelectedEnvId == null) {
-                this.pushAlertAction("Lost your session data... try to login again.")
+                this.$store.commit("pushAlert", "Lost your session data... try to login again.")
                 this.resetState()
                 this.$router.push("/")
                 return
@@ -104,12 +103,12 @@ export default {
                             console.log(byteArray)
                         }
 
-                        this.pushAlertAction("Graphs loaded!")
+                        this.$store.commit("pushAlert", "Graphs loaded!")
                         break
                     case 1000:
                     case 1001:
                     case 1002:
-                        this.pushAlertAction("Couldn't load graphs...")
+                        this.$store.commit("pushAlert", "Couldn't load graphs...")
                 }
 
                 this.setWaitingForServerResponse(false)

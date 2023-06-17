@@ -4,10 +4,7 @@
       <NavBar></NavBar>
     </div>
     <RouterView></RouterView>
-    <div v-if="getGeneralAlerts.length > 0">
-      <AlertComponent :alerts="getGeneralAlerts"></AlertComponent>
-    </div>
-    
+
     <TrainProgressCheckComponent></TrainProgressCheckComponent>
 
   </div>
@@ -18,7 +15,6 @@ import { RouterView } from "vue-router";
 import { mapGetters } from "vuex";
 
 import NavBar from '@/components/NavBar'
-import AlertComponent from '@/components/AlertComponent'
 
 import TrainProgressCheckComponent from "@/components/Training/TrainProgressCheckComponent";
 
@@ -28,14 +24,18 @@ export default {
   components: {
     NavBar,
     RouterView,
-    AlertComponent,
     TrainProgressCheckComponent,
+  },
+
+  mounted() {
+    this.$root.$on("pushAlert", (message, desiredTitle = "alert", desiredDelay = 5000, append = false) => {
+      this.pushAlert(message, desiredTitle, desiredDelay, append)
+    })
   },
 
   computed: {
     ...mapGetters([
       "getUserId",
-      "getGeneralAlerts"
     ]),
   },
 
@@ -43,7 +43,18 @@ export default {
     return {
 
     }
-  }
+  },
+
+  methods: {
+    pushAlert(message, desiredTitle = "alert", desiredDelay = 5000, append = false) {
+      this.$root.$bvToast.toast(message, {
+        title: desiredTitle,
+        autoHideDelay: desiredDelay,
+        appendToast: append
+      })
+    },
+  },
+
 }
 </script>
 

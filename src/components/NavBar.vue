@@ -29,13 +29,12 @@ export default {
       "resetState",
     ]),
     ...mapActions([
-      "pushAlertAction",
     ]),
 
     logout() {
       this.resetState()
       this.$router.push("/")
-      this.pushAlertAction("Logged out!")
+      //this.$store.commit("pushAlert", "Logged out!")
     },
   }
 }

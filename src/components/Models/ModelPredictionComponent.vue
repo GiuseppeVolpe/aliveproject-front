@@ -87,7 +87,6 @@ export default {
             "setWaitingForServerResponse",
         ]),
         ...mapActions([
-            "pushAlertAction",
         ]),
 
         getPrediction(modelForPrediction, sentenceToPredict) {
@@ -117,14 +116,14 @@ export default {
                     case 1000:
                     case 1001:
                     case 1002:
-                        this.pushAlertAction("Something went wrong when trying to predict...")
+                        this.$store.commit("pushAlert", "Something went wrong when trying to predict...")
                 }
 
                 this.loading = false
                 this.setWaitingForServerResponse(false)
             })
                 .catch(function (error) {
-                    this.pushAlertAction(error.toJSON())
+                    this.$store.commit("pushAlert", error.toJSON())
 
                     this.loading = false
                     this.setWaitingForServerResponse(false)

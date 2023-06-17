@@ -73,7 +73,6 @@ export default {
             "setTrainingInProgress",
         ]),
         ...mapActions([
-            "pushAlertAction",
             "updateTrainQueueAction",
         ]),
 
@@ -93,12 +92,12 @@ export default {
                     case 1:
                         this.$root.$emit("TrainingStarted")
                         this.setTrainingInProgress(true)
-                        this.pushAlertAction("Training started!")
+                        this.$store.commit("pushAlert", "Training started!")
                         break
                     case 1000:
                     case 1001:
                     case 1002:
-                        this.pushAlertAction("Couldn't start training...")
+                        this.$store.commit("pushAlert", "Couldn't start training...")
                 }
 
                 this.setWaitingForServerResponse(false)
@@ -124,18 +123,18 @@ export default {
                     case 1:
                         this.$root.$emit("TrainingStopped")
                         this.setTrainingInProgress(false)
-                        this.pushAlertAction("Training stopped!")
+                        this.$store.commit("pushAlert", "Training stopped!")
                         break
                     case 1000:
                     case 1001:
                     case 1002:
-                        this.pushAlertAction("Couldn't stop training...")
+                        this.$store.commit("pushAlert", "Couldn't stop training...")
                 }
 
                 this.setWaitingForServerResponse(false)
 
             }).catch(function (error) {
-                //this.pushAlertAction(error.toJSON())
+                //this.$store.commit("pushAlert", error.toJSON())
                 console.log(error)
 
                 this.setWaitingForServerResponse(false)

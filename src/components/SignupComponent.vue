@@ -1,30 +1,42 @@
 <template>
-    <div>
+    <div class="mt-0 mb-0">
         <div class="row mt-5">
             <div class="col-2 offset-5 border rounded mt-5 mb-5">
-                <h1 class="mt-3">Alive</h1>
-                <div class="row">
-                    <div class="col-12 mr-2 ml-2">
 
-                        <input name="username" type="text" class="form-control mt-3 mb-2" placeholder="Username"
+                <img class="mt-5 mb-5" src="@/assets/green_logo.png" width="200" height="50">
+
+                <div class="col-10 offset-1">
+
+                    <div class="row">
+                        <input name="username" type="text" class="form-control mt-3 mb-1" placeholder="Username"
                             title="Digit a username" minlength="2" maxlength="50" required autofocus
                             v-model="userDetails.username" />
+                    </div>
 
-                        <input name="email" type="text" class="form-control mt-3 mb-2" placeholder="Email"
-                            title="Digit your email" minlength="5" maxlength="50" required 
-                            v-model="userDetails.email" />
+                    <div class="row">
+                        <input name="email" type="text" class="form-control mt-1 mb-1" placeholder="Email"
+                            title="Digit your email" minlength="5" maxlength="50" required v-model="userDetails.email" />
+                    </div>
 
-                        <input name="password" type="password" class="form-control mb-2" placeholder="Password"
+                    <div class="row">
+                        <input name="password" type="password" class="form-control mt-1 mb-1" placeholder="Password"
                             title="Create a password" minlength="8" maxlength="50" required
                             v-model="userDetails.password" />
-                        
-                        <AlertComponent :alerts="alerts"></AlertComponent>
-
-                        <b-button class="col-12 mb-1 buttonColor" @click="signup()" :disabled="!signupButtonIsEnabled" >Signup</b-button>
-                        <b-button class="col-12 mb-1 buttonColor" @click="goToLogin()">Go to login</b-button>
-
                     </div>
+
+                    <AlertComponent :alerts="alerts"></AlertComponent>
+
+                    <div class="row">
+                        <b-button class="col-12 mt-3 mb-1 buttonColor" @click="signup()"
+                            :disabled="!signupButtonIsEnabled">Signup</b-button>
+                    </div>
+
+                    <div class="row">
+                        <b-button class="col-12 mt-1 mb-4 buttonColor" @click="goToLogin()">Go to login</b-button>
+                    </div>
+
                 </div>
+
             </div>
         </div>
     </div>
@@ -40,8 +52,8 @@ export default {
     name: "SignupComponent",
 
     components: {
-    AlertComponent
-  },
+        AlertComponent
+    },
 
     data() {
         return {
@@ -74,11 +86,10 @@ export default {
 
         ]),
         ...mapActions([
-            "pushAlertAction",
         ]),
 
         signup() {
-            
+
             this.alerts = []
 
             var url_to_signup = process.env.VUE_APP_API_URL + "signup"
@@ -96,7 +107,7 @@ export default {
                 switch (responseData.code) {
                     case 1:
                         this.goToLogin()
-                        this.pushAlertAction("User added succesfully!")
+                        this.$store.commit("pushAlert", "User added succesfully!")
                         break
                     case 1000:
                     case 1001:
@@ -107,7 +118,7 @@ export default {
                 }
             })
         },
-        
+
         goToLogin() {
             this.$router.push("/")
         },

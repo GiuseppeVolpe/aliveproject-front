@@ -5,7 +5,7 @@
             <div class="row mt-3">
                 <div class="col-6 offset-3">
                     <small class="form-text text-muted">Select Dataset</small>
-                    <b-form-select v-model="selectedDataset" :options="getAvailableDatasets" class="form-control" size="lg">
+                    <b-form-select v-model="selectedDataset" :options="$store.getters.getAvailableDatasets" class="form-control" size="lg">
                         <option value="null" disabled hidden>Select a dataset for the import</option>
                     </b-form-select>
                 </div>
@@ -120,7 +120,6 @@ export default {
             "setWaitingForServerResponse",
         ]),
         ...mapActions([
-            "pushAlertAction",
             "updateAvailableDatasetsAction",
         ]),
 
@@ -133,7 +132,7 @@ export default {
             }
 
             if (this.getUserId == null || this.getSelectedEnvId == null) {
-                this.pushAlertAction("Lost your session data... try to login again.")
+                this.$store.commit("pushAlert", "Lost your session data... try to login again.")
                 this.resetState()
                 this.$router.push("/")
                 return
@@ -166,12 +165,12 @@ export default {
 
                 switch (responseData.code) {
                     case 1:
-                        this.pushAlertAction("Examples imported to dataset!")
+                        this.$store.commit("pushAlert", "Examples imported to dataset!")
                         break
                     case 1000:
                     case 1001:
                     case 1002:
-                        this.pushAlertAction("Couldn't import the examples to the dataset...")
+                        this.$store.commit("pushAlert", "Couldn't import the examples to the dataset...")
                 }
 
                 this.loading = false

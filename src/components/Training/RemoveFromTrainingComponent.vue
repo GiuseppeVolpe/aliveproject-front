@@ -55,7 +55,6 @@ export default {
             "setWaitingForServerResponse",
         ]),
         ...mapActions([
-            "pushAlertAction",
             "updateTrainQueueAction",
         ]),
 
@@ -66,7 +65,7 @@ export default {
             }
 
             if (this.getUserId == null || this.getSelectedEnvId == null) {
-                this.pushAlertAction("Lost your session data... try to login again.")
+                this.$store.commit("pushAlert", "Lost your session data... try to login again.")
                 this.resetState()
                 this.$router.push("/")
                 return
@@ -91,19 +90,19 @@ export default {
 
                 switch (responseData.code) {
                     case 1:
-                        this.pushAlertAction("Removed training session from queue!")
+                        this.$store.commit("pushAlert", "Removed training session from queue!")
                         break
                     case 1000:
                     case 1001:
                     case 1002:
-                        this.pushAlertAction("Couldn't remove the training session from queue...")
+                        this.$store.commit("pushAlert", "Couldn't remove the training session from queue...")
                 }
 
                 this.updateTrainQueueAction()
                 this.setWaitingForServerResponse(false)
             })
                 .catch(function (error) {
-                    this.pushAlertAction(error.toJSON())
+                    this.$store.commit("pushAlert", error.toJSON())
 
                     this.setWaitingForServerResponse(false)
                 })

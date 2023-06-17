@@ -67,7 +67,6 @@ export default {
             "setWaitingForServerResponse",
         ]),
         ...mapActions([
-            "pushAlertAction",
             "updateTrainQueueAction",
             "setTrainingInProgress",
             "waitForTrainingToFinishAction",
