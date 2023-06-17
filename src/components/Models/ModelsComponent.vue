@@ -1,6 +1,5 @@
 <template>
     <div>
-        <EnvironmentSpaceBar></EnvironmentSpaceBar>
         <FunctionalitySelectorComponent :availableComponents="this.desiredComponents" title="Models" dropdownText="Go to">
         </FunctionalitySelectorComponent>
     </div>
@@ -10,14 +9,12 @@
 import { mapGetters, mapMutations, mapActions } from "vuex";
 //import axios from 'axios';
 
-import EnvironmentSpaceBar from '@/components/EnvironmentSpaceBar'
 import FunctionalitySelectorComponent from "../FunctionalitySelectorComponent";
 
 export default {
     name: "ModelsComponent",
 
     components: {
-        EnvironmentSpaceBar,
         FunctionalitySelectorComponent,
     },
 

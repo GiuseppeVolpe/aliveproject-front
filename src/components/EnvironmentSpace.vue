@@ -1,11 +1,9 @@
 <template>
     <div>
-        <EnvironmentSpaceBar></EnvironmentSpaceBar>
     </div>
 </template>
 
 <script>
-import EnvironmentSpaceBar from '@/components/EnvironmentSpaceBar'
 import { mapGetters, mapMutations } from "vuex";
 
 export default {
@@ -19,7 +17,6 @@ export default {
     methods: {
         ...mapMutations([]),
     },
-    components: { EnvironmentSpaceBar }
 }
 
 </script>
