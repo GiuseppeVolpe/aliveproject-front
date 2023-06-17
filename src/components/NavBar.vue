@@ -28,7 +28,7 @@
 
         <b-navbar-nav class="ml-auto">
           <b-navbar-brand>
-            <b-button class="mainColor" @click="logout()">Logout</b-button>
+            <b-button variant="dark" @click="logout()">Logout</b-button>
           </b-navbar-brand>
         </b-navbar-nav>
 

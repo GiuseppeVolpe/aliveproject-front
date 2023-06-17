@@ -1,7 +1,7 @@
 <template>
-    <div class="mt-0 mb-0">
+    <div id="signupComponent" class="mt-0 mb-0 mainColor">
         <div class="row mt-5">
-            <div class="col-2 offset-5 border rounded mt-5 mb-5">
+            <div class="col-2 offset-5 shadow border rounded mt-5 mb-5 secondaryColor">
 
                 <b-img class="mt-5 mb-5" src="logo/green_logo.png" width="200" height="50"></b-img>
 
@@ -128,3 +128,10 @@ export default {
 }
 
 </script>
+
+<style scoped>
+#signupComponent {
+  margin-top: 0px;
+  height: 100vh;
+}
+</style>

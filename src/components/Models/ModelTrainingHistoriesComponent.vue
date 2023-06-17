@@ -28,7 +28,7 @@
                             </b-col>
 
                             <b-col>
-                                <b-button v-if="selectedGraphIndex < (trainingGraphs.length - 1)"
+                                <b-button class="mainColor" v-if="selectedGraphIndex < (trainingGraphs.length - 1)"
                                     @click="changeSelectedGraph(-1)">Next</b-button>
                             </b-col>
                         </b-row>

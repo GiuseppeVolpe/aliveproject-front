@@ -10,8 +10,7 @@
 
                 <div class="col-4">
                     <small class="form-text text-muted">Model Type</small>
-                    <b-form-select v-model="selectedModelType" :options="getAvailableModelTypes" class="form-control"
-                        size="lg">
+                    <b-form-select v-model="selectedModelType" :options="getAvailableModelTypes" class="form-control">
                         <option value="null" disabled hidden>Select model type</option>
                     </b-form-select>
                 </div>
@@ -27,8 +26,7 @@
                 <div class="col-4">
 
                     <small class="form-text text-muted">Base Model</small>
-                    <b-form-select v-model="selectedBaseModel" :options="getAvailableBaseModels" class="form-control"
-                        size="lg">
+                    <b-form-select v-model="selectedBaseModel" :options="getAvailableBaseModels" class="form-control">
                         <option value="null" disabled hidden>Select base model</option>
                     </b-form-select>
                 </div>

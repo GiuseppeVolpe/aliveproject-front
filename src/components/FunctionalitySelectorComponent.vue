@@ -12,7 +12,7 @@
                                     <b-navbar-brand>
                                         <b-collapse id="nav-collapse" is-nav>
                                             <b-navbar-nav>
-                                                <b-dropdown dropright :text="dropdownText" class="m-md-2">
+                                                <b-dropdown dropright variant="dark" :text="dropdownText" class="m-md-2">
 
                                                     <div v-for="(availableComponent, index) in availableComponents"
                                                         :key="index">
@@ -32,7 +32,7 @@
                                     <b-collapse id="nav-collapse" is-nav>
                                         <div class="col-md-12 mt-0 mb-0 pt-0 pb-0">
                                             <div class="row mt-0 mb-0 pt-0 pb-0">
-                                                <h3 class="text-light text-center font-weight-bold col-12">
+                                                <h3 class="text-center font-weight-bold col-6 offset-2" style="color:#fff;">
                                                     {{ title }}
                                                 </h3>
                                             </div>

@@ -1,13 +1,16 @@
 <template>
-  <div id="app" class="mt-0 pt-0">
+  <div id="app">
+
     <div v-if="getUserId != null">
       <NavBar></NavBar>
     </div>
+
     <RouterView></RouterView>
 
     <div v-if="isTrainingInProgress">
-          <TrainProgressCheckComponent></TrainProgressCheckComponent>
+      <TrainProgressCheckComponent></TrainProgressCheckComponent>
     </div>
+
   </div>
 </template>
 
@@ -67,19 +70,26 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #8bd9b6;
-  margin-top: 60px;
+  color: #000;
 }
+
 .mainColor {
   background-color: #8bd9b6;
   border-color: #8bd9b6;
 }
+
+.secondaryColor {
+  background-color: #fff;
+  border-color: #fff;
+}
+
 button.mainColor {
   background-color: #8bd9b6;
   border-color: #8bd9b6;
   color: #fff;
   font: optional;
 }
+
 button.mainColor.disabled {
   background-color: #8bd9b6;
   border-color: #8bd9b6;
