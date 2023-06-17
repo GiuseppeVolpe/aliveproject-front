@@ -14,7 +14,7 @@
 
             <div class="row mt-3">
                 <div class="col-4 offset-4">
-                    <b-button class="col-12 mb-3" @click="deleteDataset(datasetToDelete)"
+                    <b-button class="col-12 mb-3 mainColor" @click="deleteDataset(datasetToDelete)"
                         :disabled="!deleteButtonIsEnabled">Delete dataset</b-button>
                 </div>
             </div>

@@ -11,7 +11,7 @@
 
         <div class="row">
             <div class="col-4 offset-4 mt-3">
-                <b-button class="col-12 mb-3" @click="removeTrainingSession()" :disabled="!removeButtonIsEnabled">Remove
+                <b-button class="col-12 mb-3 mainColor" @click="removeTrainingSession()" :disabled="!removeButtonIsEnabled">Remove
                     session</b-button>
             </div>
         </div>

@@ -19,7 +19,8 @@
                     <b-container fluid class="p-4 mt-2 mb-4">
                         <b-row>
                             <b-col>
-                                <b-button v-if="selectedGraphIndex > 0" @click="changeSelectedGraph(1)">Previous</b-button>
+                                <b-button class="mainColor" v-if="selectedGraphIndex > 0"
+                                    @click="changeSelectedGraph(1)">Previous</b-button>
                             </b-col>
 
                             <b-col>

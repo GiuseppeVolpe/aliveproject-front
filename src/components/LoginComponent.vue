@@ -22,11 +22,11 @@
           </div>
 
           <div class="row">
-            <b-button class="col-12 mb-1 buttonColor" @click="login()" :disabled="!loginButtonIsEnabled">Login</b-button>
+            <b-button class="col-12 mb-1 mainColor" @click="login()" :disabled="!loginButtonIsEnabled">Login</b-button>
           </div>
 
           <div class="row">
-            <b-button class="col-12 mb-3 buttonColor" @click="goToSignup()">Go to signup</b-button>
+            <b-button class="col-12 mb-3 mainColor" @click="goToSignup()">Go to signup</b-button>
           </div>
 
         </div>

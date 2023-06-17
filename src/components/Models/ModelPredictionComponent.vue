@@ -29,7 +29,7 @@
 
             <div class="row mt-3">
 
-                <b-button class="col-4 offset-4 mb-3" @click="getPrediction(modelForPrediction, sentenceToPredict)"
+                <b-button class="col-4 offset-4 mb-3 mainColor" @click="getPrediction(modelForPrediction, sentenceToPredict)"
                     :disabled="!predictButtonIsEnabled">Predict</b-button>
 
             </div>

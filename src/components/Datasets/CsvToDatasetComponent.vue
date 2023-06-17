@@ -55,7 +55,7 @@
             </div>
 
             <div class="row mt-5">
-                <b-button class="col-4 offset-4 mb-3" @click="importCsvToDataset()"
+                <b-button class="col-4 offset-4 mb-3 mainColor" @click="importCsvToDataset()"
                     :disabled="!importButtonIsEnabled">Import</b-button>
             </div>
 

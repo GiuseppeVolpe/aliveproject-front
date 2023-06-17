@@ -29,12 +29,12 @@
                     </div>
 
                     <div class="row mt-1 mb-1">
-                        <b-button class="col-12 buttonColor" @click="signup()"
+                        <b-button class="col-12 mainColor" @click="signup()"
                             :disabled="!signupButtonIsEnabled">Signup</b-button>
                     </div>
 
                     <div class="row mt-1 mb-4">
-                        <b-button class="col-12 buttonColor" @click="goToLogin()">Go to login</b-button>
+                        <b-button class="col-12 mainColor" @click="goToLogin()">Go to login</b-button>
                     </div>
 
                 </div>

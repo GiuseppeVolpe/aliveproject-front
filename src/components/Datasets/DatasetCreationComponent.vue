@@ -25,7 +25,7 @@
 
             <div class="row mt-3">
 
-                <b-button class="col-4 offset-4 mb-3" @click="createNewDataset(newDatasetName)"
+                <b-button class="col-4 offset-4 mb-3 mainColor" @click="createNewDataset(newDatasetName)"
                     :disabled="!createButtonIsEnabled">
                     Create new dataset
                 </b-button>

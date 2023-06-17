@@ -69,4 +69,16 @@ export default {
   color: #8bd9b6;
   margin-top: 60px;
 }
+button.mainColor {
+  background-color: #8bd9b6;
+  border-color: #8bd9b6;
+  font: optional;
+  color: #fff;
+}
+button.mainColor.disabled {
+  background-color: #8bd9b6;
+  border-color: #8bd9b6;
+  font: optional;
+  color: #fff;
+}
 </style>

@@ -18,7 +18,7 @@
                 </div>
 
                 <div class="col-4">
-                  <b-button class="col-12" @click="selectEnvironment()" :disabled="!selectButtonIsEnabled">
+                  <b-button class="col-12 mainColor" @click="selectEnvironment()" :disabled="!selectButtonIsEnabled">
                     Select
                   </b-button>
                 </div>
@@ -54,7 +54,7 @@
               </div>
 
               <div class="col-3">
-                <b-button class="col-12 mt-2 mb-3 buttonColor" @click="createNewEnvironment(newEnvName)"
+                <b-button class="col-12 mt-2 mb-3 mainColor" @click="createNewEnvironment(newEnvName)"
                   :disabled="!createButtonIsEnabled">
                   Create new environment
                 </b-button>

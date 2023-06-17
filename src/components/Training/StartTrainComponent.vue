@@ -14,11 +14,11 @@
             <div class="col-2">
 
                 <div class="row">
-                    <b-button @click="startTrain()" :disabled="!startButtonIsEnabled">Start training</b-button>
+                    <b-button class="mainColor" @click="startTrain()" :disabled="!startButtonIsEnabled">Start training</b-button>
                 </div>
 
                 <div class="row mt-2">
-                    <b-button @click="stopTrain()" :disabled="!stopButtonIsEnabled">Stop training</b-button>
+                    <b-button class="mainColor" @click="stopTrain()" :disabled="!stopButtonIsEnabled">Stop training</b-button>
                 </div>
 
             </div>

@@ -44,7 +44,7 @@
             </div>
 
             <div class="row mt-3">
-                <b-button class="col-4 mb-3 offset-4" @click="addToTrainQueue()" :disabled="!addButtonIsEnabled">
+                <b-button class="col-4 mb-3 offset-4 mainColor" @click="addToTrainQueue()" :disabled="!addButtonIsEnabled">
                     Add to training queue
                 </b-button>
             </div>
