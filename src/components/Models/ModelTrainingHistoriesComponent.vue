@@ -12,24 +12,37 @@
                 </div>
             </div>
 
-            <template v-if="trainingGraphs.length > 0">
+            <template v-if="modelToShow != null">
 
-                <b-container fluid class="p-4 mt-2 mb-4">
-                    <b-row>
-                        <b-col>
-                            <b-button v-if="selectedGraphIndex > 0" @click="changeSelectedGraph(1)">Previous</b-button>
-                        </b-col>
+                <template v-if="trainingGraphs.length > 0">
 
-                        <b-col>
-                            <b-img :src="trainingGraphs[selectedGraphIndex]" width="500" height="415"></b-img>
-                        </b-col>
+                    <b-container fluid class="p-4 mt-2 mb-4">
+                        <b-row>
+                            <b-col>
+                                <b-button v-if="selectedGraphIndex > 0" @click="changeSelectedGraph(1)">Previous</b-button>
+                            </b-col>
 
-                        <b-col>
-                            <b-button v-if="selectedGraphIndex < (trainingGraphs.length - 1)"
-                                @click="changeSelectedGraph(-1)">Next</b-button>
-                        </b-col>
-                    </b-row>
-                </b-container>
+                            <b-col>
+                                <b-img :src="trainingGraphs[selectedGraphIndex]" width="500" height="415"></b-img>
+                            </b-col>
+
+                            <b-col>
+                                <b-button v-if="selectedGraphIndex < (trainingGraphs.length - 1)"
+                                    @click="changeSelectedGraph(-1)">Next</b-button>
+                            </b-col>
+                        </b-row>
+                    </b-container>
+
+                </template>
+                <template v-else>
+
+                    <div class="row mt-3 mb-3">
+                        <div class="col-6 offset-3">
+                            Nothing to show...
+                        </div>
+                    </div>
+
+                </template>
 
             </template>
 

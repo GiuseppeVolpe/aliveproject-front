@@ -6,7 +6,7 @@
 
                 <div class="col-4">
                     <small class="form-text text-muted">Select Model</small>
-                    <b-form-select v-model="selectedModel" :options="getAvailableModels" class="form-control" size="lg">
+                    <b-form-select v-model="selectedModel" :options="getAvailableModels" class="form-control">
                         <option value="null" disabled hidden>Select model</option>
                     </b-form-select>
 
@@ -14,7 +14,7 @@
 
                 <div class="col-4">
                     <small class="form-text text-muted">Select Dataset</small>
-                    <b-form-select v-model="selectedDataset" :options="getLegalDatasets" class="form-control" size="lg">
+                    <b-form-select v-model="selectedDataset" :options="getLegalDatasets" class="form-control">
                         <option value="null" disabled hidden>Select dataset</option>
                     </b-form-select>
                 </div>

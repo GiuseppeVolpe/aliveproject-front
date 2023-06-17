@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-8 offset-2 mt-3">
                 <small class="form-text text-muted">Training session to remove</small>
-                <b-form-select v-model="trainingSessionToRemove" :options="getTrainQueue" class="form-control" size="lg">
+                <b-form-select v-model="trainingSessionToRemove" :options="getTrainQueue" class="form-control">
                     <option value="null" disabled hidden>Select training session to remove</option>
                 </b-form-select>
             </div>
