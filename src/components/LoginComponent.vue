@@ -1,36 +1,43 @@
 <template>
   <div id="loginComponent" class="mt-0 mb-0 mainColor">
-    <div class="row mt-5">
-      <div class="col-2 offset-5 shadow border rounded mt-5 mb-5 secondaryColor">
+    <div class="row">
+      <div class="col mt-5">
+        <div class="row mt-5">
 
-        <b-img class="mt-5 mb-5" src="logo/green_logo.png" width="200" height="50"></b-img>
+          <div class="col-2 offset-5 shadow border rounded mt-5 mb-5 secondaryColor">
 
-        <div class="col-10 offset-1">
+            <b-img class="mt-5 mb-5" src="logo/green_logo.png" width="200" height="50"></b-img>
 
-          <div class="row">
-            <input name="username" type="text" class="form-control mb-2" placeholder="Username" title="Digit username"
-              minlength="2" maxlength="50" required autofocus v-model="userDetails.username" />
+            <div class="col-10 offset-1">
+
+              <div class="row">
+                <input name="username" type="text" class="form-control mb-2" placeholder="Username" title="Digit username"
+                  minlength="2" maxlength="50" required autofocus v-model="userDetails.username" />
+              </div>
+
+              <div class="row">
+                <input name="password" type="password" class="form-control mb-4" placeholder="Password"
+                  title="Digit password" minlength="8" maxlength="50" required v-model="userDetails.password" />
+              </div>
+
+              <div class="row">
+                <AlertComponent :alerts="alerts" backgroundColor="#8bd9b6" textColor="#ffffff"></AlertComponent>
+              </div>
+
+              <div class="row">
+                <b-button class="col-12 mb-1 mainColor" @click="login()"
+                  :disabled="!loginButtonIsEnabled">Login</b-button>
+              </div>
+
+              <div class="row">
+                <b-button class="col-12 mb-3 mainColor" @click="goToSignup()">Go to signup</b-button>
+              </div>
+
+            </div>
+
           </div>
-
-          <div class="row">
-            <input name="password" type="password" class="form-control mb-4" placeholder="Password" title="Digit password"
-              minlength="8" maxlength="50" required v-model="userDetails.password" />
-          </div>
-
-          <div class="row">
-            <AlertComponent :alerts="alerts" backgroundColor="#8bd9b6" textColor="#ffffff"></AlertComponent>
-          </div>
-
-          <div class="row">
-            <b-button class="col-12 mb-1 mainColor" @click="login()" :disabled="!loginButtonIsEnabled">Login</b-button>
-          </div>
-
-          <div class="row">
-            <b-button class="col-12 mb-3 mainColor" @click="goToSignup()">Go to signup</b-button>
-          </div>
-
+          
         </div>
-
       </div>
     </div>
   </div>
@@ -114,7 +121,7 @@ export default {
 
 <style scoped>
 #loginComponent {
-  margin-top: 0px;
+  margin-top: 5px;
   height: 100vh;
 }
 </style>

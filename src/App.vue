@@ -14,6 +14,11 @@
   </div>
 </template>
 
+<script setup>
+const mainColor = "#8bd9b6"
+const secondaryColor = "#fff"
+</script>
+
 <script>
 import { RouterView } from "vue-router";
 import { mapGetters } from "vuex";
@@ -42,6 +47,12 @@ export default {
       "getUserId",
       "isTrainingInProgress",
     ]),
+
+    cssVars() {
+      return {
+        '--main-color': "#8bd9b6",
+      }
+    }
   },
 
   data: function () {
@@ -64,7 +75,6 @@ export default {
 </script>
 
 <style>
-
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -74,27 +84,26 @@ export default {
 }
 
 .mainColor {
-  background-color: #8bd9b6;
-  border-color: #8bd9b6;
+  background-color: v-bind(mainColor);
+  border-color: v-bind(mainColor);
 }
 
 .secondaryColor {
-  background-color: #fff;
-  border-color: #fff;
+  background-color: v-bind(secondaryColor);
+  border-color: v-bind(secondaryColor);
 }
 
 button.mainColor {
-  background-color: #8bd9b6;
-  border-color: #8bd9b6;
-  color: #fff;
+  background-color: v-bind(mainColor);
+  border-color: v-bind(mainColor);
+  color: v-bind(secondaryColor);
   font: optional;
 }
 
 button.mainColor.disabled {
-  background-color: #8bd9b6;
-  border-color: #8bd9b6;
-  color: #fff;
+  background-color: v-bind(mainColor);
+  border-color: v-bind(mainColor);
+  color: v-bind(secondaryColor);
   font: optional;
 }
-
 </style>

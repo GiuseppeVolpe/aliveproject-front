@@ -1,44 +1,52 @@
 <template>
     <div id="signupComponent" class="mt-0 mb-0 mainColor">
-        <div class="row mt-5">
-            <div class="col-2 offset-5 shadow border rounded mt-5 mb-5 secondaryColor">
+        <div class="row">
+            <div class="col mt-5">
+                <div class="row mt-5">
 
-                <b-img class="mt-5 mb-5" src="logo/green_logo.png" width="200" height="50"></b-img>
+                    <div class="col-2 offset-5 shadow border rounded mt-5 mb-5 secondaryColor">
 
-                <div class="col-10 offset-1">
+                        <b-img class="mt-5 mb-5" src="logo/green_logo.png" width="200" height="50"></b-img>
 
-                    <div class="row">
-                        <input name="username" type="text" class="form-control mt-3 mb-1" placeholder="Username"
-                            title="Digit a username" minlength="2" maxlength="50" required autofocus
-                            v-model="userDetails.username" />
-                    </div>
+                        <div class="col-10 offset-1">
 
-                    <div class="row">
-                        <input name="email" type="text" class="form-control mt-1 mb-1" placeholder="Email"
-                            title="Digit your email" minlength="5" maxlength="50" required v-model="userDetails.email" />
-                    </div>
+                            <div class="row">
+                                <input name="username" type="text" class="form-control mt-3 mb-1" placeholder="Username"
+                                    title="Digit a username" minlength="2" maxlength="50" required autofocus
+                                    v-model="userDetails.username" />
+                            </div>
 
-                    <div class="row">
-                        <input name="password" type="password" class="form-control mt-1 mb-1" placeholder="Password"
-                            title="Create a password" minlength="8" maxlength="50" required
-                            v-model="userDetails.password" />
-                    </div>
+                            <div class="row">
+                                <input name="email" type="text" class="form-control mt-1 mb-1" placeholder="Email"
+                                    title="Digit your email" minlength="5" maxlength="50" required
+                                    v-model="userDetails.email" />
+                            </div>
 
-                    <div class="row mt-2 mb-1">
-                        <AlertComponent :alerts="alerts" backgroundColor="#8bd9b6" textColor="#ffffff"></AlertComponent>
-                    </div>
+                            <div class="row">
+                                <input name="password" type="password" class="form-control mt-1 mb-1" placeholder="Password"
+                                    title="Create a password" minlength="8" maxlength="50" required
+                                    v-model="userDetails.password" />
+                            </div>
 
-                    <div class="row mt-1 mb-1">
-                        <b-button class="col-12 mainColor" @click="signup()"
-                            :disabled="!signupButtonIsEnabled">Signup</b-button>
-                    </div>
+                            <div class="row mt-2 mb-1">
+                                <AlertComponent :alerts="alerts" backgroundColor="#8bd9b6" textColor="#ffffff">
+                                </AlertComponent>
+                            </div>
 
-                    <div class="row mt-1 mb-4">
-                        <b-button class="col-12 mainColor" @click="goToLogin()">Go to login</b-button>
+                            <div class="row mt-1 mb-1">
+                                <b-button class="col-12 mainColor" @click="signup()"
+                                    :disabled="!signupButtonIsEnabled">Signup</b-button>
+                            </div>
+
+                            <div class="row mt-1 mb-4">
+                                <b-button class="col-12 mainColor" @click="goToLogin()">Go to login</b-button>
+                            </div>
+
+                        </div>
+
                     </div>
 
                 </div>
-
             </div>
         </div>
     </div>
@@ -131,7 +139,7 @@ export default {
 
 <style scoped>
 #signupComponent {
-  margin-top: 0px;
-  height: 100vh;
+    margin-top: 0px;
+    height: 100vh;
 }
 </style>
