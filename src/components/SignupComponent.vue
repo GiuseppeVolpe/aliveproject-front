@@ -107,7 +107,7 @@ export default {
                 switch (responseData.code) {
                     case 1:
                         this.goToLogin()
-                        this.$store.commit("pushAlert", "User added succesfully!")
+                        this.$root.$emit("pushAlert", "User added succesfully!")
                         break
                     case 1000:
                     case 1001:

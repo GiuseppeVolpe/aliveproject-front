@@ -116,14 +116,14 @@ export default {
                     case 1000:
                     case 1001:
                     case 1002:
-                        this.$store.commit("pushAlert", "Something went wrong when trying to predict...")
+                        this.$root.$emit("pushAlert", "Something went wrong when trying to predict...")
                 }
 
                 this.loading = false
                 this.setWaitingForServerResponse(false)
             })
                 .catch(function (error) {
-                    this.$store.commit("pushAlert", error.toJSON())
+                    this.$root.$emit("pushAlert", error.toJSON())
 
                     this.loading = false
                     this.setWaitingForServerResponse(false)

@@ -92,12 +92,12 @@ export default {
                     case 1:
                         this.$root.$emit("TrainingStarted")
                         this.setTrainingInProgress(true)
-                        this.$store.commit("pushAlert", "Training started!")
+                        this.$root.$emit("pushAlert", "Training started!")
                         break
                     case 1000:
                     case 1001:
                     case 1002:
-                        this.$store.commit("pushAlert", "Couldn't start training...")
+                        this.$root.$emit("pushAlert", "Couldn't start training...")
                 }
 
                 this.setWaitingForServerResponse(false)
@@ -123,18 +123,18 @@ export default {
                     case 1:
                         this.$root.$emit("TrainingStopped")
                         this.setTrainingInProgress(false)
-                        this.$store.commit("pushAlert", "Training stopped!")
+                        this.$root.$emit("pushAlert", "Training stopped!")
                         break
                     case 1000:
                     case 1001:
                     case 1002:
-                        this.$store.commit("pushAlert", "Couldn't stop training...")
+                        this.$root.$emit("pushAlert", "Couldn't stop training...")
                 }
 
                 this.setWaitingForServerResponse(false)
 
             }).catch(function (error) {
-                //this.$store.commit("pushAlert", error.toJSON())
+                //this.$root.$emit("pushAlert", error.toJSON())
                 console.log(error)
 
                 this.setWaitingForServerResponse(false)

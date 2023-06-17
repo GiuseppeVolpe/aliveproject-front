@@ -28,7 +28,7 @@ export default {
   },
 
   mounted() {
-    this.$root.$on("pushAlert", (message, desiredTitle = "alert", desiredDelay = 5000, append = false) => {
+    this.$root.$on("pushAlert", (message, desiredTitle = "Notification", desiredDelay = 5000, append = false) => {
       this.pushAlert(message, desiredTitle, desiredDelay, append)
     })
   },
@@ -46,7 +46,7 @@ export default {
   },
 
   methods: {
-    pushAlert(message, desiredTitle = "alert", desiredDelay = 5000, append = false) {
+    pushAlert(message, desiredTitle, desiredDelay, append) {
       this.$root.$bvToast.toast(message, {
         title: desiredTitle,
         autoHideDelay: desiredDelay,

@@ -183,7 +183,7 @@ export default {
           case 1:
             this.newEnvName = ""
             this.updateAvailableEnvsAction()
-            this.$store.commit("pushAlert", "Environment created succesfully!")
+            this.$root.$emit("pushAlert", "Environment created succesfully!")
             break
           case 1000:
           case 1001:

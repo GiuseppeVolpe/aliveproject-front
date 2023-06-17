@@ -62,7 +62,7 @@ export default {
             }
 
             if (this.getUserId == null || this.getSelectedEnvId == null) {
-                this.$store.commit("pushAlert", "Lost your session data... try to login again.")
+                this.$root.$emit("pushAlert", "Lost your session data... try to login again.")
                 this.resetState()
                 this.$router.push("/")
                 return
@@ -103,12 +103,12 @@ export default {
                             console.log(byteArray)
                         }
 
-                        this.$store.commit("pushAlert", "Graphs loaded!")
+                        this.$root.$emit("pushAlert", "Graphs loaded!")
                         break
                     case 1000:
                     case 1001:
                     case 1002:
-                        this.$store.commit("pushAlert", "Couldn't load graphs...")
+                        this.$root.$emit("pushAlert", "Couldn't load graphs...")
                 }
 
                 this.setWaitingForServerResponse(false)

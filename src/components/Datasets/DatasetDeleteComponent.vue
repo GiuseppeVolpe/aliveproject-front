@@ -71,7 +71,7 @@ export default {
             }
 
             if (this.getUserId == null || this.getSelectedEnvId == null) {
-                this.$store.commit("pushAlert", "Lost your session data... try to login again.")
+                this.$root.$emit("pushAlert", "Lost your session data... try to login again.")
                 this.resetState()
                 this.$router.push("/")
                 return
@@ -96,12 +96,12 @@ export default {
 
                 switch (responseData.code) {
                     case 1:
-                        this.$store.commit("pushAlert", "Dataset deleted!")
+                        this.$root.$emit("pushAlert", "Dataset deleted!")
                         break
                     case 1000:
                     case 1001:
                     case 1002:
-                        this.$store.commit("pushAlert", "Couldn't delete the dataset...")
+                        this.$root.$emit("pushAlert", "Couldn't delete the dataset...")
                 }
 
                 this.updateAvailableDatasetsAction()

@@ -65,7 +65,7 @@ export default {
             }
 
             if (this.getUserId == null || this.getSelectedEnvId == null) {
-                this.$store.commit("pushAlert", "Lost your session data... try to login again.")
+                this.$root.$emit("pushAlert", "Lost your session data... try to login again.")
                 this.resetState()
                 this.$router.push("/")
                 return
@@ -90,19 +90,19 @@ export default {
 
                 switch (responseData.code) {
                     case 1:
-                        this.$store.commit("pushAlert", "Removed training session from queue!")
+                        this.$root.$emit("pushAlert", "Removed training session from queue!")
                         break
                     case 1000:
                     case 1001:
                     case 1002:
-                        this.$store.commit("pushAlert", "Couldn't remove the training session from queue...")
+                        this.$root.$emit("pushAlert", "Couldn't remove the training session from queue...")
                 }
 
                 this.updateTrainQueueAction()
                 this.setWaitingForServerResponse(false)
             })
                 .catch(function (error) {
-                    this.$store.commit("pushAlert", error.toJSON())
+                    this.$root.$emit("pushAlert", error.toJSON())
 
                     this.setWaitingForServerResponse(false)
                 })
