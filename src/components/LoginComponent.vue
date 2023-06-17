@@ -3,7 +3,7 @@
     <div class="row mt-5">
       <div class="col-2 offset-5 border rounded mt-5 mb-5">
 
-        <img class="mt-5 mb-5" src="@/assets/green_logo.png" width="200" height="50">
+        <b-img class="mt-5 mb-5" src="logo/green_logo.png" width="200" height="50"></b-img>
 
         <div class="col-10 offset-1">
 
