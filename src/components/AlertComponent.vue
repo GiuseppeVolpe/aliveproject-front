@@ -1,6 +1,6 @@
 <template>
     <div v-if="alerts.length > 0">
-        <b-alert show>
+        <b-alert show :style="customStyle">
             <li v-for="(err, index) in alerts" :key="index">
                 {{ err }}
             </li>
@@ -15,7 +15,10 @@ export default {
 
   data() {
     return {
-        
+        customStyle: {
+          backgroundColor: this.backgroundColor,
+          color: this.textColor,
+        }
     }
   },
 
@@ -28,6 +31,8 @@ export default {
   
   props: {
     alerts: [],
+    backgroundColor: String,
+    textColor: String,
   },
 
 }

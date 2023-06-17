@@ -18,6 +18,10 @@
           </div>
 
           <div class="row">
+            <AlertComponent :alerts="alerts" backgroundColor="#8bd9b6" textColor="#ffffff"></AlertComponent>
+          </div>
+
+          <div class="row">
             <b-button class="col-12 mb-1 buttonColor" @click="login()" :disabled="!loginButtonIsEnabled">Login</b-button>
           </div>
 
@@ -35,11 +39,13 @@
 <script>
 import axios from 'axios';
 
+import AlertComponent from '@/components/AlertComponent';
+
 export default {
   name: "LoginComponent",
 
   components: {
-
+    AlertComponent,
   },
 
   data() {

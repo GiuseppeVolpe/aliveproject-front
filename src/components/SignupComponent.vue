@@ -24,15 +24,17 @@
                             v-model="userDetails.password" />
                     </div>
 
-                    <AlertComponent :alerts="alerts"></AlertComponent>
+                    <div class="row mt-2 mb-1">
+                        <AlertComponent :alerts="alerts" backgroundColor="#8bd9b6" textColor="#ffffff"></AlertComponent>
+                    </div>
 
-                    <div class="row">
-                        <b-button class="col-12 mt-3 mb-1 buttonColor" @click="signup()"
+                    <div class="row mt-1 mb-1">
+                        <b-button class="col-12 buttonColor" @click="signup()"
                             :disabled="!signupButtonIsEnabled">Signup</b-button>
                     </div>
 
-                    <div class="row">
-                        <b-button class="col-12 mt-1 mb-4 buttonColor" @click="goToLogin()">Go to login</b-button>
+                    <div class="row mt-1 mb-4">
+                        <b-button class="col-12 buttonColor" @click="goToLogin()">Go to login</b-button>
                     </div>
 
                 </div>
