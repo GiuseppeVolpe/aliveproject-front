@@ -6,7 +6,7 @@
             <div class="row mt-3">
                 <div class="col-4 offset-4">
                     <small class="form-text text-muted">Dataset To Delete</small>
-                    <b-form-select v-model="datasetToDelete" :options="getAvailableDatasets" class="form-control" size="lg">
+                    <b-form-select v-model="datasetToDelete" :options="getAvailableDatasets" class="form-control">
                         <option value="null" disabled hidden>Select dataset to delete</option>
                     </b-form-select>
                 </div>

@@ -1,6 +1,7 @@
 <template>
     <div class="row">
         <div class="col-12 ml-2 mr-2 pl-2 pr-2">
+
             <div class="row mt-3">
                 <div class="col-4 offset-4">
 
@@ -10,6 +11,7 @@
                     </b-form-select>
                 </div>
             </div>
+
             <div class="row mt-3">
 
                 <div class="col-4 offset-4">
@@ -17,6 +19,7 @@
                         :disabled="!deleteButtonIsEnabled">Delete model</b-button>
                 </div>
             </div>
+            
         </div>
     </div>
 </template>

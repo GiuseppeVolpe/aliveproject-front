@@ -80,7 +80,11 @@
                 </div>
             </div>
 
-            <PulseLoader :loading="loading"></PulseLoader>
+            <div class="row mt-2 mb-2">
+                <div class="col-4 offset-4">
+                    <PulseLoader :loading="loading" color="#8bd9b6"></PulseLoader>
+                </div>
+            </div>
 
         </div>
     </div>

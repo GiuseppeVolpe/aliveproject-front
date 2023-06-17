@@ -3,10 +3,9 @@
         <div class="col-12 ml-2 mr-2 pl-2 pr-2">
 
             <div class="row mt-3">
-                <div class="col-4 offset-4">
+                <div class="col-6 offset-3">
                     <small class="form-text text-muted">Select Model</small>
-                    <b-form-select v-model="modelForPrediction" :options="getAvailableModels" class="form-control"
-                        size="lg">
+                    <b-form-select v-model="modelForPrediction" :options="getAvailableModels" class="form-control">
                         <option value="null" disabled hidden>Select Model to make a prediction</option>
                     </b-form-select>
                 </div>
@@ -25,7 +24,7 @@
                     <textarea type="text" name="prediction" class="form-control mb-2" placeholder="Prediction"
                         maxlength="500" v-model="prediction" readonly />
                 </div>
-                
+
             </div>
 
             <div class="row mt-3">
@@ -35,7 +34,11 @@
 
             </div>
 
-            <PulseLoader :loading="loading"></PulseLoader>
+            <div class="row mt-2 mb-2">
+                <div class="col-4 offset-4">
+                    <PulseLoader :loading="loading" color="#8bd9b6"></PulseLoader>
+                </div>
+            </div>
 
         </div>
     </div>
@@ -109,6 +112,8 @@ export default {
             axios.post(url_to_predict, payload).then(response => {
                 var responseData = response.data
 
+                console.log(responseData)
+
                 switch (responseData.code) {
                     case 1:
                         this.prediction = responseData.data.prediction
@@ -121,13 +126,12 @@ export default {
 
                 this.loading = false
                 this.setWaitingForServerResponse(false)
-            })
-                .catch(function (error) {
-                    this.$root.$emit("pushAlert", error.toJSON())
+            }).catch(function (error) {
+                this.$root.$emit("pushAlert", error.toJSON())
 
-                    this.loading = false
-                    this.setWaitingForServerResponse(false)
-                })
+                this.loading = false
+                this.setWaitingForServerResponse(false)
+            })
         },
     },
 }

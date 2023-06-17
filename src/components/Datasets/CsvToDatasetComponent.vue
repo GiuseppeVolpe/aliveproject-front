@@ -5,7 +5,8 @@
             <div class="row mt-3">
                 <div class="col-6 offset-3">
                     <small class="form-text text-muted">Select Dataset</small>
-                    <b-form-select v-model="selectedDataset" :options="$store.getters.getAvailableDatasets" class="form-control" size="lg">
+                    <b-form-select v-model="selectedDataset" :options="$store.getters.getAvailableDatasets"
+                        class="form-control">
                         <option value="null" disabled hidden>Select a dataset for the import</option>
                     </b-form-select>
                 </div>
@@ -13,14 +14,14 @@
 
             <div class="row mt-3">
 
-                <div v-if="selectedDataset != null && selectedDataset.type == 'SLCM'">
+                <template v-if="selectedDataset != null && selectedDataset.type == 'SLCM'">
                     <div class="col-6 offset-3">
                         <small class="form-text text-muted">Text Column Name</small>
                         <input type="text" name="textColumnName" class="form-control" v-model="textColumnName">
                     </div>
-                </div>
+                </template>
 
-                <div v-if="selectedDataset != null && selectedDataset.type == 'TLCM'">
+                <template v-if="selectedDataset != null && selectedDataset.type == 'TLCM'">
                     <div class="col-4 offset-2">
                         <small class="form-text text-muted">Sentence Index Column Name</small>
                         <input type="text" name="sentenceIdxColumnName" class="form-control"
@@ -31,7 +32,7 @@
                         <small class="form-text text-muted">Word Column Name</small>
                         <input type="text" name="wordColumnName" class="form-control" v-model="wordColumnName">
                     </div>
-                </div>
+                </template>
 
             </div>
 
@@ -39,7 +40,7 @@
                 <div class="col-6 offset-3">
                     <small class="form-text text-muted">Example Category</small>
                     <b-form-select v-model="selectedExampleCategory" :options="getAvailableExampleCategories"
-                        class="form-control" size="lg">
+                        class="form-control">
                         <option value="null" disabled hidden>Select an example category</option>
                     </b-form-select>
                 </div>
@@ -58,7 +59,11 @@
                     :disabled="!importButtonIsEnabled">Import</b-button>
             </div>
 
-            <PulseLoader :loading="loading"></PulseLoader>
+            <div class="row mt-2 mb-2">
+                <div class="col-4 offset-4">
+                    <PulseLoader :loading="loading" color="#8bd9b6"></PulseLoader>
+                </div>
+            </div>
 
         </div>
     </div>
@@ -87,12 +92,11 @@ export default {
             wordColumnName: "word",
             selectedExampleCategory: null,
             loading: false,
-            file1: null
         };
     },
 
     mounted() {
-
+        
     },
 
     computed: {

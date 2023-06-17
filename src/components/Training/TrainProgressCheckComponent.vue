@@ -5,21 +5,22 @@
                 <div class="container-fluid">
                     <div class="shadow rounded border border-primary">
 
-                        <div v-if="test && (currentSessionEpoch >= 0)">
-                            <div class="row">
-                                <div class="col-10 offset-5">
-                                    <div class="row mt-3 mb-3">
-                                        <rotate-loader :loading="test"></rotate-loader>
-                                    </div>
+                        <template v-if="isTrainingInProgress && (currentSessionEpoch > 0)">
 
-                                    <div class="row mt-3 mb-3">
-                                        Now training {{ currentSessionModelName }} on {{ currentSessionDatasetName }},
-                                        epoch {{ currentSessionEpoch }} out of {{ currentSessionEpochsLeft }}.
-                                    </div>
+                            <div class="row mt-3 mb-3">
+                                <div class="col-4 offset-4">
+                                    <PulseLoader :loading="isTrainingInProgress" color="#8bd9b6"></PulseLoader>
                                 </div>
                             </div>
-                        </div>
 
+                            <div class="row mt-3 mb-3">
+                                <div class="col-4 offset-4">
+                                    Now training {{ currentSessionModelName }} on {{ currentSessionDatasetName }},
+                                    epoch {{ currentSessionEpoch }} out of {{ currentSessionEpochsLeft }}.
+                                </div>
+                            </div>
+
+                        </template>
                     </div>
                 </div>
             </div>
@@ -31,13 +32,13 @@
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import axios from 'axios';
 
-import RotateLoader from 'vue-spinner/src/RotateLoader.vue'
+import PulseLoader from "vue-spinner/src/PulseLoader";
 
 export default {
     name: "TrainProgressCheckComponent",
 
     components: {
-        RotateLoader,
+        PulseLoader,
     },
 
     data() {
@@ -48,7 +49,6 @@ export default {
             currentSessionEpoch: 0,
             currentSessionEpochsLeft: 0,
             timer: null,
-            test: true,
         };
     },
 

@@ -5,7 +5,7 @@
     </div>
     <RouterView></RouterView>
 
-    <div v-if="false">
+    <div v-if="isTrainingInProgress">
           <TrainProgressCheckComponent></TrainProgressCheckComponent>
     </div>
   </div>
@@ -37,6 +37,7 @@ export default {
   computed: {
     ...mapGetters([
       "getUserId",
+      "isTrainingInProgress",
     ]),
   },
 

@@ -10,8 +10,7 @@
                 </div>
                 <div class="col-5">
                     <small class="form-text text-muted">Select dataset type</small>
-                    <b-form-select v-model="selectedDatasetType" :options="getAvailableModelTypes" class="form-control"
-                        size="lg">
+                    <b-form-select v-model="selectedDatasetType" :options="getAvailableModelTypes" class="form-control">
                         <option value="null" disabled hidden>Select dataset type</option>
                     </b-form-select>
                 </div>
@@ -31,9 +30,14 @@
                     Create new dataset
                 </b-button>
 
-                <PulseLoader :loading="loading"></PulseLoader>
-
             </div>
+
+            <div class="row mt-2 mb-2">
+                <div class="col-4 offset-4">
+                    <PulseLoader :loading="loading" color="#8bd9b6"></PulseLoader>
+                </div>
+            </div>
+
         </div>
     </div>
 </template>
