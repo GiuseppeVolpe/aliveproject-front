@@ -188,7 +188,7 @@ export default new Vuex.Store({
       context.commit("setSelectedEnvName", null)
       router.push("/env_selection")
 
-      context.commit("pushAlert", "Environment closed!")
+      //context.commit("pushAlert", "Environment closed!")
     },
 
     deleteSelectedEnvAction(context) {
@@ -210,12 +210,12 @@ export default new Vuex.Store({
 
         switch (responseData.code) {
           case 1:
-            context.commit("pushAlert", "Environment deleted succesfully!")
+            //context.commit("pushAlert", "Environment deleted succesfully!")
             break
           case 1000:
           case 1001:
           case 1002:
-            context.commit("pushAlert", "Couldn't delete the environment...")
+            //context.commit("pushAlert", "Couldn't delete the environment...")
         }
       })
     },
@@ -223,7 +223,7 @@ export default new Vuex.Store({
     async updateAvailableModelsAction(context) {
 
       if (context.getters.getUserId == null || context.getters.getSelectedEnvId == null) {
-        context.commit("pushAlert", "Lost your session data... try to login again.")
+        //context.commit("pushAlert", "Lost your session data... try to login again.")
         context.commit("resetState")
         router.push("/")
         return
@@ -247,7 +247,7 @@ export default new Vuex.Store({
     async updateAvailableDatasetsAction(context) {
 
       if (context.getters.getUserId == null || context.getters.getSelectedEnvId == null) {
-        context.commit("pushAlert", "Lost your session data... try to login again.")
+        //context.commit("pushAlert", "Lost your session data... try to login again.")
         context.commit("resetState")
         router.push("/")
         return
@@ -271,7 +271,7 @@ export default new Vuex.Store({
     async updateTrainQueueAction(context) {
 
       if (context.getters.getUserId == null || context.getters.getSelectedEnvId == null) {
-        context.commit("pushAlert", "Lost your session data... try to login again.")
+        //context.commit("pushAlert", "Lost your session data... try to login again.")
         context.commit("resetState")
         router.push("/")
         return

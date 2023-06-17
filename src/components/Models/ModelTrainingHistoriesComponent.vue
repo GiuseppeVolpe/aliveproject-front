@@ -5,29 +5,33 @@
             <div class="row mt-3 mb-3">
                 <div class="col-4 offset-4">
                     <small class="form-text text-muted">Model To Show</small>
-                    <b-form-select v-model="modelToShow" :options="getAvailableModels" @change="getGraphs"
+                    <b-form-select v-model="modelToShow" :options="getAvailableModels" @change="updateGraphs()"
                         class="form-control">
                         <option value="null" disabled hidden>Select Model to Show</option>
                     </b-form-select>
                 </div>
             </div>
 
-            <b-container fluid class="p-4 mt-2 mb-4">
-                <b-row>
-                    <b-col>
-                        <b-button>Previous</b-button>
-                    </b-col>
+            <template v-if="trainingGraphs.length > 0">
 
-                    <b-col>
-                        <!--<b-img thumbnail fluid src="https://picsum.photos/250/250/?image=54" alt="Image 1"></b-img>-->
-                        <b-img :src="selectedGraph" width="600" height="500"></b-img>
-                    </b-col>
+                <b-container fluid class="p-4 mt-2 mb-4">
+                    <b-row>
+                        <b-col>
+                            <b-button v-if="selectedGraphIndex > 0" @click="changeSelectedGraph(1)">Previous</b-button>
+                        </b-col>
 
-                    <b-col>
-                        <b-button>Next</b-button>
-                    </b-col>
-                </b-row>
-            </b-container>
+                        <b-col>
+                            <b-img :src="trainingGraphs[selectedGraphIndex]" width="500" height="415"></b-img>
+                        </b-col>
+
+                        <b-col>
+                            <b-button v-if="selectedGraphIndex < (trainingGraphs.length - 1)"
+                                @click="changeSelectedGraph(-1)">Next</b-button>
+                        </b-col>
+                    </b-row>
+                </b-container>
+
+            </template>
 
         </div>
     </div>
@@ -44,7 +48,7 @@ export default {
         return {
             modelToShow: null,
             trainingGraphs: [],
-            selectedGraph: null,
+            selectedGraphIndex: null,
         };
     },
 
@@ -72,7 +76,7 @@ export default {
             "updateAvailableModelsAction",
         ]),
 
-        getGraphs(modelToShow) {
+        updateGraphs() {
 
             if (this.isWaitingForServerResponse) {
                 return
@@ -85,17 +89,19 @@ export default {
                 return
             }
 
-            if (modelToShow == null) {
+            this.trainingGraphs = []
+
+            console.log(this.modelToShow)
+
+            if (this.modelToShow == null) {
                 return
             }
-
-            this.setWaitingForServerResponse(true)
 
             var url_to_get_training_graphs = process.env.VUE_APP_API_URL + "get_model_training_graphs"
 
             var payload = {
                 "session": this.getSession,
-                "model_name": modelToShow.name,
+                "model_name": this.modelToShow.name,
             }
 
             axios.post(url_to_get_training_graphs, payload).then(response => {
@@ -108,21 +114,31 @@ export default {
                         var data = responseData.data
 
                         for (var i = 0; i < data.length; i++) {
-                            this.selectedGraph = "data:image/gif;base64," + data[i]
+                            var currentImage = "data:image/gif;base64," + data[i]
+                            this.trainingGraphs.push(currentImage)
                         }
 
-                        this.$root.$emit("pushAlert", "Graphs loaded!")
+                        console.log("Len" + this.trainingGraphs.length)
+
+                        if (this.trainingGraphs.length > 0) {
+                            this.selectedGraphIndex = 0
+                        }
+
                         break
                     case 1000:
                     case 1001:
                     case 1002:
                         this.$root.$emit("pushAlert", "Couldn't load graphs...")
                 }
-
-                this.setWaitingForServerResponse(false)
             }).catch(function (error) {
                 console.log(error)
             })
+        },
+
+        changeSelectedGraph(direction) {
+            if (this.trainingGraphs.length > 0) {
+                this.selectedGraphIndex = Math.min(Math.max(this.selectedGraphIndex - direction, 0), this.trainingGraphs.length - 1)
+            }
         },
     },
 }

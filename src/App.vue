@@ -5,8 +5,9 @@
     </div>
     <RouterView></RouterView>
 
-    <TrainProgressCheckComponent></TrainProgressCheckComponent>
-
+    <div v-if="false">
+          <TrainProgressCheckComponent></TrainProgressCheckComponent>
+    </div>
   </div>
 </template>
 
