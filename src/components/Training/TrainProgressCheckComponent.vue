@@ -98,7 +98,7 @@ export default {
             axios.post(url_to_infos, payload).then(response => {
 
                 var responseData = response.data
-
+                
                 switch (responseData.code) {
                     case 1:
                         var data = responseData.data
