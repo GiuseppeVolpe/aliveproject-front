@@ -1,17 +1,33 @@
 <template>
     <div class="row">
-        <div class="col-12 ml-2 mr-2 pl-2 pr-2">
+        <div class="col-12 ml-2 mr-2">
 
-            <div class="row mt-3">
+            <div class="row mt-3 mb-3">
                 <div class="col-4 offset-4">
-
                     <small class="form-text text-muted">Model To Show</small>
                     <b-form-select v-model="modelToShow" :options="getAvailableModels" @change="getGraphs"
-                        class="form-control" size="lg">
+                        class="form-control">
                         <option value="null" disabled hidden>Select Model to Show</option>
                     </b-form-select>
                 </div>
             </div>
+
+            <b-container fluid class="p-4 mt-2 mb-4">
+                <b-row>
+                    <b-col>
+                        <b-button>Previous</b-button>
+                    </b-col>
+
+                    <b-col>
+                        <!--<b-img thumbnail fluid src="https://picsum.photos/250/250/?image=54" alt="Image 1"></b-img>-->
+                        <b-img :src="selectedGraph" width="600" height="500"></b-img>
+                    </b-col>
+
+                    <b-col>
+                        <b-button>Next</b-button>
+                    </b-col>
+                </b-row>
+            </b-container>
 
         </div>
     </div>
@@ -28,6 +44,7 @@ export default {
         return {
             modelToShow: null,
             trainingGraphs: [],
+            selectedGraph: null,
         };
     },
 
@@ -91,16 +108,7 @@ export default {
                         var data = responseData.data
 
                         for (var i = 0; i < data.length; i++) {
-                            var current_img = data[i]
-
-                            var byteCharacters = atob(current_img);
-                            var byteNumbers = new Array(byteCharacters.length);
-                            for (var j = 0; j < byteCharacters.length; j++) {
-                                byteNumbers[i] = byteCharacters.charCodeAt(i);
-                            }
-                            var byteArray = new Uint8Array(byteNumbers);
-
-                            console.log(byteArray)
+                            this.selectedGraph = "data:image/gif;base64," + data[i]
                         }
 
                         this.$root.$emit("pushAlert", "Graphs loaded!")

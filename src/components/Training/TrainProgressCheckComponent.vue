@@ -1,14 +1,28 @@
 <template>
     <div>
-        <div>
+        <div class="row mt-3">
+            <div class="col-8 offset-2">
+                <div class="container-fluid">
+                    <div class="shadow rounded border border-primary">
 
-            <div v-if="isTrainingInProgress && (currentSessionEpoch > 0)">
-                <rotate-loader :loading="isTrainingInProgress"></rotate-loader>
+                        <div v-if="test && (currentSessionEpoch >= 0)">
+                            <div class="row">
+                                <div class="col-10 offset-5">
+                                    <div class="row mt-3 mb-3">
+                                        <rotate-loader :loading="test"></rotate-loader>
+                                    </div>
 
-                Now training {{ currentSessionModelName }} on {{ currentSessionDatasetName }},
-                epoch {{ currentSessionEpoch }} out of {{ currentSessionEpochsLeft }}.
+                                    <div class="row mt-3 mb-3">
+                                        Now training {{ currentSessionModelName }} on {{ currentSessionDatasetName }},
+                                        epoch {{ currentSessionEpoch }} out of {{ currentSessionEpochsLeft }}.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
-
         </div>
     </div>
 </template>
@@ -34,6 +48,7 @@ export default {
             currentSessionEpoch: 0,
             currentSessionEpochsLeft: 0,
             timer: null,
+            test: true,
         };
     },
 
