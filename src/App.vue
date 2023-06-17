@@ -29,7 +29,7 @@ export default {
   },
 
   mounted() {
-    this.$root.$on("pushAlert", (message, desiredTitle = "Notification", desiredDelay = 5000, append = false) => {
+    this.$root.$on("pushAlert", (message, desiredTitle = "Notification", desiredDelay = 2000, append = false) => {
       this.pushAlert(message, desiredTitle, desiredDelay, append)
     })
   },
