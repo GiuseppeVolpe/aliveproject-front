@@ -34,7 +34,7 @@ export default {
     logout() {
       this.resetState()
       this.$router.push("/")
-      //this.$root.$emit("pushAlert", "Logged out!")
+      this.$root.$emit("pushAlert", "Logged out!")
     },
   }
 }

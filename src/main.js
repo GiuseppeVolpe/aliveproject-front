@@ -14,6 +14,8 @@ Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)
 Vue.use(BVToastPlugin)
 
+//export const eventBus = new Vue()
+
 Vue.config.productionTip = false
 
 new Vue({

@@ -5,7 +5,7 @@
             <div class="col-10">
                 <b-list-group>
                     <b-list-group-item v-for="(trainingSession, index) in getTrainQueue" :key="index">
-                        <b-badge pill variant="primary">{{ index }}</b-badge>
+                        <b-badge pill variant="primary">{{ index + 1 }}</b-badge>
                         {{ trainingSession.text }}, {{ trainingSession.value.num_of_epochs }} epochs
                     </b-list-group-item>
                 </b-list-group>
