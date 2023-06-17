@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <b-navbar toggleable="lg" type="dark" variant="info">
+    <b-navbar toggleable="lg" class="mainColor">
 
       <b-navbar-brand>
         <b-img class="pb-1 mr-2" src="logo/white_logo.png" fluid alt="Alive" height="40" width="130"></b-img>

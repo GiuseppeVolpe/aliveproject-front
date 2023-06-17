@@ -3,11 +3,11 @@
         <div class="row mt-3">
             <div class="col-8 offset-2">
                 <div class="container-fluid">
-                    <div class="shadow rounded border border-primary">
+                    <div class="shadow rounded border-primary">
 
                         <div class="row mt-0">
                             <div class="col-12">
-                                <b-navbar toggleable="lg" type="dark" variant="info">
+                                <b-navbar toggleable="lg" class="mainColor">
 
                                     <b-navbar-brand>
                                         <b-collapse id="nav-collapse" is-nav>

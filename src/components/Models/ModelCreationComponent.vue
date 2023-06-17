@@ -15,10 +15,10 @@
                         <option value="null" disabled hidden>Select model type</option>
                     </b-form-select>
                 </div>
+
                 <div class="col-4">
                     <small class="form-text text-muted">Finetunable</small>
                     <b-checkbox switch v-model="finetunable" class="mt-2" />
-
                 </div>
 
             </div>
