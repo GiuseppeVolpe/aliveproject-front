@@ -4,7 +4,7 @@
     <b-navbar toggleable="lg" type="dark" variant="info">
 
       <b-navbar-brand>
-        <b-img class="pb-1 mr-2" src="logo/white_logo.png"  height="40" width="130"></b-img>
+        <b-img class="pb-1 mr-2" src="logo/white_logo.png" fluid alt="Alive" height="40" width="130"></b-img>
       </b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
