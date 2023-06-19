@@ -65,7 +65,7 @@ import ModelDeleteComponent from "@/components/Models/ModelDeleteComponent"
 import ModelPredictionComponent from "@/components/Models/ModelPredictionComponent"
 import DatasetCreationComponent from "@/components/Datasets/DatasetCreationComponent"
 import DatasetDeleteComponent from "@/components/Datasets/DatasetDeleteComponent"
-import CsvToDatasetComponent from "@/components/Datasets/CsvToDatasetComponent"
+import HandlingDatasetComponent from "@/components/Datasets/HandlingDatasetComponent"
 import AddToTrainingComponent from "@/components/Training/AddToTrainingComponent"
 import RemoveFromTrainingComponent from "@/components/Training/RemoveFromTrainingComponent"
 import StartTrainComponent from "@/components/Training/StartTrainComponent"
@@ -80,7 +80,7 @@ export default {
         ModelPredictionComponent,
         DatasetCreationComponent,
         DatasetDeleteComponent,
-        CsvToDatasetComponent,
+        HandlingDatasetComponent,
         AddToTrainingComponent,
         RemoveFromTrainingComponent,
         StartTrainComponent,

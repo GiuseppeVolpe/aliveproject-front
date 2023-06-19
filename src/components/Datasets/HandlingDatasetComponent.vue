@@ -77,7 +77,7 @@ import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 //import store from "@/store";
 
 export default {
-    name: "CsvToDatasetComponent",
+    name: "HandlingDatasetComponent",
 
     components: {
         PulseLoader,

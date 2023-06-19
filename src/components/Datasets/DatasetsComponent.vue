@@ -20,7 +20,7 @@ export default {
 
     data() {
         return {
-            desiredComponents: ["DatasetCreationComponent", "DatasetDeleteComponent", "CsvToDatasetComponent"],
+            desiredComponents: ["DatasetCreationComponent", "DatasetDeleteComponent", "HandlingDatasetComponent"],
         };
     },
 
