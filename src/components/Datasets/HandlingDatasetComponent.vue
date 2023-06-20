@@ -316,6 +316,8 @@ export default {
                 switch (responseData.code) {
                     case 1:
                         this.$root.$emit("pushAlert", "Example added!")
+                        this.setWaitingForServerResponse(false)
+                        this.loadDataset()
                         break
                     case 1000:
                     case 1001:
@@ -326,7 +328,6 @@ export default {
                 }
 
                 this.clearExampleInsertionForm()
-                this.loadDataset()
                 this.loading = false
                 this.setWaitingForServerResponse(false)
             }).catch(function (error) {
@@ -358,8 +359,6 @@ export default {
             this.loading = true
             this.setWaitingForServerResponse(true)
 
-            this.$root.$emit("pushAlert", "Trying to load examples!")
-
             var url_to_get_dataset_examples = process.env.VUE_APP_API_URL + "get_dataset_examples"
 
             var payload = {
@@ -386,8 +385,6 @@ export default {
                         this.fields = []
                         this.selectedDatasetExamples = []
                 }
-
-                this.updateAvailableDatasetsAction()
 
                 this.loading = false
                 this.setWaitingForServerResponse(false)
