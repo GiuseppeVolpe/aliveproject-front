@@ -18,13 +18,13 @@
 
                     <div class="col-4 offset-2">
                         <small class="form-text text-muted">Starting Index</small>
-                        <input type="number" name="startingIndex" class="form-control mb-2" placeholder="Starting Index"
+                        <input type="number" min="0" name="startingIndex" class="form-control mb-2" placeholder="Starting Index"
                             @change="loadDataset" v-model="startingIndex" />
                     </div>
 
                     <div class="col-4">
                         <small class="form-text text-muted">Number of examples</small>
-                        <input type="number" name="numberOfExamples" class="form-control mb-2"
+                        <input type="number" min="1" name="numberOfExamples" class="form-control mb-2"
                             placeholder="Number of Examples" @change="loadDataset" max="20"
                             v-model="numberOfExamplesToFetch" />
                     </div>
@@ -33,14 +33,106 @@
 
                 <template v-if="selectedDatasetExamples.length > 0">
                     <div class="row mt-3">
-                        <b-table striped hover :items="selectedDatasetExamples" :fields="fields"></b-table>
+                        <b-table striped hover :items="selectedDatasetExamples" :fields="fields">
+                            <template #cell(modify)="{ item }">
+                                <span><b-btn @click="addExampleModifyingForm(item)" class="mainColor">Edit</b-btn></span>
+                            </template>
+                            <template #cell(remove)="{ item }">
+                                <span><b-btn @click="removeExampleFromDataset(item)" class="mainColor">Remove</b-btn></span>
+                            </template>
+                        </b-table>
                     </div>
                 </template>
 
-                <div class="row mt-3">
-                    <b-button class="col-2 offset-5 mb-3 mainColor" @click="addExampleInsertionForm()"
-                        :disabled="selectedDataset == null || wantsToAddExample == true">+</b-button>
-                </div>
+                <template v-if="!wantsToModifyExample">
+                    <div class="row mt-3">
+                        <b-button class="col-2 offset-5 mb-3 mainColor" @click="addExampleInsertionForm()"
+                            :disabled="selectedDataset == null || wantsToAddExample || wantsToModifyExample">
+                            +
+                        </b-button>
+                    </div>
+                </template>
+
+                <template v-if="wantsToModifyExample == true">
+                    <div class="container-fluid mt-2 mb-2">
+                        <div class="shadow rounded border-primary mt-2 mb-2">
+
+                            <div class="row mt-3">
+                                <h3 class="text-center font-weight-bold col-6 offset-3 mt-3" style="color:#000;">
+                                    Modify example
+                                </h3>
+                            </div>
+
+                            <div class="row mt-3">
+                                <div class="col-10 offset-1">
+                                    <small class="form-text text-muted">Example Text</small>
+                                    <textarea type="text" name="modifiedExampleText" class="form-control mb-2"
+                                        placeholder="Modified example text" maxlength="500" v-model="modifiedExampleText" />
+                                </div>
+                            </div>
+
+                            <div class="row mt-3">
+                                <div class="col-4 offset-4">
+                                    <small class="form-text text-muted">Example Category</small>
+                                    <b-form-select :options="getAvailableExampleCategories" class="form-control"
+                                        v-model="modifiedExampleCategory">
+                                        <option value="null" disabled hidden>Change the example category</option>
+                                    </b-form-select>
+                                </div>
+                            </div>
+
+                            <div class="row mt-3">
+
+                                <div class="col-8 offset-2">
+                                    <div v-for="modifiedExampleTarget, index in modifiedExampleTargets" :key="index">
+
+                                        <div class="row">
+
+                                            <div class="col-5">
+                                                <small class="form-text text-muted">New Target Name</small>
+                                                <input type="text" name="modifiedTargetName" class="form-control"
+                                                    placeholder="Modified target name"
+                                                    v-model="modifiedExampleTarget.targetName" />
+                                            </div>
+
+                                            <div class="col-5">
+                                                <small class="form-text text-muted">New Target Value</small>
+                                                <input type="text" name="newTargetValue" class="form-control"
+                                                    placeholder="Modified target value"
+                                                    v-model="modifiedExampleTarget.targetValue" />
+                                            </div>
+
+                                            <div class="col-1">
+                                                <small class="form-text text-muted">remove</small>
+                                                <b-button class="form-control mainColor offset-6"
+                                                    @click="removeTargetFromModifiedExample(index)"
+                                                    :disabled="selectedDataset == null">-</b-button>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-3">
+                                <b-button class="col-2 offset-5 mb-3 mainColor" @click="addTargetToModifiedExample()"
+                                    :disabled="selectedDataset == null">Add new target</b-button>
+                            </div>
+
+                            <div class="row mt-3 mb-2">
+                                <b-button class="col-4 offset-2 mb-3 mr-1 mainColor" @click="modifyExampleInDataset()"
+                                    :disabled="selectedDataset == null || this.modifiedExampleText == null || this.modifiedExampleTargets.length == 0 || this.modifiedExampleCategory == null">
+                                    Modify this example
+                                </b-button>
+
+                                <b-button class="col-4 mb-3 ml-1 mainColor" @click="clearExampleModifyingForm()"
+                                    :disabled="selectedDataset == null">Discard Changes</b-button>
+                            </div>
+
+                        </div>
+                    </div>
+                </template>
 
                 <template v-if="wantsToAddExample == true">
                     <div class="container-fluid mt-2 mb-2">
@@ -57,7 +149,7 @@
                                 <div class="col-10 offset-1">
                                     <small class="form-text text-muted">Example Text</small>
                                     <textarea type="text" name="newExampleText" class="form-control mb-2"
-                                        placeholder="New example" maxlength="500" v-model="newExampleText" />
+                                        placeholder="New example text" maxlength="500" v-model="newExampleText" />
                                 </div>
 
                             </div>
@@ -217,8 +309,14 @@ export default {
             numberOfExamplesToFetch: 10,
             fields: [],
             selectedDatasetExamples: [],
-            wantsToAddExample: false,
 
+            wantsToModifyExample: false,
+            modifiedExampleIndex: null,
+            modifiedExampleText: null,
+            modifiedExampleCategory: null,
+            modifiedExampleTargets: [],
+
+            wantsToAddExample: false,
             newExampleText: null,
             newExampleCategory: null,
             newExampleTargets: [],
@@ -279,6 +377,89 @@ export default {
             this.newExampleTargets.splice(1, index)
         },
 
+        addExampleModifyingForm(item) {
+
+            if (!this.wantsToModifyExample) {
+                this.wantsToModifyExample = true
+
+                this.modifiedExampleIndex = item.index
+                this.modifiedExampleText = item.text
+                this.modifiedExampleCategory = item.example_category
+
+                for (var prop in item) {
+                    if (prop != "text" && prop != "example_category") {
+                        if (Object.prototype.hasOwnProperty.call(item, prop)) {
+                            this.modifiedExampleTargets.push({ "targetName": prop, "targetValue": item[prop] })
+                        }
+                    }
+                }
+            }
+        },
+
+        addTargetToModifiedExample() {
+            this.modifiedExampleTargets.push({ "targetName": "", "targetValue": "" })
+        },
+
+        removeTargetFromModifiedExample(index) {
+            this.modifiedExampleTargets.splice(1, index)
+        },
+
+        modifyExampleInDataset() {
+
+            if (this.isWaitingForServerResponse) {
+                return
+            }
+
+            if (this.modifiedExampleIndex == null || this.modifiedExampleText == null || 
+                this.modifiedExampleTargets.length == 0 || this.modifiedExampleCategory == null) {
+                return
+            }
+
+            if (this.getUserId == null || this.getSelectedEnvId == null) {
+                this.$root.$emit("pushAlert", "Lost your session data... try to login again.")
+                this.resetState()
+                this.$router.push("/")
+                return
+            }
+
+            this.loading = true
+            this.setWaitingForServerResponse(true)
+
+            var url_to_modify_example_in_dataset = process.env.VUE_APP_API_URL + "modify_example_in_dataset"
+
+            var payload = {
+                "session": this.getSession,
+                "dataset_name": this.selectedDataset.name,
+                "example_index": this.modifiedExampleIndex,
+                "example_text": this.modifiedExampleText,
+                "example_targets": this.modifiedExampleTargets,
+                "example_category": this.modifiedExampleCategory,
+            }
+
+            axios.post(url_to_modify_example_in_dataset, payload).then(response => {
+
+                var responseData = response.data
+
+                switch (responseData.code) {
+                    case 1:
+                        this.$root.$emit("pushAlert", "Example modified!")
+                        this.setWaitingForServerResponse(false)
+                        this.loadDataset()
+                        break
+                    case 1000:
+                    case 1001:
+                    case 1002:
+                        this.$root.$emit("pushAlert", "Couldn't modify the example...")
+                }
+
+                this.clearExampleModifyingForm()
+                this.loading = false
+                this.setWaitingForServerResponse(false)
+            }).catch(function (error) {
+                console.log(error)
+            })
+        },
+
         appendExampleToDataset() {
 
             if (this.isWaitingForServerResponse) {
@@ -322,8 +503,6 @@ export default {
                     case 1000:
                     case 1001:
                     case 1002:
-                        this.fields = []
-                        this.selectedDatasetExamples = []
                         this.$root.$emit("pushAlert", "Couldn't add the example...")
                 }
 
@@ -333,6 +512,66 @@ export default {
             }).catch(function (error) {
                 console.log(error)
             })
+        },
+
+        removeExampleFromDataset(example) {
+
+            if (example == null) {
+                return
+            }
+
+            if (this.isWaitingForServerResponse) {
+                return
+            }
+
+            if (this.getUserId == null || this.getSelectedEnvId == null) {
+                this.$root.$emit("pushAlert", "Lost your session data... try to login again.")
+                this.resetState()
+                this.$router.push("/")
+                return
+            }
+
+            this.loading = true
+            this.setWaitingForServerResponse(true)
+
+            var url_to_remove_examples_from_dataset = process.env.VUE_APP_API_URL + "remove_example_from_dataset"
+
+            var payload = {
+                "session": this.getSession,
+                "dataset_name": this.selectedDataset.name,
+                "example_index": example.index,
+            }
+
+            axios.post(url_to_remove_examples_from_dataset, payload).then(response => {
+
+                var responseData = response.data
+
+                switch (responseData.code) {
+                    case 1:
+                        this.$root.$emit("pushAlert", "Example removed!")
+                        this.setWaitingForServerResponse(false)
+                        this.loadDataset()
+                        break
+                    case 1000:
+                    case 1001:
+                    case 1002:
+                        this.$root.$emit("pushAlert", "Couldn't remove the example...")
+                }
+
+                this.loading = false
+                this.setWaitingForServerResponse(false)
+            }).catch(function (error) {
+                console.log(error)
+            })
+        },
+
+        clearExampleModifyingForm() {
+            this.wantsToModifyExample = false
+
+            this.modifiedExampleIndex = null
+            this.modifiedExampleText = null
+            this.modifiedExampleCategory = null
+            this.modifiedExampleTargets = []
         },
 
         clearExampleInsertionForm() {
@@ -372,11 +611,11 @@ export default {
 
                 var responseData = response.data
 
-                console.log(responseData)
-
                 switch (responseData.code) {
                     case 1:
                         this.fields = responseData.data.fields
+                        this.fields.push("modify")
+                        this.fields.push("remove")
                         this.selectedDatasetExamples = responseData.data.examples
                         break
                     case 1000:
