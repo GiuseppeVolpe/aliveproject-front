@@ -114,7 +114,9 @@ export default {
 
                 switch (responseData.code) {
                     case 1:
-                        this.prediction = responseData.data.prediction
+                        var output = "Prediction: " + responseData.data.prediction + "\n"
+                        output += "Probability: " + responseData.data.prob
+                        this.prediction = output
                         break
                     case 1000:
                     case 1001:
