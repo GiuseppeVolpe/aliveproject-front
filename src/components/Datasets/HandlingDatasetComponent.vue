@@ -387,7 +387,7 @@ export default {
                 this.modifiedExampleCategory = item.example_category
 
                 for (var prop in item) {
-                    if (prop != "text" && prop != "example_category") {
+                    if (prop != "text" && prop != "example_category" && prop != "index") {
                         if (Object.prototype.hasOwnProperty.call(item, prop)) {
                             this.modifiedExampleTargets.push({ "targetName": prop, "targetValue": item[prop] })
                         }
